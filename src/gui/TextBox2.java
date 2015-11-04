@@ -32,11 +32,15 @@ public class TextBox2 extends GUIMenu {
 		loadMessage(messageFile);
 
 		timer = 0d;
-		delay = 0.25d;
+		delay = 0.10d;
+		
+		displayArea = new Dimension(size.width - 10, size.height - 10);
 	}
 
 	public void show(){
 
+		if (isVisible()){return;}
+		
 		setVisible(true);
 		timer = 0d;
 
@@ -52,7 +56,7 @@ public class TextBox2 extends GUIMenu {
 
 		try {
 
-			BufferedReader reader = new BufferedReader(new FileReader("content/" + fileName));
+			BufferedReader reader = new BufferedReader(new FileReader("bin/content/" + fileName));
 			String thisLine;
 			String whole = "";
 
@@ -97,9 +101,23 @@ public class TextBox2 extends GUIMenu {
 
 			} else if (font.widthOfString(lines.get(index) + " " + words[i]) > size.width - 10){
 
-				index++;
-				lines.add(index, words[i]);
+				if (font.widthOfString(words[i]) > size.width - 10){
+					
+					ArrayList<String> splitWords = splitWord(words[i]);
+					
+					for (String s : splitWords){
+						
+						index++;
+						lines.add(index, s);
+						
+					}
+					
+				} else {
+					
+					index++;
+					lines.add(index, words[i]);
 
+				}
 			}
 		}
 
@@ -107,6 +125,33 @@ public class TextBox2 extends GUIMenu {
 
 		return lines;
 
+	}
+	
+	private ArrayList<String> splitWord(String word){
+		
+		ArrayList<String> words = new ArrayList<String>();
+		int currentWord = 0;
+		
+		for (int i = 0; i < word.length(); i++){
+			
+			if (words.size() == 0 || words.get(currentWord) == null){
+				
+				words.add(currentWord, word.substring(i, i + 1));
+				
+			} else if (font.widthOfString(words.get(currentWord) + word.substring(i, i + 1)) > size.width - 10) {
+				
+				currentWord++;
+				words.add(currentWord, word.substring(i, i + 1));
+				
+			} else {
+				
+				words.set(currentWord, words.get(currentWord) +  word.substring(i, i + 1));
+				
+			}
+		}
+		
+		return words;
+		
 	}
 
 	@Override
@@ -140,7 +185,9 @@ public class TextBox2 extends GUIMenu {
 				currentLine++;
 				currentLetter = 0;
 
-			} else if (currentLetter < message.get(currentLine).length()){
+			} 
+
+			if (currentLetter < message.get(currentLine).length()){
 
 				if (message.get(currentLine).substring(currentLetter, currentLetter + 1).equals("`")){
 
@@ -173,12 +220,12 @@ public class TextBox2 extends GUIMenu {
 				}
 			}
 
-			delay = 0.05d;
+			delay = 0.025d;
 
 		} else {
 
 			actionHeld = false;
-			delay = 0.5d;
+			delay = 0.10d;
 
 		}
 	}

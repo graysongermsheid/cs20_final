@@ -13,7 +13,6 @@ public class GUIMenu extends GUIComponent {
 	protected Point locationRelativeToMouse;
 	protected CompositeImage background;
 	protected boolean dragged;
-	protected boolean visible;
 	protected GUIButton[] menuButtons;
 	protected SpriteFont font;
 	private String title;

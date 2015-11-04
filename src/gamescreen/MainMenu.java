@@ -43,7 +43,7 @@ public class MainMenu extends Menu {
 
 		components[2] = new GUIMenu("composite_three.png", 0, 0, 240, 240, "Popup Menu");
 		components[3] = new GUIMenu("composite_one.png", 240, 240, 240, 240);
-		components[4] = new TextBox2("butts.txt", 0, 0, 256, 128);
+		components[4] = new TextBox2("butts.txt", 0, 0, 256, 480);
 
 	}
 
