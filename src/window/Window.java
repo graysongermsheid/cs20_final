@@ -25,8 +25,6 @@ public class Window extends JFrame{
 		this.setVisible(true);
 		canvas.createBuffer();
 
-		//this.setResizable(false);
-
 		canvas.run();
 	}
 }
