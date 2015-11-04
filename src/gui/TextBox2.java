@@ -5,34 +5,31 @@ import input.InputHandler;
 import java.io.*;
 import java.awt.Graphics2D;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.util.ArrayList;
 
 public class TextBox2 extends GUIMenu {
-	
-	private String[] phrases;
-	private String[] thisPhrase;
 
-	private int currentPhrase;
-	private int currentLetter;
-	private int currentLine;
-
-	private boolean reachedEndOfLine;
-	private boolean reachedEndOfPhrase;
-	private boolean actionHeldThrough;
+	private ArrayList<String> message;
+	private Dimension displayArea;
 
 	private double timer;
 	private double delay;
 
-	public TextBox2(String message, int x, int y, int width, int height){
+	private int currentLine;
+	private int currentLetter;
+
+	private boolean reachedPause;
+	private boolean finishedMessage;
+	private boolean actionHeld;
+
+	public TextBox2(String messageFile, int x, int y, int width, int height){
 
 		super("composite_one.png", x, y, width, height);
-
 		this.font = ResourceManager.getFont("font.png");
 
-		loadMessage(message);
-
-		reachedEndOfLine = false;
-		reachedEndOfPhrase = false;
-		actionHeldThrough = false;
+		message = new ArrayList<String>();
+		loadMessage(messageFile);
 
 		timer = 0d;
 		delay = 0.25d;
@@ -41,48 +38,75 @@ public class TextBox2 extends GUIMenu {
 	public void show(){
 
 		setVisible(true);
-
-		currentLine = 0;
-		currentLetter = 0;
-		currentPhrase = 0;
-
-		reachedEndOfLine = false;
-		reachedEndOfPhrase = false;
-		actionHeldThrough = false;
-
 		timer = 0d;
-		delay = 0.25d;
 
-		thisPhrase = splitPhrase(phrases[0]);
+		reachedPause = false;
+		finishedMessage = false;
+		actionHeld = false;
+		currentLetter = 0;
+		currentLine = 0;
+
 	}
 
 	private void loadMessage(String fileName){
 
 		try {
 
-			BufferedReader br = new BufferedReader(new FileReader("content/" + fileName));
-			String line;
-			String message = "";
+			BufferedReader reader = new BufferedReader(new FileReader("content/" + fileName));
+			String thisLine;
+			String whole = "";
 
-			while ((line = br.readLine()) != null){
+			while ((thisLine = reader.readLine()) != null){
 
-				message += line + " ";
+				whole += " " + thisLine;
 
 			}
 
-			phrases = message.split(";");
-			thisPhrase = splitPhrase(phrases[0]);
+			whole = whole.trim();
+
+			message = splitMessage(whole);
 
 		} catch (FileNotFoundException e) {
 
-			System.out.println("          AAAAAAAAAAAAAAAAA");
+			System.out.println("ERROR: couldn't load file <" + fileName + ">");
 
-		}catch (Exception e){
+		} catch (Exception e) {
 
 			e.printStackTrace();
-			System.out.println("couldn't load message");
+			System.out.println("Some otger exception");
 
 		}
+
+	}
+
+	private ArrayList<String> splitMessage(String source){
+
+		String[] words = source.split(" ");
+		ArrayList<String> lines = new ArrayList<String>();
+		int index = 0;
+
+		for (int i = 0; i < words.length; i++){
+
+			if (lines.size() == 0 || lines.get(index) == null){
+
+				lines.add(index, words[i]);
+
+			} else if (!(font.widthOfString(lines.get(index) + " " + words[i]) > size.width - 10)){
+
+				lines.set(index, lines.get(index) + " " + words[i]);
+
+			} else if (font.widthOfString(lines.get(index) + " " + words[i]) > size.width - 10){
+
+				index++;
+				lines.add(index, words[i]);
+
+			}
+		}
+
+		for (String s : lines) { System.out.println(s); }
+
+		return lines;
+
 	}
 
 	@Override
@@ -91,12 +115,42 @@ public class TextBox2 extends GUIMenu {
 		timer += elapsedMilliseconds;
 
 		if (timer >= 1000 * delay){
-
+			
 			timer = 0d;
-			updatePhrase();
 
+			if (currentLetter < message.get(currentLine).length() && !reachedPause){
+
+				if (currentLetter < message.get(currentLine).length() - 1){
+
+					currentLetter = (message.get(currentLine).substring(currentLetter + 1, currentLetter + 2).equals(" ")) ? currentLetter + 2 : currentLetter + 1;
+
+				} else {
+
+					currentLetter++;
+
+				}
+			}
+
+			if (currentLine == message.size() - 1){
+
+				finishedMessage = true;
+
+			} else if (currentLetter == message.get(currentLine).length()){
+
+				currentLine++;
+				currentLetter = 0;
+
+			} else if (currentLetter < message.get(currentLine).length()){
+
+				if (message.get(currentLine).substring(currentLetter, currentLetter + 1).equals("`")){
+
+					message.set(currentLine, message.get(currentLine).replace("`", ""));
+					reachedPause = true;
+
+				}
+
+			}
 		}
-
 	}
 
 	@Override
@@ -104,46 +158,27 @@ public class TextBox2 extends GUIMenu {
 
 		if (InputHandler.KEY_ACTION2_PRESSED){
 
-			delay = 0.05d;
+			if (!actionHeld){
 
-			if (reachedEndOfLine && !actionHeldThrough){
+				actionHeld = true;
 
-				if ((currentLine == thisPhrase.length - 1) && (currentLetter == thisPhrase[currentLine].length() - 1)){
-
-					reachedEndOfPhrase = true;
-
-				} else {
-
-					currentLine++;
-					currentLetter = 0;
-
-				}
-			}
-
-			if (reachedEndOfPhrase && !actionHeldThrough){
-
-				if ((currentPhrase == phrases.length - 1) &&
-					(currentLine == thisPhrase.length - 1) &&
-					(currentLetter == thisPhrase[currentLine].length() - 1)){
+				if (finishedMessage){
 
 					setVisible(false);
 
-				} else {
+				} else if (reachedPause){
 
-					currentPhrase++;
-					currentLetter = 0;
-					currentLine = 0;
-					thisPhrase = splitPhrase(phrases[currentPhrase]);
+					reachedPause = false;
 
 				}
 			}
 
-			actionHeldThrough = true;
+			delay = 0.05d;
 
 		} else {
 
-			delay = 0.25d;
-			actionHeldThrough = false;
+			actionHeld = false;
+			delay = 0.5d;
 
 		}
 	}
@@ -153,97 +188,17 @@ public class TextBox2 extends GUIMenu {
 
 		super.draw(g);
 
-		if (currentLine == 0){
+		int i = 0;
 
-			font.drawColoredText(thisPhrase[currentLine].substring(0, currentLetter), location.x + 5, location.y + 5, Color.RED, g);
+		if (currentLine > 0){
 
-		} else {
+			for (i = 0; i < currentLine; i++){
 
-			font.drawColoredText(thisPhrase[currentLine - 1], location.x + 5, location.y + 5, Color.GREEN, g);
-			font.drawColoredText(thisPhrase[currentLine].substring(0, currentLetter), location.x + 5, location.y + 25, Color.RED, g);
-
-		}
-
-	}
-
-	private void updatePhrase(){
-
-		if (currentLetter < thisPhrase[currentLine].length() - 1){
-
-			currentLetter++;
-
-		} else {
-
-			reachedEndOfLine = true;
-
-		}
-	}
-
-	private String[] splitPhrase(String phrase){
-
-		String splitLines[] = new String[1];
-		splitLines[0] = "";
-		int currentLine = 0;
-		int currentLineLength = 0;
-		int lastLineEnd = 0;
-
-		String[] words = phrase.split(" ");
-
-		for (String word : words){
-
-			if (font.widthOfString(splitLines[currentLine] + " " + word) > size.width - 10){
-
-				currentLine++;
-				splitLines = extendArray(splitLines);
-
-			}
-
-			splitLines[currentLine] += " " + word;
-
-		}
-
-		for (String s : splitLines){
-
-			System.out.println(s);
-
-		}
-
-		return splitLines;
-	}
-
-	private String[] extendArray(String[] array){
-
-		String[] array2 = new String[array.length + 1];
-
-		for (int i = 0; i < array.length; i++){
-
-			array2[i] = array[i];
-
-		}
-
-		array2[array2.length - 1] = "";
-
-		return array2;
-	}
-
-	private int lastTerminator(String s){
-
-		for (int i = s.length(); i > 0; i--){
-
-			if (s.substring(i - 1, i).equals(" ") ||
-				s.substring(i - 1, i).equals(".") ||
-				s.substring(i - 1, i).equals(",") ||
-				s.substring(i - 1, i).equals(";") ||
-				s.substring(i - 1, i).equals(":")){
-
-				System.out.println("lastTerminator: " + s.substring(i - 1, i) + " (" + i + ")");
-
-				return i - 1;
+				font.drawColoredText(message.get(i), location.x + 6, location.y + 4 + (i * 17), Color.WHITE, g);
 
 			}
 		}
 
-		System.out.println("-11111111");
-		return -1;
+		font.drawColoredText(message.get(currentLine).substring(0, currentLetter), location.x + 6, location.y + 4 + (i * 17), Color.WHITE, g);
 	}
 }

@@ -1,1 +1,4 @@
-Okay, so this is the sentence I'm writing. Hopefully this will wrap properly!;Let's have a real go at it this time! God, I hope this works
+Okay, so this is the sentence
+I'm writing. Hopefully this will wrap properly!
+Let's have a real go at it this time!`
+God, I hope this works
