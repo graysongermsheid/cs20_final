@@ -1,6 +1,7 @@
 package gui;
 
 import resources.ResourceManager;
+import resources.Animation;
 import input.InputHandler;
 import java.io.*;
 import java.awt.Graphics2D;
@@ -10,8 +11,10 @@ import java.util.ArrayList;
 
 public class TextBox2 extends GUIMenu {
 
+	private String[] backlog;
 	private ArrayList<String> message;
 	private Dimension displayArea;
+	private Animation indicator;
 
 	private double timer;
 	private double delay;
@@ -20,6 +23,7 @@ public class TextBox2 extends GUIMenu {
 	private int currentLetter;
 
 	private boolean reachedPause;
+	private boolean clearNext;
 	private boolean finishedMessage;
 	private boolean actionHeld;
 
@@ -34,7 +38,8 @@ public class TextBox2 extends GUIMenu {
 		timer = 0d;
 		delay = 0.10d;
 		
-		displayArea = new Dimension(size.width - 10, size.height - 10);
+		displayArea = new Dimension(size.width - 12, size.height - 12);
+		indicator = new Animation(ResourceManager.getSpriteSheet("textboxArrow.png"), 0.75f);
 	}
 
 	public void show(){
@@ -47,6 +52,7 @@ public class TextBox2 extends GUIMenu {
 		reachedPause = false;
 		finishedMessage = false;
 		actionHeld = false;
+		clearNext = false;
 		currentLetter = 0;
 		currentLine = 0;
 
@@ -56,7 +62,7 @@ public class TextBox2 extends GUIMenu {
 
 		try {
 
-			BufferedReader reader = new BufferedReader(new FileReader("bin/content/" + fileName));
+			BufferedReader reader = new BufferedReader(new FileReader("content/" + fileName));
 			String thisLine;
 			String whole = "";
 
@@ -138,8 +144,9 @@ public class TextBox2 extends GUIMenu {
 				
 				words.add(currentWord, word.substring(i, i + 1));
 				
-			} else if (font.widthOfString(words.get(currentWord) + word.substring(i, i + 1)) > size.width - 10) {
+			} else if (i + 2 < word.length() && font.widthOfString(words.get(currentWord) + word.substring(i, i + 2)) > size.width - 10) {
 				
+				words.set(currentWord, words.get(currentWord) + "-");
 				currentWord++;
 				words.add(currentWord, word.substring(i, i + 1));
 				
@@ -156,6 +163,10 @@ public class TextBox2 extends GUIMenu {
 
 	@Override
 	public void update(double elapsedMilliseconds){
+
+		if (!visible){ return; }
+
+		indicator.update(elapsedMilliseconds);
 
 		timer += elapsedMilliseconds;
 
@@ -193,9 +204,16 @@ public class TextBox2 extends GUIMenu {
 
 					message.set(currentLine, message.get(currentLine).replace("`", ""));
 					reachedPause = true;
+					System.out.println("reached a grave");
+
+				} else if (message.get(currentLine).substring(currentLetter, currentLetter + 1).equals("^")){
+
+					message.set(currentLine, message.get(currentLine).replace("^", ""));
+					clearNext = true;
+					reachedPause = true;
+					System.out.println("normally here, it would clear a line");
 
 				}
-
 			}
 		}
 	}
@@ -203,13 +221,15 @@ public class TextBox2 extends GUIMenu {
 	@Override
 	public void processInput(){
 
+		if (!visible){ return; }
+
 		if (InputHandler.KEY_ACTION2_PRESSED){
 
 			if (!actionHeld){
 
 				actionHeld = true;
 
-				if (finishedMessage){
+				if (finishedMessage && currentLetter >= message.get(currentLine).length() - 1){
 
 					setVisible(false);
 
@@ -241,11 +261,17 @@ public class TextBox2 extends GUIMenu {
 
 			for (i = 0; i < currentLine; i++){
 
-				font.drawColoredText(message.get(i), location.x + 6, location.y + 4 + (i * 17), Color.WHITE, g);
+				font.drawColoredText(message.get(i), location.x + 8, location.y + 8 + (i * font.getOriginalSize().height), Color.WHITE, g);
 
 			}
 		}
 
-		font.drawColoredText(message.get(currentLine).substring(0, currentLetter), location.x + 6, location.y + 4 + (i * 17), Color.WHITE, g);
+		font.drawColoredText(message.get(currentLine).substring(0, currentLetter), location.x + 8, location.y + 8 + (i * font.getOriginalSize().height), Color.WHITE, g);
+	
+		if (reachedPause || (currentLetter >= message.get(currentLine).length() - 1 && currentLine >= message.size() - 1)){
+
+			g.drawImage(indicator.currentFrame(), location.x + size.width - 16, location.y + size.height - 16, null);
+
+		}
 	}
 }
