@@ -56,6 +56,8 @@ public abstract class Menu implements GameScreen {
 	public void loadResources(){
 
 		ResourceManager.createSpriteSheet("font.png", 16, 16);
+		ResourceManager.createSpriteSheet("font_special.png", 9, 12);
+		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_large.png", 32, 32);
 
 		ResourceManager.createSpriteSheet("button.png", 192, 32);
