@@ -1,5 +1,2 @@
 A really long message to test how well text wraps, I really need to fix the overflow though so let's see if that works...` I guess it should start a new line afer pauses too` and maybe another character to clear the box.
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-ABCDEFGHIJKLMNOPQRSTUVWXYZ
-abcdefghijklmnopqrstuvwxyz
-`1234567890-=[]\;',./~!@#$%^&*()_+{}|:"<>?
+ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg

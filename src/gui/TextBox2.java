@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class TextBox2 extends GUIMenu {
 
+	private String[] backlog;
 	private ArrayList<String> message;
 	private Dimension displayArea;
 
@@ -20,6 +21,7 @@ public class TextBox2 extends GUIMenu {
 	private int currentLetter;
 
 	private boolean reachedPause;
+	private boolean clearNext;
 	private boolean finishedMessage;
 	private boolean actionHeld;
 
@@ -34,7 +36,9 @@ public class TextBox2 extends GUIMenu {
 		timer = 0d;
 		delay = 0.10d;
 		
-		displayArea = new Dimension(size.width - 10, size.height - 10);
+		displayArea = new Dimension(size.width - 12, size.height - 12);
+		System.out.println("Textbox dimensions: " + displayArea.width + "x" + displayArea.height);
+		System.out.println("Can display: " + Math.floor(displayArea.height / 16d) + " lines of text");
 	}
 
 	public void show(){
@@ -47,6 +51,7 @@ public class TextBox2 extends GUIMenu {
 		reachedPause = false;
 		finishedMessage = false;
 		actionHeld = false;
+		clearNext = false;
 		currentLetter = 0;
 		currentLine = 0;
 
@@ -56,7 +61,7 @@ public class TextBox2 extends GUIMenu {
 
 		try {
 
-			BufferedReader reader = new BufferedReader(new FileReader("bin/content/" + fileName));
+			BufferedReader reader = new BufferedReader(new FileReader("content/" + fileName));
 			String thisLine;
 			String whole = "";
 
@@ -194,8 +199,13 @@ public class TextBox2 extends GUIMenu {
 					message.set(currentLine, message.get(currentLine).replace("`", ""));
 					reachedPause = true;
 
-				}
+				} else if (message.get(currentLine).substring(currentLetter, currentLetter + 1).equals("^")){
 
+					message.set(currentLine, message.get(currentLine).replace("^", ""));
+					clearNext = true;
+					reachedPause = true;
+
+				}
 			}
 		}
 	}
@@ -241,11 +251,11 @@ public class TextBox2 extends GUIMenu {
 
 			for (i = 0; i < currentLine; i++){
 
-				font.drawColoredText(message.get(i), location.x + 6, location.y + 4 + (i * 17), Color.WHITE, g);
+				font.drawColoredText(message.get(i), location.x + 8, location.y + 8 + (i * font.getOriginalSize().height), Color.WHITE, g);
 
 			}
 		}
 
-		font.drawColoredText(message.get(currentLine).substring(0, currentLetter), location.x + 6, location.y + 4 + (i * 17), Color.WHITE, g);
+		font.drawColoredText(message.get(currentLine).substring(0, currentLetter), location.x + 8, location.y + 8 + (i * font.getOriginalSize().height), Color.WHITE, g);
 	}
 }

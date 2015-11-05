@@ -239,6 +239,12 @@ public class SpriteFont extends SpriteSheet{
 		return image.getWidth() - 1;
 	}
 
+	public Dimension getOriginalSize(){
+
+		return frameSize;
+
+	}
+
 	public int widthOfString(String text){
 
 		int length = 0;
