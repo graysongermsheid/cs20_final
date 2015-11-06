@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.io.*;
 import javax.imageio.*;
+import java.util.Arrays;
 
 public class SpriteSheet {
 	
@@ -25,7 +26,7 @@ public class SpriteSheet {
 
 		name = copyFrom.name;
 		frameSize = copyFrom.frameSize;
-		images = copyFrom.images;
+		images = copyFrom.images.clone();
 
 	}
 

@@ -79,7 +79,6 @@ public class ResourceManager {
 	public static void createSpriteSheet(String sheetName, int frameWidth, int frameHeight){
 
 		spriteSheetMap.put(sheetName, new SpriteSheet(sheetName, frameWidth, frameHeight));
-		System.out.println("Creating new SpriteSheet <" + sheetName + ">");
 
 	}
 

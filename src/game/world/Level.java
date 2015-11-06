@@ -1,18 +1,14 @@
-package gamescreen;
+package game.world;
 
 import java.awt.Graphics2D;
 
-public interface GameScreen {
+public interface Level {
 	
+	public void processInput();
 	public void update(double elapsedMilliseconds);
-
 	public void draw(Graphics2D g);
 
-	public void processInput();
-
-	public String getTitle();
-
 	public void loadResources();
-
 	public void unloadResources();
+
 }

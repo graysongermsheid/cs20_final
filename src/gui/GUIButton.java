@@ -14,7 +14,7 @@ public class GUIButton extends GUIComponent{
 	public GUIButton(String spriteSheet, int x, int y, int width, int height){
 
 		super(spriteSheet, x, y, width, height);
-		this.image = resources.ResourceManager.animationFromSheet(source, 1.0f);
+		this.image = new Animation(source, 1.0f);
 
 		visible = true;
 		currentState = ButtonState.DEFAULT;

@@ -40,9 +40,20 @@ public class SpriteFont extends SpriteSheet{
 
 	}
 
+	public void drawColoredText(String text, int x, int y, Color c, int size, Graphics2D g){
+
+		for (int i = 0; i < text.length(); i++){
+
+			g.drawImage(resizedImage(coloredImage(images[keyMap.get(text.substring(i, i + 1))], c), size), x, y, null);
+			x += images[keyMap.get(text.substring(i, i + 1))].getWidth() * size;
+
+		}
+
+	}
+
 	private void initialize(){
 
-		keyMap.put("	", 0);
+		keyMap.put(" ", 0);
 		keyMap.put("!", 1);
 		keyMap.put("\"", 2);
 		keyMap.put("#", 3);
@@ -137,9 +148,34 @@ public class SpriteFont extends SpriteSheet{
 		keyMap.put("|", 92);
 		keyMap.put("}", 93); 
 		keyMap.put("~", 94);
-		keyMap.put(" ", 95);
+		keyMap.put("	", 95);
 
 		trimLetters();
+	}
+
+	private BufferedImage resizedImage(BufferedImage source, int size){
+
+		if (size == 1) {return source;}
+
+		BufferedImage newImage = new BufferedImage(source.getWidth() * size, source.getHeight() * size, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g = newImage.createGraphics();
+
+		for (int i = 0; i < source.getHeight(); i++){
+
+			for (int j = 0; j < source.getWidth(); j++){
+
+				for (int k = 0; k < size; k++){
+
+					for (int e = 0; e < size; e++){
+
+						newImage.setRGB(j * size + k, i * size + e, source.getRGB(j, i));
+
+					}
+				}				
+			}
+		}
+
+		return newImage;
 	}
 
 	private BufferedImage coloredImage(BufferedImage s, Color c){
@@ -172,8 +208,6 @@ public class SpriteFont extends SpriteSheet{
 
 	private void trimLetters(){
 
-		System.out.println("Trimming SpriteFont " + this.getName());
-
 		int i = 0;
 		int largestX = 0;
 
@@ -190,15 +224,10 @@ public class SpriteFont extends SpriteSheet{
 
 			largestX = (largestX < (highestX - lowestX)) ? (highestX - lowestX) : largestX;
 
-			/*System.out.println("Trimming image " + i + "(" + image.getWidth() + "x" + image.getHeight() + ") to " + (highestX - lowestX) + "x" + image.getHeight());
-			System.out.println("lowest x is " + lowestX + ", highest x is " + highestX);*/
-
 			try { images[i] = images[i].getSubimage(lowestX, 0, highestX, image.getHeight()); } catch (Exception e) {System.out.println("couldn't trim image " + i);}
 
 			i++;
 		}
-
-		System.out.println("largest width of a letter: " + largestX);
 	}
 
 	private int getFirstPixel(BufferedImage image){

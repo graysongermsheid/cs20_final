@@ -5,10 +5,12 @@ import java.awt.Point;
 import gui.GUIComponent;
 import input.InputHandler;
 import resources.ResourceManager;
+import resources.SpriteFont;
 
 public abstract class Menu implements GameScreen {
 
 	protected GUIComponent[] components;
+	protected SpriteFont font;
 
 	@Override
 	public void processInput(){
@@ -53,6 +55,13 @@ public abstract class Menu implements GameScreen {
 	}
 
 	@Override
+	public String getTitle(){
+
+		return "Default Menu Title";
+
+	}
+
+	@Override
 	public void loadResources(){
 
 		ResourceManager.createSpriteSheet("font.png", 16, 16);
@@ -64,6 +73,7 @@ public abstract class Menu implements GameScreen {
 		ResourceManager.createSpriteSheet("composite_one.png", 16, 16);
 		ResourceManager.createSpriteSheet("composite_two.png", 16, 16);
 		ResourceManager.createSpriteSheet("composite_three.png", 16, 16);
+		ResourceManager.createSpriteSheet("composite_four.png", 16, 16);
 		ResourceManager.createSpriteSheet("textboxArrow.png", 11, 11);
 		ResourceManager.createSpriteSheet("textboxProceed.png", 96, 26);
 

@@ -45,6 +45,19 @@ public class Animation extends SpriteSheet {
 
 	}
 
+	public BufferedImage getFrame(int index){
+
+		return images[index];
+
+	}
+
+	public void changeFrameImage(int index, BufferedImage image){
+
+		frameSize = new Dimension(image.getWidth(), image.getHeight());
+		images[index] = image;
+
+	}
+
 	public Dimension getSize(){
 
 		return this.frameSize;

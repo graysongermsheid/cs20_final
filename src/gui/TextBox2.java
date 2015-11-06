@@ -26,10 +26,11 @@ public class TextBox2 extends GUIMenu {
 	private boolean clearNext;
 	private boolean finishedMessage;
 	private boolean actionHeld;
+	private Color bestFontColor;
 
 	public TextBox2(String messageFile, int x, int y, int width, int height){
 
-		super("composite_one.png", x, y, width, height);
+		super("composite_two.png", x, y, width, height);
 		this.font = ResourceManager.getFont("font.png");
 
 		message = new ArrayList<String>();
@@ -40,6 +41,8 @@ public class TextBox2 extends GUIMenu {
 		
 		displayArea = new Dimension(size.width - 12, size.height - 12);
 		indicator = new Animation(ResourceManager.getSpriteSheet("textboxArrow.png"), 0.75f);
+
+		bestFontColor = background.getBestFontColor();
 	}
 
 	public void show(){
@@ -83,7 +86,7 @@ public class TextBox2 extends GUIMenu {
 		} catch (Exception e) {
 
 			e.printStackTrace();
-			System.out.println("Some otger exception");
+			System.out.println("ERROR: Unknown exception in TextBox2");
 
 		}
 
@@ -126,8 +129,6 @@ public class TextBox2 extends GUIMenu {
 				}
 			}
 		}
-
-		for (String s : lines) { System.out.println(s); }
 
 		return lines;
 
@@ -204,14 +205,12 @@ public class TextBox2 extends GUIMenu {
 
 					message.set(currentLine, message.get(currentLine).replace("`", ""));
 					reachedPause = true;
-					System.out.println("reached a grave");
 
 				} else if (message.get(currentLine).substring(currentLetter, currentLetter + 1).equals("^")){
 
 					message.set(currentLine, message.get(currentLine).replace("^", ""));
 					clearNext = true;
 					reachedPause = true;
-					System.out.println("normally here, it would clear a line");
 
 				}
 			}
@@ -261,12 +260,12 @@ public class TextBox2 extends GUIMenu {
 
 			for (i = 0; i < currentLine; i++){
 
-				font.drawColoredText(message.get(i), location.x + 8, location.y + 8 + (i * font.getOriginalSize().height), Color.WHITE, g);
+				font.drawColoredText(message.get(i), location.x + 8, location.y + 8 + (i * font.getOriginalSize().height), bestFontColor, g);
 
 			}
 		}
 
-		font.drawColoredText(message.get(currentLine).substring(0, currentLetter), location.x + 8, location.y + 8 + (i * font.getOriginalSize().height), Color.WHITE, g);
+		font.drawColoredText(message.get(currentLine).substring(0, currentLetter), location.x + 8, location.y + 8 + (i * font.getOriginalSize().height), bestFontColor, g);
 	
 		if (reachedPause || (currentLetter >= message.get(currentLine).length() - 1 && currentLine >= message.size() - 1)){
 

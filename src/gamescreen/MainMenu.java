@@ -2,53 +2,35 @@ package gamescreen;
 
 import java.awt.Graphics2D;
 import gui.*;
-import resources.CompositeImage;
+import resources.*;
+import java.awt.Color;
 
 public class MainMenu extends Menu {
 
 	public MainMenu(){
 
 		super.loadResources();
+		this.font = ResourceManager.getFont("font_bold.png");
+
 		initialize();
 
 	}
 
 	private void initialize(){
 
-		this.components = new GUIComponent[5];
+		this.components = new GUIComponent[4];
 
-		components[0] = new LabeledButton("Click Here", 100, 100){
-
-			@Override
-			public void performAction(){
-
-				components[2].setVisible(!components[2].isVisible());
-				components[3].setVisible(!components[3].isVisible());
-
-			}
-
-		};
-		components[1] = new LabeledButton("Start Game", 307, 100){
-
-			@Override
-			public void performAction(){
-
-				TextBox2 t = (TextBox2) components[4];
-
-				t.show();
-
-			}
-
-		};
-
-		components[2] = new GUIMenu("composite_three.png", 0, 0, 240, 240, "Popup Menu");
-		components[3] = new GUIMenu("composite_one.png", 240, 240, 240, 240);
-		components[4] = new TextBox2("butts.txt", 0, 0, 256, 256);
+		components[0] = new LabeledButton("     Play Game    ", 196, 100);
+		components[1] = new LabeledButton("Options", 113, 142);
+		components[2] = new LabeledButton("Quit", 325, 142);
+		components[3] = new TextBox2("message.txt", 0, 0, 256, 256);
 
 	}
 
 	@Override
 	public void draw(Graphics2D g){
+
+		font.drawColoredText(getTitle(), (640 / 2) - (font.widthOfString(getTitle()) * 3) / 2, 32, Color.WHITE, 3, g);
 
 		super.draw(g);
 
@@ -65,5 +47,12 @@ public class MainMenu extends Menu {
 	public void processInput(){
 
 		super.processInput();
+	}
+
+	@Override
+	public String getTitle(){
+
+		return "Main Menu";
+
 	}
 }
