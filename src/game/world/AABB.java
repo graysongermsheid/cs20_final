@@ -4,18 +4,42 @@ import java.awt.Point;
 
 public class AABB {
 	
-	public static boolean collides(Point aMin, Point aMax, Point bMin, Point bMax){
+	public static boolean collides(Entity e, Tile t){
 
-		if (aMax.x < bMin.x ||
-			aMin.x > bMax.y ||
-			aMax.y < bMin.y ||
-			aMax.y > bMax.y){
+		switch (t.getCollisionType()){
+
+			Point a = e.getLocation();
+			Point b = e.getFarLocation();
+
+			case 0xffff:
+
+				return checkCollision(a, b, t.getLocation(), t.getFarLocation());
+
+			case 0x0000:
+
+				return false;
+
+			default:
+
+				return true;
+
+		}
+
+	}
+
+	private boolean checkCollision(Point aMin, aMax, bMin, bmax){
+
+		if (aMin.x > bMax.x ||
+			aMin.y > bMax.y ||
+			aMax.x < bMin.x ||
+			aMax.y < bMin.y){
 
 			return false;
 
 		}
 
 		return true;
+
 	}
 
 	public static int overlap(int aMax, int aMin, int bMax, bMin){
