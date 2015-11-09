@@ -6,14 +6,11 @@ import gui.*;
 import resources.*;
 
 public class GameMenu extends Menu {
-	
-	private game.entities.Player p;
 
 	public GameMenu(){
 
 		loadResources();
 		this.font = ResourceManager.getFont("font_bold.png");
-		p = new game.entities.Player(0, 0);
 
 	}
 
@@ -76,7 +73,6 @@ public class GameMenu extends Menu {
 	public void update(double elapsedMilliseconds){
 
 		super.update(elapsedMilliseconds);
-		p.update(elapsedMilliseconds);
 
 	}
 
@@ -84,7 +80,6 @@ public class GameMenu extends Menu {
 	public void processInput(){
 
 		super.processInput();
-		p.processInput();
 
 	}
 
@@ -96,7 +91,6 @@ public class GameMenu extends Menu {
 		font.drawText(getTitle(), (640 / 2) - (font.getStringSize(getTitle()).width) / 2, 32, g);
 		font.setScaling(1);
 		super.draw(g);
-		p.draw(g);
 
 	}
 

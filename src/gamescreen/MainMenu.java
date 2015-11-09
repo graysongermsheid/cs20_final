@@ -36,12 +36,13 @@ public class MainMenu extends Menu {
 			@Override
 			public void performAction(){
 
-				System.exit(0);
+				TextBox2 c = (TextBox2) components[3];
+				c.show();
 
 			}
 
 		};
-		components[3] = new TextBox2("message.txt", 0, 0, 256, 256);
+		components[3] = new TextBox2("message.txt", 0, 0, 256, 48);
 
 	}
 

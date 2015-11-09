@@ -21,6 +21,8 @@ public class TextBox2 extends GUIMenu {
 
 	private int currentLine;
 	private int currentLetter;
+	private int maxLine;
+	private Dimension padding;
 
 	private boolean reachedPause;
 	private boolean clearNext;
@@ -30,8 +32,9 @@ public class TextBox2 extends GUIMenu {
 
 	public TextBox2(String messageFile, int x, int y, int width, int height){
 
-		super("composite_two.png", x, y, width, height);
+		super("composite_four.png", x, y, width, height);
 		this.font = ResourceManager.getFont("font.png");
+		padding = new Dimension(16, 8);
 
 		message = new ArrayList<String>();
 		loadMessage(messageFile);
@@ -39,9 +42,8 @@ public class TextBox2 extends GUIMenu {
 		timer = 0d;
 		delay = 0.10d;
 		
-		displayArea = new Dimension(size.width - 12, size.height - 12);
+		maxLine = ((size.height - padding.height) / font.getSize().height) - 1;
 		indicator = new Animation(ResourceManager.getSpriteSheet("textboxArrow.png"), 0.75f);
-
 		bestFontColor = background.getBestFontColor();
 	}
 
@@ -104,13 +106,13 @@ public class TextBox2 extends GUIMenu {
 
 				lines.add(index, words[i]);
 
-			} else if (!(font.getStringSize(lines.get(index) + " " + words[i]).width > size.width - 10)){
+			} else if (!(font.getStringSize(lines.get(index) + " " + words[i]).width > size.width - padding.width)){
 
 				lines.set(index, lines.get(index) + " " + words[i]);
 
-			} else if (font.getStringSize(lines.get(index) + " " + words[i]).width > size.width - 10){
+			} else if (font.getStringSize(lines.get(index) + " " + words[i]).width > size.width - padding.width){
 
-				if (font.getStringSize(words[i]).width > size.width - 10){
+				if (font.getStringSize(words[i]).width > size.width - padding.width){
 					
 					ArrayList<String> splitWords = splitWord(words[i]);
 					
@@ -131,7 +133,6 @@ public class TextBox2 extends GUIMenu {
 		}
 
 		return lines;
-
 	}
 	
 	private ArrayList<String> splitWord(String word){
@@ -145,7 +146,7 @@ public class TextBox2 extends GUIMenu {
 				
 				words.add(currentWord, word.substring(i, i + 1));
 				
-			} else if ((i + 2 < word.length()) && (font.getStringSize(words.get(currentWord) + word.substring(i, i + 2)).width > size.width - 10)) {
+			} else if ((i + 2 < word.length()) && (font.getStringSize(words.get(currentWord) + word.substring(i, i + 2)).width > size.width - padding.width)) {
 				
 				words.set(currentWord, words.get(currentWord) + "-");
 				currentWord++;
@@ -253,19 +254,24 @@ public class TextBox2 extends GUIMenu {
 
 		super.draw(g);
 
-		int i = 0;
+		int startingLine = 0;
 
-		if (currentLine > 0){
+		if (currentLine >= maxLine){
 
-			for (i = 0; i < currentLine; i++){
+			startingLine = currentLine - maxLine;
 
-				font.setColor(bestFontColor);
-				font.drawText(message.get(i), location.x + 8, location.y + 8 + (i * font.getOriginalSize().height), g);
-
-			}
 		}
-		font.setColor(bestFontColor);
-		font.drawText(message.get(currentLine).substring(0, currentLetter), location.x + 8, location.y + 8 + (i * font.getSize().height), g);
+
+		int i = 0;
+		font.setColor(Color.WHITE);
+
+		for (i = startingLine; i < currentLine; i++){
+
+			font.drawText(message.get(i), location.x + 8, location.y + 4 + ((i - startingLine) * font.getSize().height), g);
+
+		}
+
+		font.drawText(message.get(currentLine).substring(0, currentLetter), location.x + 8, location.y + 4 + ((i - startingLine) * font.getSize().height), g);
 	
 		if (reachedPause || (currentLetter >= message.get(currentLine).length() - 1 && currentLine >= message.size() - 1)){
 

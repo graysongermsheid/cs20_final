@@ -73,7 +73,7 @@ public abstract class Menu implements GameScreen {
 		ResourceManager.createSpriteSheet("composite_one.png", 16, 16);
 		ResourceManager.createSpriteSheet("composite_two.png", 16, 16);
 		ResourceManager.createSpriteSheet("composite_three.png", 16, 16);
-		ResourceManager.createSpriteSheet("composite_four.png", 16, 16);
+		ResourceManager.createSpriteSheet("composite_four.png", 8, 8);
 		ResourceManager.createSpriteSheet("textboxArrow.png", 11, 11);
 		ResourceManager.createSpriteSheet("textboxProceed.png", 96, 26);
 
