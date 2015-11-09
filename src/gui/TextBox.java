@@ -1,53 +1,65 @@
 package gui;
 
 import resources.ResourceManager;
-import resources.SpriteFont;
-import java.awt.Graphics2D;
 import resources.Animation;
 import input.InputHandler;
 import java.io.*;
+import java.awt.Graphics2D;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.util.ArrayList;
 
+public class TextBox2 extends GUIMenu {
 
-public class TextBox extends GUIMenu {
+	private String[] backlog;
+	private ArrayList<String> message;
+	private Dimension displayArea;
+	private Animation indicator;
 
-	private String[] lines;
+	private double timer;
+	private double delay;
+
 	private int currentLine;
 	private int currentLetter;
-	private Animation indicatior;
-	private float scrollSpeed;
-	private double timer;
-	private boolean reachedEndOfLine;
-	private boolean reachedEndOfMessage;
-	private boolean actionHeldThrough;
-	
-	public TextBox(String messageFile, int x, int y, int width, int height){
+	private int maxLine;
+	private Dimension padding;
 
-		super("composite_one.png", x, y, width, height);
+	private boolean reachedPause;
+	private boolean clearNext;
+	private boolean finishedMessage;
+	private boolean actionHeld;
+	private Color bestFontColor;
 
-		font = ResourceManager.getFont("font.png");
+	public TextBox2(String messageFile, int x, int y, int width, int height){
 
-		indicatior = new Animation(ResourceManager.getSpriteSheet("textboxProceed.png"), 1.0f);
+		super("composite_four.png", x, y, width, height);
+		this.font = ResourceManager.getFont("font.png");
+		padding = new Dimension(16, 8);
 
+		message = new ArrayList<String>();
 		loadMessage(messageFile);
 
-		scrollSpeed = 0.25f;
 		timer = 0d;
-		reachedEndOfLine = false;
-		actionHeldThrough = false;
-
+		delay = 0.10d;
+		
+		maxLine = ((size.height - padding.height) / font.getSize().height) - 1;
+		indicator = new Animation(ResourceManager.getSpriteSheet("textboxArrow.png"), 0.75f);
+		bestFontColor = background.getBestFontColor();
 	}
 
 	public void show(){
 
-		if (!isVisible()){
-			timer = 0d;
-			reachedEndOfLine = false;
-			reachedEndOfMessage = false;
-			setVisible(true);
+		if (isVisible()){return;}
+		
+		setVisible(true);
+		timer = 0d;
 
-			currentLetter = 0;
-			currentLine = 0;
-		}
+		reachedPause = false;
+		finishedMessage = false;
+		actionHeld = false;
+		clearNext = false;
+		currentLetter = 0;
+		currentLine = 0;
 
 	}
 
@@ -56,101 +68,183 @@ public class TextBox extends GUIMenu {
 		try {
 
 			BufferedReader reader = new BufferedReader(new FileReader("content/" + fileName));
+			String thisLine;
+			String whole = "";
 
-			lines = new String[1];
-			String line;
-			int i = 0;
+			while ((thisLine = reader.readLine()) != null){
 
-			while ((line = reader.readLine()) != null){
+				whole += " " + thisLine;
 
-				String[] x = new String[i + 1];
-
-				for (int j = 0; j < lines.length; j++){
-
-					x[j] = lines[j];
-
-				}
-
-				x[i] = line;
-
-				lines = x;
-
-				i++;
 			}
 
-		} catch (Exception e){
+			whole = whole.trim();
 
-			System.out.println("Could not read message file <" + fileName + ">");
+			message = splitMessage(whole);
+
+		} catch (FileNotFoundException e) {
+
+			System.out.println("ERROR: couldn't load file <" + fileName + ">");
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			System.out.println("ERROR: Unknown exception in TextBox2");
 
 		}
+
+	}
+
+	private ArrayList<String> splitMessage(String source){
+
+		String[] words = source.split(" ");
+		ArrayList<String> lines = new ArrayList<String>();
+		int index = 0;
+
+		for (int i = 0; i < words.length; i++){
+
+			if (lines.size() == 0 || lines.get(index) == null){
+
+				lines.add(index, words[i]);
+
+			} else if (!(font.getStringSize(lines.get(index) + " " + words[i]).width > size.width - padding.width)){
+
+				lines.set(index, lines.get(index) + " " + words[i]);
+
+			} else if (font.getStringSize(lines.get(index) + " " + words[i]).width > size.width - padding.width){
+
+				if (font.getStringSize(words[i]).width > size.width - padding.width){
+					
+					ArrayList<String> splitWords = splitWord(words[i]);
+					
+					for (String s : splitWords){
+						
+						index++;
+						lines.add(index, s);
+						
+					}
+					
+				} else {
+					
+					index++;
+					lines.add(index, words[i]);
+
+				}
+			}
+		}
+
+		return lines;
+	}
+	
+	private ArrayList<String> splitWord(String word){
+		
+		ArrayList<String> words = new ArrayList<String>();
+		int currentWord = 0;
+		
+		for (int i = 0; i < word.length(); i++){
+			
+			if (words.size() == 0 || words.get(currentWord) == null){
+				
+				words.add(currentWord, word.substring(i, i + 1));
+				
+			} else if ((i + 2 < word.length()) && (font.getStringSize(words.get(currentWord) + word.substring(i, i + 2)).width > size.width - padding.width)) {
+				
+				words.set(currentWord, words.get(currentWord) + "-");
+				currentWord++;
+				words.add(currentWord, word.substring(i, i + 1));
+				
+			} else {
+				
+				words.set(currentWord, words.get(currentWord) +  word.substring(i, i + 1));
+				
+			}
+		}
+		
+		return words;
 	}
 
 	@Override
 	public void update(double elapsedMilliseconds){
 
-		indicatior.update(elapsedMilliseconds);
+		if (!visible){ return; }
+
+		indicator.update(elapsedMilliseconds);
 
 		timer += elapsedMilliseconds;
 
-		if (timer >= 1000 * scrollSpeed){
-
+		if (timer >= 1000 * delay){
+			
 			timer = 0d;
 
-			if ((currentLetter < lines[currentLine].length()) && !reachedEndOfLine){
+			if (currentLetter < message.get(currentLine).length() && !reachedPause){
 
-				if (currentLetter < lines[currentLine].length() - 1){
+				if (currentLetter < message.get(currentLine).length() - 1){
 
-					String line = lines[currentLine];
-
-					currentLetter = (line.substring(currentLetter + 1, currentLetter + 2).equals(" ")) ? currentLetter + 2 : currentLetter + 1;
+					currentLetter = (message.get(currentLine).substring(currentLetter + 1, currentLetter + 2).equals(" ")) ? currentLetter + 2 : currentLetter + 1;
 
 				} else {
 
 					currentLetter++;
 
 				}
-
-			} else if (!reachedEndOfLine){
-
-				reachedEndOfLine = true;
-				indicatior.setFrame(0);
-
 			}
 
-		}
+			if (currentLine == message.size() - 1){
 
-		if ((currentLine == lines.length - 1) && reachedEndOfLine){
+				finishedMessage = true;
 
-			reachedEndOfMessage = true;
+			} else if (currentLetter == message.get(currentLine).length()){
 
+				currentLine++;
+				currentLetter = 0;
+
+			} 
+
+			if (currentLetter < message.get(currentLine).length()){
+
+				if (message.get(currentLine).substring(currentLetter, currentLetter + 1).equals("`")){
+
+					message.set(currentLine, message.get(currentLine).replace("`", ""));
+					reachedPause = true;
+
+				} else if (message.get(currentLine).substring(currentLetter, currentLetter + 1).equals("^")){
+
+					message.set(currentLine, message.get(currentLine).replace("^", ""));
+					clearNext = true;
+					reachedPause = true;
+
+				}
+			}
 		}
 	}
 
 	@Override
 	public void processInput(){
 
-		if (InputHandler.KEY_ACTION2_PRESSED && !reachedEndOfLine){
+		if (!visible){ return; }
 
-			scrollSpeed = 0.05f;
-			actionHeldThrough = true;
+		if (InputHandler.KEY_ACTION2_PRESSED){
 
-		} else if (InputHandler.KEY_ACTION2_PRESSED && reachedEndOfLine && !reachedEndOfMessage && !actionHeldThrough){
+			if (!actionHeld){
 
-			System.out.println("advance line");
+				actionHeld = true;
 
-			currentLine++;
-			currentLetter = 0;
-			reachedEndOfLine = false;
-			actionHeldThrough = true;
+				if (finishedMessage && currentLetter >= message.get(currentLine).length() - 1){
 
-		} else if (InputHandler.KEY_ACTION2_PRESSED && reachedEndOfMessage && !actionHeldThrough){
+					setVisible(false);
 
-			setVisible(false);
+				} else if (reachedPause){
 
-		} else if (!InputHandler.KEY_ACTION2_PRESSED){
+					reachedPause = false;
 
-			actionHeldThrough = false;
-			scrollSpeed = 0.25f;
+				}
+			}
+
+			delay = 0.025d;
+
+		} else {
+
+			actionHeld = false;
+			delay = 0.10d;
 
 		}
 	}
@@ -160,16 +254,28 @@ public class TextBox extends GUIMenu {
 
 		super.draw(g);
 
-		for (int i = 0; i < currentLetter; i++){
+		int startingLine = 0;
 
-			font.setColor(java.awt.Color.GREEN);
-			font.drawText(lines[currentLine].substring(0, currentLetter), location.x + 7, location.y + 5, g);
+		if (currentLine >= maxLine){
+
+			startingLine = currentLine - maxLine;
 
 		}
 
-		if (reachedEndOfLine){
+		int i = 0;
+		font.setColor(Color.WHITE);
 
-			g.drawImage(indicatior.currentFrame(), location.x + size.width - (indicatior.getSize().width + 4), location.y + size.height - (indicatior.getSize().height + 4), null);
+		for (i = startingLine; i < currentLine; i++){
+
+			font.drawText(message.get(i), location.x + 8, location.y + 4 + ((i - startingLine) * font.getSize().height), g);
+
+		}
+
+		font.drawText(message.get(currentLine).substring(0, currentLetter), location.x + 8, location.y + 4 + ((i - startingLine) * font.getSize().height), g);
+	
+		if (reachedPause || (currentLetter >= message.get(currentLine).length() - 1 && currentLine >= message.size() - 1)){
+
+			g.drawImage(indicator.currentFrame(), location.x + size.width - 16, location.y + size.height - 16, null);
 
 		}
 	}
