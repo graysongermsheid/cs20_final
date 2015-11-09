@@ -1,4 +1,4 @@
-package game.level;
+package game.world;
 
 import java.awt.Point;
 

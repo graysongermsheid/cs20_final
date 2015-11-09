@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.awt.Dimension;
 import resources.Animation;
 import resources.CompositeImage;
+import resources.ImageTools;
 import input.InputHandler;
 
 public class GUIButton extends GUIComponent{
@@ -19,9 +20,10 @@ public class GUIButton extends GUIComponent{
 
 		if (width != 192){
 
-			image.changeFrameImage(0, CompositeImage.resizeImage(image.getFrame(0), width, size.height));
-			image.changeFrameImage(1, CompositeImage.resizeImage(image.getFrame(1), width, size.height));
-			image.changeFrameImage(2, CompositeImage.resizeImage(image.getFrame(2), width, size.height));
+			//changed to imagetools
+			image.changeFrameImage(0, ImageTools.resizeImage(image.getFrame(0), width, size.height));
+			image.changeFrameImage(1, ImageTools.resizeImage(image.getFrame(1), width, size.height));
+			image.changeFrameImage(2, ImageTools.resizeImage(image.getFrame(2), width, size.height));
 
 			size = new Dimension(width, size.height);
 		}

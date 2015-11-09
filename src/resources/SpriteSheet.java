@@ -66,7 +66,7 @@ public class SpriteSheet {
 
 		try {
 
-			BufferedImage source = ImageIO.read(new File("content/" + fileName));
+			BufferedImage source = ImageIO.read(new File("src/content/" + fileName));
 
 			int sourceWidthFrames = source.getWidth() / frameSize.width;
 			int sourceHeightFrames = source.getHeight() / frameSize.height;

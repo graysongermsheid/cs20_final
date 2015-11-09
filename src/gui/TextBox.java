@@ -9,7 +9,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
-public class TextBox2 extends GUIMenu {
+public class TextBox extends GUIMenu {
 
 	private String[] backlog;
 	private ArrayList<String> message;
@@ -30,7 +30,7 @@ public class TextBox2 extends GUIMenu {
 	private boolean actionHeld;
 	private Color bestFontColor;
 
-	public TextBox2(String messageFile, int x, int y, int width, int height){
+	public TextBox(String messageFile, int x, int y, int width, int height){
 
 		super("composite_four.png", x, y, width, height);
 		this.font = ResourceManager.getFont("font.png");
@@ -64,7 +64,7 @@ public class TextBox2 extends GUIMenu {
 	}
 
 	private void loadMessage(String fileName){
-
+		
 		try {
 
 			BufferedReader reader = new BufferedReader(new FileReader("content/" + fileName));
@@ -83,12 +83,12 @@ public class TextBox2 extends GUIMenu {
 
 		} catch (FileNotFoundException e) {
 
-			System.out.println("ERROR: couldn't load file <" + fileName + ">");
+			System.out.println("ERROR: couldn't find file <" + fileName + ">");
 
 		} catch (Exception e) {
 
 			e.printStackTrace();
-			System.out.println("ERROR: Unknown exception in TextBox2");
+			System.out.println("ERROR: Unknown exception in TextBox");
 
 		}
 
