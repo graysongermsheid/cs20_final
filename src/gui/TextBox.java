@@ -162,7 +162,8 @@ public class TextBox extends GUIMenu {
 
 		for (int i = 0; i < currentLetter; i++){
 
-			font.drawColoredText(lines[currentLine].substring(0, currentLetter), location.x + 7, location.y + 5, java.awt.Color.GREEN, g);
+			font.setColor(java.awt.Color.GREEN);
+			font.drawText(lines[currentLine].substring(0, currentLetter), location.x + 7, location.y + 5, g);
 
 		}
 

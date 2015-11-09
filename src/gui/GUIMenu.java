@@ -69,7 +69,8 @@ public class GUIMenu extends GUIComponent {
 
 		if (title != null){
 
-			font.drawColoredText(title, location.x + 2, location.y + 2, java.awt.Color.BLUE, g);
+			font.setColor(java.awt.Color.WHITE);
+			font.drawText(title, location.x + 2, location.y + 2, g);
 
 		}
 

@@ -104,13 +104,13 @@ public class TextBox2 extends GUIMenu {
 
 				lines.add(index, words[i]);
 
-			} else if (!(font.widthOfString(lines.get(index) + " " + words[i]) > size.width - 10)){
+			} else if (!(font.getStringSize(lines.get(index) + " " + words[i]).width > size.width - 10)){
 
 				lines.set(index, lines.get(index) + " " + words[i]);
 
-			} else if (font.widthOfString(lines.get(index) + " " + words[i]) > size.width - 10){
+			} else if (font.getStringSize(lines.get(index) + " " + words[i]).width > size.width - 10){
 
-				if (font.widthOfString(words[i]) > size.width - 10){
+				if (font.getStringSize(words[i]).width > size.width - 10){
 					
 					ArrayList<String> splitWords = splitWord(words[i]);
 					
@@ -145,7 +145,7 @@ public class TextBox2 extends GUIMenu {
 				
 				words.add(currentWord, word.substring(i, i + 1));
 				
-			} else if (i + 2 < word.length() && font.widthOfString(words.get(currentWord) + word.substring(i, i + 2)) > size.width - 10) {
+			} else if ((i + 2 < word.length()) && (font.getStringSize(words.get(currentWord) + word.substring(i, i + 2)).width > size.width - 10)) {
 				
 				words.set(currentWord, words.get(currentWord) + "-");
 				currentWord++;
@@ -159,7 +159,6 @@ public class TextBox2 extends GUIMenu {
 		}
 		
 		return words;
-		
 	}
 
 	@Override
@@ -260,12 +259,13 @@ public class TextBox2 extends GUIMenu {
 
 			for (i = 0; i < currentLine; i++){
 
-				font.drawColoredText(message.get(i), location.x + 8, location.y + 8 + (i * font.getOriginalSize().height), bestFontColor, g);
+				font.setColor(bestFontColor);
+				font.drawText(message.get(i), location.x + 8, location.y + 8 + (i * font.getOriginalSize().height), g);
 
 			}
 		}
-
-		font.drawColoredText(message.get(currentLine).substring(0, currentLetter), location.x + 8, location.y + 8 + (i * font.getOriginalSize().height), bestFontColor, g);
+		font.setColor(bestFontColor);
+		font.drawText(message.get(currentLine).substring(0, currentLetter), location.x + 8, location.y + 8 + (i * font.getSize().height), g);
 	
 		if (reachedPause || (currentLetter >= message.get(currentLine).length() - 1 && currentLine >= message.size() - 1)){
 

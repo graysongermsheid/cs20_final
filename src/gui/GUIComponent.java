@@ -45,6 +45,12 @@ public abstract class GUIComponent {
 
 	}
 
+	public Dimension getSize(){
+
+		return size;
+
+	}
+
 	public boolean isInsideBoundaries(Point p){
 
 		if (p.x > location.x &&

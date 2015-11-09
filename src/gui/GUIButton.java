@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Dimension;
 import resources.Animation;
+import resources.CompositeImage;
 import input.InputHandler;
 
 public class GUIButton extends GUIComponent{
@@ -11,10 +12,19 @@ public class GUIButton extends GUIComponent{
 	protected Animation image;
 	protected ButtonState currentState;
 
-	public GUIButton(String spriteSheet, int x, int y, int width, int height){
+	public GUIButton(String spriteSheet, int x, int y, int width){
 
-		super(spriteSheet, x, y, width, height);
+		super(spriteSheet, x, y, 192, 32);
 		this.image = new Animation(source, 1.0f);
+
+		if (width != 192){
+
+			image.changeFrameImage(0, CompositeImage.resizeImage(image.getFrame(0), width, size.height));
+			image.changeFrameImage(1, CompositeImage.resizeImage(image.getFrame(1), width, size.height));
+			image.changeFrameImage(2, CompositeImage.resizeImage(image.getFrame(2), width, size.height));
+
+			size = new Dimension(width, size.height);
+		}
 
 		visible = true;
 		currentState = ButtonState.DEFAULT;

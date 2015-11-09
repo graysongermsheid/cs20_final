@@ -9,20 +9,38 @@ public class MainMenu extends Menu {
 
 	public MainMenu(){
 
-		super.loadResources();
+		loadResources();
 		this.font = ResourceManager.getFont("font_bold.png");
-
-		initialize();
 
 	}
 
-	private void initialize(){
+	@Override
+	public void loadResources(){
 
+		super.loadResources();
 		this.components = new GUIComponent[4];
 
-		components[0] = new LabeledButton("     Play Game    ", 196, 100);
-		components[1] = new LabeledButton("Options", 113, 142);
-		components[2] = new LabeledButton("Quit", 325, 142);
+		components[0] = new LabeledButton("     Play Game    ", 196, 100, 300){
+
+			@Override
+			public void performAction(){
+
+				game.ScreenManager.switchCurrentScreen(new GameMenu(), false);
+
+			}
+
+		};
+		components[1] = new LabeledButton("Options", 113, 142, 192);
+		components[2] = new LabeledButton("Quit", 325, 142, 192){
+
+			@Override
+			public void performAction(){
+
+				System.exit(0);
+
+			}
+
+		};
 		components[3] = new TextBox2("message.txt", 0, 0, 256, 256);
 
 	}
@@ -30,23 +48,13 @@ public class MainMenu extends Menu {
 	@Override
 	public void draw(Graphics2D g){
 
-		font.drawColoredText(getTitle(), (640 / 2) - (font.widthOfString(getTitle()) * 3) / 2, 32, Color.WHITE, 3, g);
+		font.setScaling(4);
+		font.setColor(Color.WHITE);
+		font.drawText(getTitle(), (640 / 2) - (font.getStringSize(getTitle()).width) / 2, 32, g);
+		font.setScaling(1);
 
 		super.draw(g);
 
-	}
-
-	@Override
-	public void update(double elapsedMilliseconds){
-
-		super.update(elapsedMilliseconds);
-
-	}
-
-	@Override
-	public void processInput(){
-
-		super.processInput();
 	}
 
 	@Override

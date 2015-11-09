@@ -121,6 +121,9 @@ public class CompositeImage extends SpriteSheet {
 		BufferedImage drawImage;
 		Graphics2D imageGraphics = combinedImage.createGraphics();
 
+		imageGraphics.setColor(new Color(1f, 1f, 1f, 0f));
+		imageGraphics.fillRect(0, 0, newSize.width, newSize.height);
+
 		for (int i = 0; i < framesHigh; i++){
 
 			for (int j = 0; j < framesWide; j++){

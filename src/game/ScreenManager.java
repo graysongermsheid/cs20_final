@@ -23,7 +23,7 @@ public class ScreenManager {
 
 		currentScreen = new MainMenu();
 		
-		displayFont = ResourceManager.getFont("font.png");
+		displayFont = ResourceManager.getFont("font_special.png");
 
 	}
 
@@ -61,7 +61,12 @@ public class ScreenManager {
 			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, 640, 480);
 
-			displayFont.drawColoredText("*", ((640 / 2) - ((displayFont.widthOfString("*") * 4) / 2)), ((480 / 2) - (displayFont.getOriginalSize().height / 2) - 32), Color.WHITE, 4, g);
+			displayFont.setScaling(4);
+			displayFont.setColor(Color.WHITE);
+
+			displayFont.drawText(screenTitle, (640 / 2) - (displayFont.getStringSize(screenTitle).width / 2), (480 / 2) - (displayFont.getStringSize(screenTitle).height / 2), g);
+
+			displayFont.setScaling(1);
 
 		} else {
 
@@ -71,14 +76,14 @@ public class ScreenManager {
 
 	}
 
-	public static void switchCurrentScreen(GameScreen newScreen){
+	public static void switchCurrentScreen(GameScreen newScreen, boolean doTransition){
 
 
 		
 		currentScreen.unloadResources();
 		currentScreen = newScreen;
 		screenTitle = newScreen.getTitle();
-		transition = true;
+		transition = doTransition;
 		newScreen = null;
 
 	}

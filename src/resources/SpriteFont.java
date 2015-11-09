@@ -8,174 +8,90 @@ import java.util.HashMap;
 import java.awt.Color;
 
 public class SpriteFont extends SpriteSheet{
-	
-	private HashMap<String, Integer> keyMap = new HashMap<String, Integer>();
+
+	private BufferedImage modifiedImages[];
+	private Color currentColor;
+	private int scaling;
 
 	public SpriteFont(SpriteSheet source){
 
 		super(source);
-		initialize();
-
+		currentColor = Color.WHITE;
+		trimLetters();
+		modifiedImages = images;
+		scaling = 1;
 	}
 
 	public void drawText(String text, int x, int y, Graphics2D g){
 
-		for (int i = 0; i < text.length(); i++){
-
-			g.drawImage(images[keyMap.get(text.substring(i, i + 1))], x, y, null);
-			x += images[keyMap.get(text.substring(i, i + 1))].getWidth();
-
-		}
-
-	}
-
-	public void drawColoredText(String text, int x, int y, Color c, Graphics2D g){
+		int lastX = x;
 
 		for (int i = 0; i < text.length(); i++){
 
-			g.drawImage(coloredImage(images[keyMap.get(text.substring(i, i + 1))], c), x, y, null);
-			x += images[keyMap.get(text.substring(i, i + 1))].getWidth();
+			int character;
+
+			try {
+
+				character = text.charAt(i);
+				g.drawImage(coloredImage(modifiedImages[character], currentColor), lastX, y, null);
+				lastX += modifiedImages[character].getWidth() + scaling;
+
+			} catch (Exception e) {}
+		}
+	}
+
+	public void setScaling(int scaling){
+
+		this.scaling = scaling;
+
+		if (scaling != 1) { 
+
+			createScaledImages(scaling); 
+
+		} else {
+
+			modifiedImages = images;
 
 		}
-
 	}
 
-	public void drawColoredText(String text, int x, int y, Color c, int size, Graphics2D g){
+	public void setColor(Color c){
 
-		for (int i = 0; i < text.length(); i++){
+		if (currentColor.getRGB() != c.getRGB()){
 
-			g.drawImage(resizedImage(coloredImage(images[keyMap.get(text.substring(i, i + 1))], c), size), x, y, null);
-			x += images[keyMap.get(text.substring(i, i + 1))].getWidth() * size;
+			currentColor = c;
 
 		}
-
 	}
 
-	private void initialize(){
+	private void createScaledImages(int scaling){
 
-		keyMap.put(" ", 0);
-		keyMap.put("!", 1);
-		keyMap.put("\"", 2);
-		keyMap.put("#", 3);
-		keyMap.put("$", 4);
-		keyMap.put("%", 5);
-		keyMap.put("&", 6);
-		keyMap.put("'", 7);
-		keyMap.put("(", 8);
-		keyMap.put(")", 9);
-		keyMap.put("*", 10);
-		keyMap.put("+", 11);
-		keyMap.put(",", 12);
-		keyMap.put("-", 13);
-		keyMap.put(".", 14);
-		keyMap.put("/", 15);
-		keyMap.put("0", 16);
-		keyMap.put("1", 17);
-		keyMap.put("2", 18);
-		keyMap.put("3", 19);
-		keyMap.put("4", 20);
-		keyMap.put("5", 21);
-		keyMap.put("6", 22);
-		keyMap.put("7", 23);
-		keyMap.put("8", 24);
-		keyMap.put("9", 25);
-		keyMap.put(":", 26);
-		keyMap.put(";", 27);
-		keyMap.put("<", 28);
-		keyMap.put("=", 29);
-		keyMap.put(">", 30);
-		keyMap.put("?", 31);
-		keyMap.put("@", 32);
-		keyMap.put("A", 33);
-		keyMap.put("B", 34);
-		keyMap.put("C", 35);
-		keyMap.put("D", 36);
-		keyMap.put("E", 37);
-		keyMap.put("F", 38);
-		keyMap.put("G", 39);
-		keyMap.put("H", 40);
-		keyMap.put("I", 41);
-		keyMap.put("J", 42);
-		keyMap.put("K", 43);
-		keyMap.put("L", 44);
-		keyMap.put("M", 45);
-		keyMap.put("N", 46);
-		keyMap.put("O", 47);
-		keyMap.put("P", 48);
-		keyMap.put("Q", 49);
-		keyMap.put("R", 50);
-		keyMap.put("S", 51);
-		keyMap.put("T", 52);
-		keyMap.put("U", 53);
-		keyMap.put("V", 54);
-		keyMap.put("W", 55);
-		keyMap.put("X", 56);
-		keyMap.put("Y", 57);
-		keyMap.put("Z", 58);
-		keyMap.put("[", 59);
-		keyMap.put("\\", 60);
-		keyMap.put("]", 61);
-		keyMap.put("^", 62);
-		keyMap.put("_", 63);
-		keyMap.put("`", 64);
-		keyMap.put("a", 65);
-		keyMap.put("b", 66);
-		keyMap.put("c", 67);
-		keyMap.put("d", 68);
-		keyMap.put("e", 69);
-		keyMap.put("f", 70);
-		keyMap.put("g", 71);
-		keyMap.put("h", 72);
-		keyMap.put("i", 73);
-		keyMap.put("j", 74);
-		keyMap.put("k", 75);
-		keyMap.put("l", 76);
-		keyMap.put("m", 77);
-		keyMap.put("n", 78);
-		keyMap.put("o", 79);
-		keyMap.put("p", 80);
-		keyMap.put("q", 81);
-		keyMap.put("r", 82);
-		keyMap.put("s", 83);
-		keyMap.put("t", 84);
-		keyMap.put("u", 85);
-		keyMap.put("v", 86);
-		keyMap.put("w", 87);
-		keyMap.put("x", 88);
-		keyMap.put("y", 89);
-		keyMap.put("z", 90);
-		keyMap.put("{", 91);
-		keyMap.put("|", 92);
-		keyMap.put("}", 93); 
-		keyMap.put("~", 94);
-		keyMap.put("	", 95);
+		BufferedImage[] newImages = new BufferedImage[images.length];
 
-		trimLetters();
-	}
+		for (int i = 0; i < images.length; i++){
 
-	private BufferedImage resizedImage(BufferedImage source, int size){
+			BufferedImage scaledImage = new BufferedImage(images[i].getWidth() * scaling, images[i].getHeight() * scaling, BufferedImage.TYPE_INT_ARGB);
 
-		if (size == 1) {return source;}
+			for (int y = 0; y < images[i].getHeight(); y++){
 
-		BufferedImage newImage = new BufferedImage(source.getWidth() * size, source.getHeight() * size, BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g = newImage.createGraphics();
+				for (int x = 0; x < images[i].getWidth(); x++){
 
-		for (int i = 0; i < source.getHeight(); i++){
+					for (int y2 = 0; y2 < scaling; y2++){
 
-			for (int j = 0; j < source.getWidth(); j++){
+						for (int x2 = 0; x2 < scaling; x2++){
 
-				for (int k = 0; k < size; k++){
+							scaledImage.setRGB(x * scaling + x2, y * scaling + y2, images[i].getRGB(x, y));
 
-					for (int e = 0; e < size; e++){
-
-						newImage.setRGB(j * size + k, i * size + e, source.getRGB(j, i));
-
+						}
 					}
-				}				
+				}
 			}
+
+			newImages[i] = scaledImage;
+
 		}
 
-		return newImage;
+		modifiedImages = newImages;
 	}
 
 	private BufferedImage coloredImage(BufferedImage s, Color c){
@@ -274,17 +190,25 @@ public class SpriteFont extends SpriteSheet{
 
 	}
 
-	public int widthOfString(String text){
+	public Dimension getSize(){
+
+		return new Dimension(modifiedImages[0].getWidth(), modifiedImages[0].getHeight());
+
+	}
+
+	public Dimension getStringSize(String text){
 
 		int length = 0;
 
 		for (int i = 0; i < text.length(); i++){
 
-			length += images[keyMap.get(text.substring(i, i + 1))].getWidth();
+			//System.out.println("array length: " + modifiedImages.length + " character: " + text.charAt(i) + " value: " + (int)text.charAt(i));
+
+			length += modifiedImages[text.charAt(i)].getWidth();
 
 		}
 
-		return length;
+		return new Dimension(length, modifiedImages[0].getHeight());
 	}
 }
 	

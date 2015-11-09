@@ -10,9 +10,9 @@ public class DynamicButton extends GUIButton {
 
 	private Point locationOffset;
 
-	public DynamicButton(String imageName, int x, int y, int width, int height){
+	public DynamicButton(String imageName, int x, int y, int width){
 
-		super(imageName, x, y, width, height);
+		super(imageName, x, y, width);
 
 	}
 

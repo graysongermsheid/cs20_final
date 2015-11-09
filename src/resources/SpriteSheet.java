@@ -14,6 +14,8 @@ public class SpriteSheet {
 	protected Dimension frameSize;
 	protected String name;
 
+	protected SpriteSheet(){}
+
 	public SpriteSheet(String fileName, int imageWidth, int imageHeight){
 
 		name = fileName;
@@ -27,6 +29,24 @@ public class SpriteSheet {
 		name = copyFrom.name;
 		frameSize = copyFrom.frameSize;
 		images = copyFrom.images.clone();
+
+	}
+
+	public SpriteSheet getRange(int start, int end){
+
+		SpriteSheet newSheet = new SpriteSheet();
+
+		newSheet.name = this.name;
+		newSheet.frameSize = this.frameSize;
+		newSheet.images = new BufferedImage[end - start + 1];
+
+		for (int i = start; i <= end; i++){
+
+			newSheet.images[i - start] = this.images[i];
+
+		}
+
+		return newSheet;
 
 	}
 
