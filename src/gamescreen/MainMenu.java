@@ -36,13 +36,13 @@ public class MainMenu extends Menu {
 			@Override
 			public void performAction(){
 
-				TextBox2 c = (TextBox2) components[3];
+				TextBox c = (TextBox) components[3];
 				c.show();
 
 			}
 
 		};
-		components[3] = new TextBox2("message.txt", 0, 0, 256, 48);
+		components[3] = new TextBox("message.txt", 0, 0, 256, 48);
 
 	}
 
@@ -51,7 +51,7 @@ public class MainMenu extends Menu {
 
 		font.setScaling(4);
 		font.setColor(Color.WHITE);
-		font.drawText(getTitle(), (640 / 2) - (font.getStringSize(getTitle()).width) / 2, 32, g);
+		font.drawShadowedText(getTitle(), (640 / 2) - (font.getStringSize(getTitle()).width) / 2, 32, g);
 		font.setScaling(1);
 
 		super.draw(g);

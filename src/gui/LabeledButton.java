@@ -16,7 +16,7 @@ public class LabeledButton extends GUIButton {
 	public LabeledButton(String text, int x, int y, int width){
 
 		super("button.png", x, y, width);
-		this.spritefont = ResourceManager.getFont("font.png");
+		this.spritefont = ResourceManager.getFont("font_bold.png");
 		this.text = text;
 		
 		int offsetX = location.x + (size.width / 2) - (spritefont.getStringSize(text).width / 2);

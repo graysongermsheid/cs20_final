@@ -39,6 +39,26 @@ public class SpriteFont extends SpriteSheet{
 			} catch (Exception e) {}
 		}
 	}
+	
+	public void drawShadowedText(String text, int x, int y, Graphics2D g){
+		
+		int lastX = x;
+
+		for (int i = 0; i < text.length(); i++){
+
+			int character;
+
+			try {
+
+				character = text.charAt(i);
+				BufferedImage shadow = coloredImage(modifiedImages[character], Color.DARK_GRAY);
+				g.drawImage(shadow, lastX + scaling, y + scaling, null);
+				g.drawImage(coloredImage(modifiedImages[character], currentColor), lastX, y, null);
+				lastX += modifiedImages[character].getWidth() + scaling;
+
+			} catch (Exception e) {}
+		}
+	}
 
 	public void setScaling(int scaling){
 
