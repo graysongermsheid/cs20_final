@@ -47,19 +47,19 @@ public class ImageTools {
 					
 				} else if (i == 0){
 					
-					currentImage = images[3];
+					currentImage = images[1];
 					
 				} else if (i == framesHigh - 1){
 					
-					currentImage = images[5];
+					currentImage = images[7];
 					
 				} else if (j == 0){
 					
-					currentImage = images[1];
+					currentImage = images[3];
 					
 				} else if (j == framesWide - 1){
 					
-					currentImage = images[7];
+					currentImage = images[5];
 					
 				} else {
 					

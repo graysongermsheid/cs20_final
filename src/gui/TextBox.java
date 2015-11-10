@@ -11,9 +11,7 @@ import java.util.ArrayList;
 
 public class TextBox extends GUIMenu {
 
-	private String[] backlog;
 	private ArrayList<String> message;
-	private Dimension displayArea;
 	private Animation indicator;
 
 	private double timer;
@@ -25,7 +23,6 @@ public class TextBox extends GUIMenu {
 	private Dimension padding;
 
 	private boolean reachedPause;
-	private boolean clearNext;
 	private boolean finishedMessage;
 	private boolean actionHeld;
 	private Color bestFontColor;
@@ -44,7 +41,7 @@ public class TextBox extends GUIMenu {
 		
 		maxLine = ((size.height - padding.height) / font.getSize().height) - 1;
 		indicator = new Animation(ResourceManager.getSpriteSheet("textboxArrow.png"), 0.75f);
-		bestFontColor = background.getBestFontColor();
+		bestFontColor = Color.WHITE;
 	}
 
 	public void show(){
@@ -57,7 +54,6 @@ public class TextBox extends GUIMenu {
 		reachedPause = false;
 		finishedMessage = false;
 		actionHeld = false;
-		clearNext = false;
 		currentLetter = 0;
 		currentLine = 0;
 
@@ -199,20 +195,12 @@ public class TextBox extends GUIMenu {
 
 			} 
 
-			if (currentLetter < message.get(currentLine).length()){
-
-				if (message.get(currentLine).substring(currentLetter, currentLetter + 1).equals("`")){
+			if (currentLetter < message.get(currentLine).length() &&
+				message.get(currentLine).substring(currentLetter, currentLetter + 1).equals("`")){
 
 					message.set(currentLine, message.get(currentLine).replace("`", ""));
 					reachedPause = true;
 
-				} else if (message.get(currentLine).substring(currentLetter, currentLetter + 1).equals("^")){
-
-					message.set(currentLine, message.get(currentLine).replace("^", ""));
-					clearNext = true;
-					reachedPause = true;
-
-				}
 			}
 		}
 	}

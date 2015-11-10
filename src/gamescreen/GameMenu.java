@@ -18,10 +18,7 @@ public class GameMenu extends Menu {
 	public void loadResources(){
 
 		super.loadResources();
-
-		ResourceManager.createSpriteSheet("Player.png", 32, 32);
-
-		this.components = new GUIComponent[4];
+		this.components = new GUIComponent[3];
 
 		components[0] = new LabeledButton("Quit!", 416, 416, 192){
 
@@ -32,40 +29,8 @@ public class GameMenu extends Menu {
 
 			}
 		};
-		components[1] = new LabeledButton("Runner", 113, 142, 192){
-
-			@Override
-			public void performAction(){
-
-				SelectionBox sb = (SelectionBox) components[3];
-				sb.show();
-
-			}
-		};
-		components[2] = new LabeledButton("Minesweeper", 325, 142, 192){
-
-			@Override
-			public void performAction(){
-
-				System.out.println("Launch a minesweeper clone");
-
-			}
-		};
-		components[3] = new SelectionBox(124, 368, 392, 48);
-
-		SelectionBox sb = (SelectionBox) components[3];
-
-		sb.addButton(new LabeledButton("Yea", 128, 372, 96){
-
-			@Override
-			public void performAction(){
-
-				System.out.println("YEA");
-
-			}
-
-		});
-		sb.addButton(new LabeledButton("Nah", 328, 372, 96));
+		components[1] = new LabeledButton("Runner", 113, 142, 192);
+		components[2] = new LabeledButton("Minesweeper", 325, 142, 192);
 
 	}
 

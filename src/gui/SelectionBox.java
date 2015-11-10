@@ -11,15 +11,14 @@ public class SelectionBox extends GUIComponent {
 	private ArrayList<GUIButton> buttons;
 	private boolean buttonHeld;
 	private double timer;
-	private CompositeImage image;
+	private BufferedImage image;
 	private BufferedImage selector;
 	private int currentSelection;
 
 	public SelectionBox(int x, int y, int width, int height){
 
 		super("composite_two.png", x, y, 16, 16);
-		buttons = new ArrayList<GUIButton>();
-		image = new CompositeImage(source, width, height);
+		image = ImageTools.combineImages(width, height, source.getAllImages());
 		currentSelection = 0;
 		timer = 0d;
 		buttonHeld = false;
@@ -91,7 +90,7 @@ public class SelectionBox extends GUIComponent {
 	@Override
 	public void draw(Graphics2D g){
 
-		g.drawImage(image.getDrawImage(), location.x, location.y, null);
+		g.drawImage(image, location.x, location.y, null);
 
 		for (GUIButton button : buttons){
 

@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 public class GUIMenu extends GUIComponent {
 	
 	protected Point locationRelativeToMouse;
-	protected CompositeImage background;
+	protected BufferedImage background;
 	protected boolean dragged;
 	protected GUIButton[] menuButtons;
 	protected SpriteFont font;
@@ -21,7 +21,9 @@ public class GUIMenu extends GUIComponent {
 
 		super(spriteSheet, x, y, width, height);
 
-		this.background = new CompositeImage(source, width, height);
+		SpriteSheet s = ResourceManager.getSpriteSheet(spriteSheet);
+
+		this.background = ImageTools.combineImages(width, height, s.getAllImages());
 		this.dragged = false;
 
 		this.font = ResourceManager.getFont("font_large.png");
@@ -31,8 +33,10 @@ public class GUIMenu extends GUIComponent {
 	public GUIMenu(String spriteSheet, int x, int y, int width, int height, String title){
 
 		super(spriteSheet, x, y, width, height);
+	
+		SpriteSheet s = ResourceManager.getSpriteSheet(spriteSheet);
 
-		this.background = new CompositeImage(source, width, height);
+		this.background = ImageTools.combineImages(width, height, s.getAllImages());
 		this.dragged = false;
 
 		this.font = ResourceManager.getFont("font_large.png");
@@ -65,7 +69,7 @@ public class GUIMenu extends GUIComponent {
 	@Override
 	public void draw(Graphics2D g){
 
-		g.drawImage(background.getDrawImage(), location.x, location.y, null);
+		g.drawImage(background, location.x, location.y, null);
 
 		if (title != null){
 

@@ -13,7 +13,6 @@ public class TextBox2 extends GUIMenu {
 
 	private String[] backlog;
 	private ArrayList<String> message;
-	private Dimension displayArea;
 	private Animation indicator;
 
 	private double timer;
@@ -44,7 +43,7 @@ public class TextBox2 extends GUIMenu {
 		
 		maxLine = ((size.height - padding.height) / font.getSize().height) - 1;
 		indicator = new Animation(ResourceManager.getSpriteSheet("textboxArrow.png"), 0.75f);
-		bestFontColor = background.getBestFontColor();
+		bestFontColor = Color.WHITE;
 	}
 
 	public void show(){
@@ -67,7 +66,7 @@ public class TextBox2 extends GUIMenu {
 
 		try {
 
-			BufferedReader reader = new BufferedReader(new FileReader("src/content/" + fileName));
+			BufferedReader reader = new BufferedReader(new FileReader("content/" + fileName));
 			String thisLine;
 			String whole = "";
 

@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Dimension;
 import resources.Animation;
-import resources.CompositeImage;
 import resources.ImageTools;
 import input.InputHandler;
 
