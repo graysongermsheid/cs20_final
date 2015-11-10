@@ -57,11 +57,11 @@ public class SpriteFont extends SpriteSheet{
 
 	public void setColor(Color c){
 
-		/*if (currentColor.getRGB() != c.getRGB()){
+		if (currentColor.getRGB() != c.getRGB()){
 
 			currentColor = c;
 
-		}*/
+		}
 	}
 
 	private void createScaledImages(int scaling){

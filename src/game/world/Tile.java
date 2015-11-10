@@ -37,24 +37,24 @@ public class Tile {
 
 		return collisionType;
 
-	}
-
-	public Point getLocation(){
-
-		return location;
-
-	}
-
-	public Point[] getSubLocation(int location){
-
-		Point[] points = new Point[2];
-
-		switch(location){
-
+	}                                           
+                                                
+	public Point getLocation(){                 
+                                                
+		return location;                        
+                                                
+	}                                           
+                                                
+	public Point[] getSubLocation(int hexBlock){
+                                                
+		Point[] points = new Point[2];          
+                                                
+		switch(hexBlock){                       
+                                                
 			case 0xf000:
 
 				points[0] = location;
-				points[1] = Point(location.x + (size.width / 2), location.y + (size.height / 2));
+				points[1] = new Point(location.x + (size.width / 2), location.y + (size.height / 2));
 				break;
 
 			case 0x0f00:
@@ -72,7 +72,7 @@ public class Tile {
 			case 0x000f:
 
 				points[0] = new Point(location.x + (size.width / 2), location.y + (size.height / 2));
-				points[1] = new Point(location.x + size.width, location.y + size.heigh);
+				points[1] = new Point(location.x + size.width, location.y + size.height);
 				break;
 
 		}

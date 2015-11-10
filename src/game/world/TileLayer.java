@@ -1,6 +1,7 @@
 package game.world;
 
 import java.util.ArrayList;
+import java.awt.Graphics2D;
 
 public class TileLayer {
 	
@@ -13,7 +14,7 @@ public class TileLayer {
 
 	}
 
-	public Tile[] getTiles{
+	public Tile[] getTiles(){
 
 		return tiles;
 
@@ -23,7 +24,7 @@ public class TileLayer {
 
 		for (Tile t : tiles){
 
-			t.update(elapsedMilliseconds);
+			//t.update(elapsedMilliseconds);
 
 		}
 	}
