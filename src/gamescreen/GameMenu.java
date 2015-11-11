@@ -3,6 +3,7 @@ package gamescreen;
 import java.awt.Graphics2D;
 import java.awt.Color;
 import gui.*;
+import game.ScreenManager;
 import resources.*;
 
 public class GameMenu extends Menu {
@@ -18,33 +19,18 @@ public class GameMenu extends Menu {
 	public void loadResources(){
 
 		super.loadResources();
-		this.components = new GUIComponent[3];
 
-		components[0] = new LabeledButton("Quit!", 416, 416, 192){
+		components = new GUIComponent[1];
+
+		components[0] = new LabeledButton("~", 0, 0, 32){
 
 			@Override
 			public void performAction(){
 
-				game.ScreenManager.switchCurrentScreen(new MainMenu(), false);
+				ScreenManager.switchCurrentScreen(new MainMenu(), true);
 
 			}
 		};
-		components[1] = new LabeledButton("Runner", 113, 142, 192);
-		components[2] = new LabeledButton("Minesweeper", 325, 142, 192);
-
-	}
-
-	@Override
-	public void update(double elapsedMilliseconds){
-
-		super.update(elapsedMilliseconds);
-
-	}
-
-	@Override
-	public void processInput(){
-
-		super.processInput();
 
 	}
 
@@ -52,8 +38,9 @@ public class GameMenu extends Menu {
 	public void draw(Graphics2D g){
 
 		font.setScaling(3);
-		font.setColor(Color.RED);
-		font.drawText(getTitle(), (640 / 2) - (font.getStringSize(getTitle()).width) / 2, 32, g);
+		font.setColor(Color.BLUE);
+		font.setBackgroundColor(Color.YELLOW);
+		font.drawShadowedText("AABBCCDDEEFF", (640 / 2) - (font.getStringSize(getTitle()).width) / 2, 32, g);
 		font.setScaling(1);
 		super.draw(g);
 
@@ -62,7 +49,7 @@ public class GameMenu extends Menu {
 	@Override
 	public String getTitle(){
 
-		return "Select a Game:";
+		return "~~~";
 
 	}
 }

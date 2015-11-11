@@ -3,6 +3,8 @@ package resources;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.Graphics2D;
 import java.util.HashMap;
 import java.awt.Color;
@@ -11,52 +13,108 @@ public class SpriteFont extends SpriteSheet{
 
 	private BufferedImage modifiedImages[];
 	private Color currentColor;
+	private Color backgroundColor;
 	private int scaling;
 
 	public SpriteFont(SpriteSheet source){
 
 		super(source);
-		currentColor = Color.WHITE;
-		trimLetters();
 		modifiedImages = images;
+		trimLetters();
+		backgroundColor = Color.BLACK;
+		currentColor = Color.WHITE;
 		scaling = 1;
 	}
 
 	public void drawText(String text, int x, int y, Graphics2D g){
 
 		int lastX = x;
+		int character;
+		BufferedImage drawImage = null;
 
 		for (int i = 0; i < text.length(); i++){
 
-			int character;
-
-			try {
+			do {
 
 				character = text.charAt(i);
-				g.drawImage(coloredImage(modifiedImages[character], currentColor), lastX, y, null);
-				lastX += modifiedImages[character].getWidth() + scaling;
 
-			} catch (Exception e) {}
+				if (character > 127 || character < 32){
+
+					i++;
+						character = -1;
+
+				}
+
+			} while (character == -1);
+
+			if (scaling != 1){
+
+				AffineTransform transform = new AffineTransform();
+				transform.scale(scaling, scaling);
+				AffineTransformOp scaleOp = new AffineTransformOp(transform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR); //that's a weird way to spell neighbour
+
+				try {
+
+					drawImage = new BufferedImage(modifiedImages[character].getWidth() * scaling, modifiedImages[character].getHeight() * scaling, BufferedImage.TYPE_INT_ARGB);
+					drawImage = scaleOp.filter(modifiedImages[character], drawImage);
+
+				} catch (Exception e){ System.out.println("Couldn't draw scaled image"); }
+
+			} else {
+
+				drawImage = modifiedImages[character];
+
+			}
+
+			g.drawImage(coloredImage(drawImage, currentColor), lastX, y, null);
+			lastX += drawImage.getWidth() + scaling;
+
 		}
 	}
-	
+
 	public void drawShadowedText(String text, int x, int y, Graphics2D g){
-		
+
 		int lastX = x;
+		int character;
+		BufferedImage drawImage = null;
 
 		for (int i = 0; i < text.length(); i++){
 
-			int character;
-
-			try {
+			do {
 
 				character = text.charAt(i);
-				BufferedImage shadow = coloredImage(modifiedImages[character], Color.DARK_GRAY);
-				g.drawImage(shadow, lastX + scaling, y + scaling, null);
-				g.drawImage(coloredImage(modifiedImages[character], currentColor), lastX, y, null);
-				lastX += modifiedImages[character].getWidth() + scaling;
 
-			} catch (Exception e) {}
+				if (character > 127 || character < 32){
+
+					i++;
+						character = -1;
+
+				}
+
+			} while (character == -1);
+
+			if (scaling != 1){
+
+				AffineTransform transform = new AffineTransform();
+				transform.scale(scaling, scaling);
+				AffineTransformOp scaleOp = new AffineTransformOp(transform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR); //that's a weird way to spell neighbour
+
+				try {
+
+					drawImage = new BufferedImage(modifiedImages[character].getWidth() * scaling, modifiedImages[character].getHeight() * scaling, BufferedImage.TYPE_INT_ARGB);
+					drawImage = scaleOp.filter(modifiedImages[character], drawImage);
+
+				} catch (Exception e){ System.out.println("Couldn't draw scaled image"); }
+
+			} else {
+
+				drawImage = modifiedImages[character];
+
+			}
+
+			g.drawImage(coloredImage(drawImage, currentColor, backgroundColor), lastX, y, null);
+			lastX += drawImage.getWidth() + scaling;
+
 		}
 	}
 
@@ -64,54 +122,18 @@ public class SpriteFont extends SpriteSheet{
 
 		this.scaling = scaling;
 
-		if (scaling != 1) { 
-
-			createScaledImages(scaling); 
-
-		} else {
-
-			modifiedImages = images;
-
-		}
 	}
 
 	public void setColor(Color c){
 
-		if (currentColor.getRGB() != c.getRGB()){
+		currentColor = c;
 
-			currentColor = c;
-
-		}
 	}
 
-	private void createScaledImages(int scaling){
+	public void setBackgroundColor(Color c){
 
-		BufferedImage[] newImages = new BufferedImage[images.length];
+		backgroundColor = c;
 
-		for (int i = 0; i < images.length; i++){
-
-			BufferedImage scaledImage = new BufferedImage(images[i].getWidth() * scaling, images[i].getHeight() * scaling, BufferedImage.TYPE_INT_ARGB);
-
-			for (int y = 0; y < images[i].getHeight(); y++){
-
-				for (int x = 0; x < images[i].getWidth(); x++){
-
-					for (int y2 = 0; y2 < scaling; y2++){
-
-						for (int x2 = 0; x2 < scaling; x2++){
-
-							scaledImage.setRGB(x * scaling + x2, y * scaling + y2, images[i].getRGB(x, y));
-
-						}
-					}
-				}
-			}
-
-			newImages[i] = scaledImage;
-
-		}
-
-		modifiedImages = newImages;
 	}
 
 	private BufferedImage coloredImage(BufferedImage s, Color c){
@@ -124,9 +146,11 @@ public class SpriteFont extends SpriteSheet{
 
 			for (int j = 0; j < s.getWidth(); j++){
 
-				int alpha = s.getRGB(j, i) & 0xff000000 >>> 24;
+				int color = s.getRGB(j, i);
+				int alpha = (color >>> 24) & 0xff;
+				int red = (color >> 16) & 0xff;
 
-				if (alpha == 255){
+				if (alpha == 255 && red == 255){
 
 					newImage.setRGB(j, i, c.getRGB());
 
@@ -134,6 +158,39 @@ public class SpriteFont extends SpriteSheet{
 
 					Color newColor = new Color(255, 255, 255, 0);
 					newImage.setRGB(j, i, newColor.getRGB());
+
+				}
+			}
+		}
+
+		return newImage;
+	}
+
+	private BufferedImage coloredImage(BufferedImage s, Color c, Color b){
+
+		BufferedImage newImage = new BufferedImage(s.getWidth(), s.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+		Graphics2D g = newImage.createGraphics();
+
+		for (int i = 0; i < s.getHeight(); i++){
+
+			for (int j = 0; j < s.getWidth(); j++){
+
+				int color = s.getRGB(j, i);
+				int a = (color >>> 24) & 0xff;
+				int r = (color >> 16) & 0xff;
+
+				if (a == 255 && r == 255){
+
+					newImage.setRGB(j, i, c.getRGB());
+
+				} else if (a == 255 && r == 0) {
+
+					newImage.setRGB(j, i, b.getRGB());
+
+				} else {
+
+					newImage.setRGB(j, i, 0);
 
 				}
 			}
@@ -222,9 +279,7 @@ public class SpriteFont extends SpriteSheet{
 
 		for (int i = 0; i < text.length(); i++){
 
-			//System.out.println("array length: " + modifiedImages.length + " character: " + text.charAt(i) + " value: " + (int)text.charAt(i));
-
-			length += modifiedImages[text.charAt(i)].getWidth();
+			length += modifiedImages[text.charAt(i)].getWidth() * scaling + scaling;
 
 		}
 
