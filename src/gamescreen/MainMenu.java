@@ -31,7 +31,7 @@ public class MainMenu extends Menu {
 
 			}
 		};
-		components[1] = new Button("POPUP!", 0, 42, 128, 32){
+		components[1] = new Button("POPUP!", 0, 42, 128, 128){
 
 			@Override
 			public void performAction(){
