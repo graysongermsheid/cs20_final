@@ -7,7 +7,7 @@ import input.InputHandler;
 import resources.ResourceManager;
 import resources.SpriteFont;
 
-public abstract class Menu implements GameScreen {
+public abstract class MenuScreen implements GameScreen {
 
 	protected GUIComponent[] components;
 	protected SpriteFont font;

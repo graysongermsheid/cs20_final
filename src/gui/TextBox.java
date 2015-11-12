@@ -32,6 +32,7 @@ public class TextBox extends GUIMenu {
 		super("composite_four.png", x, y, width, height);
 		this.font = ResourceManager.getFont("font.png");
 		padding = new Dimension(16, 8);
+		bestFontColor = Color.WHITE;
 
 		message = new ArrayList<String>();
 		loadMessage(messageFile);
@@ -41,7 +42,6 @@ public class TextBox extends GUIMenu {
 		
 		maxLine = ((size.height - padding.height) / font.getSize().height) - 1;
 		indicator = new Animation(ResourceManager.getSpriteSheet("textboxArrow.png"), 0.75f);
-		bestFontColor = Color.WHITE;
 	}
 
 	public void show(){
@@ -59,6 +59,8 @@ public class TextBox extends GUIMenu {
 
 	}
 
+	
+	//Load the message to display from the specified textfile
 	private void loadMessage(String fileName){
 		
 		try {
@@ -80,10 +82,16 @@ public class TextBox extends GUIMenu {
 		} catch (FileNotFoundException e) {
 
 			System.out.println("ERROR: couldn't find file <" + fileName + ">");
+			message.clear();
+			message = splitMessage("Could not find file: " + fileName);
+			bestFontColor = Color.RED;
 
 		} catch (Exception e) {
 
 			e.printStackTrace();
+			message.clear();
+			message = splitMessage("Unknown error loading message file: " + fileName);
+			bestFontColor = Color.RED;
 			System.out.println("ERROR: Unknown exception in TextBox");
 
 		}
@@ -251,7 +259,7 @@ public class TextBox extends GUIMenu {
 		}
 
 		int i = 0;
-		font.setColor(Color.WHITE);
+		font.setColor(bestFontColor);
 
 		for (i = startingLine; i < currentLine; i++){
 

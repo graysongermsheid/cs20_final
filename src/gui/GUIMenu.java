@@ -1,10 +1,8 @@
 package gui;
 
-import gamescreen.Menu;
 import resources.*;
 import input.InputHandler;
 import java.util.ArrayList;
-import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

@@ -6,7 +6,7 @@ import resources.*;
 import game.ScreenManager;
 import java.awt.Color;
 
-public class MainMenu extends Menu {
+public class MainMenu extends MenuScreen {
 
 	public MainMenu(){
 
@@ -36,14 +36,12 @@ public class MainMenu extends Menu {
 			@Override
 			public void performAction(){
 
-				components[2].setVisible(!components[2].isVisible());
+				TextBox t = (TextBox) components[2];
+				t.show();
 
 			}
 		};
-		components[2] = new GUIMenu("composite_four.png", 128, 128, 128, 128);
-
-		GUIMenu m = (GUIMenu) components[2];
-		m.addButton(new Button("~", 32, 32, 32, 32));
+		components[2] = new TextBox("message.txt", 128, 128, 128, 128);
 
 	}
 

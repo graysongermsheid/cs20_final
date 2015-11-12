@@ -6,7 +6,7 @@ import gui.*;
 import game.ScreenManager;
 import resources.*;
 
-public class GameMenu extends Menu {
+public class GameMenu extends MenuScreen {
 
 	public GameMenu(){
 
