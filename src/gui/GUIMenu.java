@@ -3,6 +3,7 @@ package gui;
 import gamescreen.Menu;
 import resources.*;
 import input.InputHandler;
+import java.util.ArrayList;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Graphics2D;
@@ -13,7 +14,7 @@ public class GUIMenu extends GUIComponent {
 	protected Point locationRelativeToMouse;
 	protected BufferedImage background;
 	protected boolean dragged;
-	protected GUIButton[] menuButtons;
+	protected ArrayList<Button> menuButtons;
 	protected SpriteFont font;
 	private String title;
 
@@ -28,6 +29,7 @@ public class GUIMenu extends GUIComponent {
 
 		this.font = ResourceManager.getFont("font_large.png");
 		this.title = null;
+		menuButtons = new ArrayList<Button>();
 	}
 
 	public GUIMenu(String spriteSheet, int x, int y, int width, int height, String title){
@@ -41,28 +43,13 @@ public class GUIMenu extends GUIComponent {
 
 		this.font = ResourceManager.getFont("font_large.png");
 		this.title = title;
+		menuButtons = new ArrayList<Button>();
 	}
 
-	public void addButton(GUIButton button){
+	public void addButton(Button button){
 
-		if (menuButtons == null){
-
-			menuButtons = new GUIButton[1];
-			menuButtons[0] = button;
-
-			return;
-
-		}
-
-		GUIButton[] newArray = new GUIButton[menuButtons.length + 1];
-
-		for (int i = 0; i < menuButtons.length; i++){
-
-			newArray[i] = menuButtons[i];
-
-		}
-
-		newArray[menuButtons.length] = button;
+		button.setLocation(button.getLocation().x + location.x, button.getLocation().y + location.y);
+		menuButtons.add(button);
 
 	}
 
@@ -80,36 +67,28 @@ public class GUIMenu extends GUIComponent {
 
 		if (menuButtons == null) {return;}
 
-		for (int i = 0; i < menuButtons.length; i++){
+		for (Button button : menuButtons){
 
-			DynamicButton b = (DynamicButton) menuButtons[i];
-			b.draw(g, location);
+			button.draw(g);
 
 		}
-
-	}
-
-	@Override
-	public void setVisible(boolean visibility){
-
-		super.setVisible(visibility);
 
 	}
 
 	@Override
 	public void update(double elapsedMilliseconds){
 
-		if ((this.location.x + this.size.width) > 640){
+		/*if ((this.location.x + this.size.width) > 640){
 
 			this.location.x -= (640 - this.location.x);
 
-		}
+		}*/
 
 		if (menuButtons == null) {return;}
 
-		for (int i = 0; i < menuButtons.length; i++){
+		for (Button button : menuButtons){
 
-			menuButtons[i].update(elapsedMilliseconds);
+			button.update(elapsedMilliseconds);
 
 		}
 	}
@@ -128,11 +107,18 @@ public class GUIMenu extends GUIComponent {
 
 		} else if (InputHandler.MOUSE_DRAGGED && dragged){
 
+			Point oldLocation = location;
 			Point newLocation =  new Point(InputHandler.MOUSE_LOCATION.x + locationRelativeToMouse.x,
 				InputHandler.MOUSE_LOCATION.y + locationRelativeToMouse.y);
 
 			
 			location = fixLocation(newLocation);
+
+			for (Button button : menuButtons){
+
+				button.setLocation(button.getLocation().x + (location.x - oldLocation.x), button.getLocation().y + (location.y - oldLocation.y));
+
+			}
 
 		} else {
 
@@ -143,10 +129,9 @@ public class GUIMenu extends GUIComponent {
 
 		if (menuButtons == null) {return;}
 
-		for (int i = 0; i < menuButtons.length; i++){
+		for (Button button : menuButtons){
 
-			DynamicButton b = (DynamicButton) menuButtons[i];
-			b.processInput(location);
+			button.processInput();
 
 		}
 

@@ -56,7 +56,7 @@ public class DynamicButton extends GUIButton {
 
 		Point correctedPoint = new Point(locationOffset.x + location.x, locationOffset.y + location.y);
 
-		g.drawImage(image.currentFrame(), correctedPoint.x, correctedPoint.y, null);
+		g.drawImage(image.getCurrentFrame(), correctedPoint.x, correctedPoint.y, null);
 
 	}
 }

@@ -23,7 +23,7 @@ public class ScreenManager {
 
 		currentScreen = new MainMenu();
 		
-		displayFont = ResourceManager.getFont("font_special.png");
+		displayFont = ResourceManager.getFont("font_bold.png");
 
 	}
 
@@ -58,13 +58,14 @@ public class ScreenManager {
 
 		if (transition){
 
-			g.setColor(Color.BLACK);
+			g.setColor(new Color(0x13, 0x1B, 0x1B));
 			g.fillRect(0, 0, 640, 480);
 
 			displayFont.setScaling(4);
-			displayFont.setColor(Color.WHITE);
+			displayFont.setColor(new Color(0xDC, 0x3D, 0x24));
+			displayFont.setBackgroundColor(new Color(0xE3, 0xAE, 0x57));
 
-			displayFont.drawText(screenTitle, (640 / 2) - (displayFont.getStringSize(screenTitle).width / 2), (480 / 2) - (displayFont.getStringSize(screenTitle).height / 2), g);
+			displayFont.drawShadowedText(screenTitle, (640 / 2) - (displayFont.getStringSize(screenTitle).width / 2), (480 / 2) - (displayFont.getStringSize(screenTitle).height / 2), g);
 
 			displayFont.setScaling(1);
 

@@ -3,6 +3,7 @@ package gui;
 import java.awt.Point;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import input.InputHandler;
 import resources.SpriteSheet;
 import resources.ResourceManager;
 
@@ -48,6 +49,20 @@ public abstract class GUIComponent {
 	public Dimension getSize(){
 
 		return size;
+
+	}
+
+	public boolean isClicked(){
+
+		if (isInsideBoundaries(InputHandler.MOUSE_LOCATION) &&
+			InputHandler.MOUSE_CLICKED &&
+			isInsideBoundaries(InputHandler.MOUSE_CLICK_LOCATION)){
+
+			return true;
+
+		}
+
+		return false;
 
 	}
 

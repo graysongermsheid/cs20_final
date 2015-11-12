@@ -11,7 +11,7 @@ public class MainMenu extends Menu {
 	public MainMenu(){
 
 		loadResources();
-		this.font = ResourceManager.getFont("font_bold.png");
+		this.font = ResourceManager.getFont("font_special.png");
 
 	}
 
@@ -20,9 +20,9 @@ public class MainMenu extends Menu {
 
 		super.loadResources();
 
-		components = new GUIComponent[1];
+		components = new GUIComponent[3];
 
-		components[0] = new LabeledButton("~", 0, 0, 32){
+		components[0] = new Button("Special Font", 0, 0, 128, 32){
 
 			@Override
 			public void performAction(){
@@ -31,6 +31,19 @@ public class MainMenu extends Menu {
 
 			}
 		};
+		components[1] = new Button("POPUP!", 0, 42, 128, 32){
+
+			@Override
+			public void performAction(){
+
+				components[2].setVisible(!components[2].isVisible());
+
+			}
+		};
+		components[2] = new GUIMenu("composite_four.png", 128, 128, 128, 128);
+
+		GUIMenu m = (GUIMenu) components[2];
+		m.addButton(new Button("~", 32, 32, 32, 32));
 
 	}
 
@@ -38,9 +51,9 @@ public class MainMenu extends Menu {
 	public void draw(Graphics2D g){
 
 		font.setScaling(3);
-		font.setColor(Color.BLUE);
-		font.setBackgroundColor(Color.YELLOW);
-		font.drawShadowedText("AABBCCDDEEFF", (640 / 2) - (font.getStringSize(getTitle()).width) / 2, 32, g);
+		font.setColor(Color.BLACK);
+		font.setBackgroundColor(Color.WHITE);
+		font.drawShadowedText(getTitle(), (640 / 2) - (font.getStringSize(getTitle()).width) / 2, 32, g);
 		font.setScaling(1);
 
 		super.draw(g);
@@ -50,7 +63,7 @@ public class MainMenu extends Menu {
 	@Override
 	public String getTitle(){
 
-		return "~~~";
+		return "Main Menu";
 
 	}
 }

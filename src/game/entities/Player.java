@@ -22,7 +22,7 @@ public final class Player extends LivingEntity {
 
 		if (location.equals(oldLocation)){
 
-			animations[currentAnimation.value()].setFrame(0);
+			animations[currentAnimation.value()].setCurrentFrame(0);
 
 		} else {
 
@@ -35,7 +35,7 @@ public final class Player extends LivingEntity {
 	@Override
 	public void draw(Graphics2D g){
 
-		g.drawImage(animations[currentAnimation.value()].currentFrame(), location.x, location.y, null);
+		g.drawImage(animations[currentAnimation.value()].getCurrentFrame(), location.x, location.y, null);
 
 	}
 

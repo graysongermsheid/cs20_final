@@ -11,7 +11,6 @@ import java.awt.Color;
 
 public class SpriteFont extends SpriteSheet{
 
-	private BufferedImage modifiedImages[];
 	private Color currentColor;
 	private Color backgroundColor;
 	private int scaling;
@@ -19,7 +18,6 @@ public class SpriteFont extends SpriteSheet{
 	public SpriteFont(SpriteSheet source){
 
 		super(source);
-		modifiedImages = images;
 		trimLetters();
 		backgroundColor = Color.BLACK;
 		currentColor = Color.WHITE;
@@ -55,14 +53,18 @@ public class SpriteFont extends SpriteSheet{
 
 				try {
 
-					drawImage = new BufferedImage(modifiedImages[character].getWidth() * scaling, modifiedImages[character].getHeight() * scaling, BufferedImage.TYPE_INT_ARGB);
-					drawImage = scaleOp.filter(modifiedImages[character], drawImage);
+					drawImage = new BufferedImage(images[character].getWidth() * scaling, images[character].getHeight() * scaling, BufferedImage.TYPE_INT_ARGB);
+					drawImage = scaleOp.filter(images[character], drawImage);
 
-				} catch (Exception e){ System.out.println("Couldn't draw scaled image"); }
+				} catch (Exception e){
+
+					System.out.println("ERROR: could not scale '" + (char)character + "'");
+
+				}
 
 			} else {
 
-				drawImage = modifiedImages[character];
+				drawImage = images[character];
 
 			}
 
@@ -101,14 +103,18 @@ public class SpriteFont extends SpriteSheet{
 
 				try {
 
-					drawImage = new BufferedImage(modifiedImages[character].getWidth() * scaling, modifiedImages[character].getHeight() * scaling, BufferedImage.TYPE_INT_ARGB);
-					drawImage = scaleOp.filter(modifiedImages[character], drawImage);
+					drawImage = new BufferedImage(images[character].getWidth() * scaling, images[character].getHeight() * scaling, BufferedImage.TYPE_INT_ARGB);
+					drawImage = scaleOp.filter(images[character], drawImage);
 
-				} catch (Exception e){ System.out.println("Couldn't draw scaled image"); }
+				} catch (Exception e){
+
+					System.out.println("ERROR: could not scale '" + (char)character + "'");
+
+				}
 
 			} else {
 
-				drawImage = modifiedImages[character];
+				drawImage = images[character];
 
 			}
 
@@ -215,9 +221,17 @@ public class SpriteFont extends SpriteSheet{
 
 			}
 
-			largestX = (largestX < (highestX - lowestX)) ? (highestX - lowestX) : largestX;
+			//largestX = (largestX < (highestX - lowestX)) ? (highestX - lowestX) : largestX;
 
-			try { images[i] = images[i].getSubimage(lowestX, 0, highestX, image.getHeight()); } catch (Exception e) {System.out.println("couldn't trim image " + i);}
+			try {
+
+				images[i] = images[i].getSubimage(lowestX, 0, highestX, image.getHeight());
+
+			} catch (Exception e){
+
+				System.out.println("couldn't trim image " + i);
+
+			}
 
 			i++;
 		}
@@ -229,7 +243,7 @@ public class SpriteFont extends SpriteSheet{
 
 			for (int y = 0; y < image.getHeight(); y++){
 
-				int alpha = (image.getRGB(x, y) & 0xff000000 >>> 24);
+				int alpha = (image.getRGB(x, y) >>> 24) & 0xff;
 
 				if (alpha != 0){
 
@@ -248,7 +262,7 @@ public class SpriteFont extends SpriteSheet{
 
 			for (int y = image.getHeight() - 1; y >= 0; y--){
 
-				int alpha = (image.getRGB(x, y) & 0xff000000 >>> 24);
+				int alpha = (image.getRGB(x, y) >>> 24) & 0xff;
 
 				if (alpha != 0){
 
@@ -269,7 +283,7 @@ public class SpriteFont extends SpriteSheet{
 
 	public Dimension getSize(){
 
-		return new Dimension(modifiedImages[0].getWidth(), modifiedImages[0].getHeight());
+		return new Dimension(images[0].getWidth(), images[0].getHeight());
 
 	}
 
@@ -279,11 +293,11 @@ public class SpriteFont extends SpriteSheet{
 
 		for (int i = 0; i < text.length(); i++){
 
-			length += modifiedImages[text.charAt(i)].getWidth() * scaling + scaling;
+			length += images[text.charAt(i)].getWidth() * scaling + scaling;
 
 		}
 
-		return new Dimension(length, modifiedImages[0].getHeight());
+		return new Dimension(length, images[0].getHeight());
 	}
 }
 	

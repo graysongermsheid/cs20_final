@@ -263,7 +263,7 @@ public class TextBox extends GUIMenu {
 	
 		if (reachedPause || (currentLetter >= message.get(currentLine).length() - 1 && currentLine >= message.size() - 1)){
 
-			g.drawImage(indicator.currentFrame(), location.x + size.width - 16, location.y + size.height - 16, null);
+			g.drawImage(indicator.getCurrentFrame(), location.x + size.width - 16, location.y + size.height - 16, null);
 
 		}
 	}

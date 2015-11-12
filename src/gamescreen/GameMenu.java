@@ -22,7 +22,7 @@ public class GameMenu extends Menu {
 
 		components = new GUIComponent[1];
 
-		components[0] = new LabeledButton("~", 0, 0, 32){
+		components[0] = new Button("Bold Font", 0, 0, 128, 32){
 
 			@Override
 			public void performAction(){
@@ -38,9 +38,9 @@ public class GameMenu extends Menu {
 	public void draw(Graphics2D g){
 
 		font.setScaling(3);
-		font.setColor(Color.BLUE);
+		font.setColor(Color.WHITE);
 		font.setBackgroundColor(Color.YELLOW);
-		font.drawShadowedText("AABBCCDDEEFF", (640 / 2) - (font.getStringSize(getTitle()).width) / 2, 32, g);
+		font.drawShadowedText(getTitle(), (640 / 2) - (font.getStringSize(getTitle()).width) / 2, 32, g);
 		font.setScaling(1);
 		super.draw(g);
 
@@ -49,7 +49,7 @@ public class GameMenu extends Menu {
 	@Override
 	public String getTitle(){
 
-		return "~~~";
+		return "Another Menu...";
 
 	}
 }

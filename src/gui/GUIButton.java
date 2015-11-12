@@ -20,9 +20,9 @@ public class GUIButton extends GUIComponent{
 		if (width != 192){
 
 			//changed to imagetools
-			image.changeFrameImage(0, ImageTools.resizeImage(image.getFrame(0), width, size.height));
-			image.changeFrameImage(1, ImageTools.resizeImage(image.getFrame(1), width, size.height));
-			image.changeFrameImage(2, ImageTools.resizeImage(image.getFrame(2), width, size.height));
+			image.setFrame(0, ImageTools.resizeImage(image.getFrame(0), width, size.height));
+			image.setFrame(1, ImageTools.resizeImage(image.getFrame(1), width, size.height));
+			image.setFrame(2, ImageTools.resizeImage(image.getFrame(2), width, size.height));
 
 			size = new Dimension(width, size.height);
 		}
@@ -34,7 +34,7 @@ public class GUIButton extends GUIComponent{
 	@Override
 	public void draw(Graphics2D g){
 	
-		g.drawImage(image.currentFrame(), location.x, location.y, null);
+		g.drawImage(image.getCurrentFrame(), location.x, location.y, null);
 
 	}
 
@@ -66,7 +66,7 @@ public class GUIButton extends GUIComponent{
 	@Override
 	public void update(double elapsedMilliseconds){
 
-		image.setFrame(currentState.value());
+		image.setCurrentFrame(currentState.value());
 
 	}
 

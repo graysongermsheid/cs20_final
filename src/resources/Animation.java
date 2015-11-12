@@ -1,47 +1,52 @@
 package resources;
 
 import java.awt.image.BufferedImage;
-import java.awt.Dimension;
 
 public class Animation extends SpriteSheet {
 	
-	protected float delay;
-	protected double timer;
-	protected int currentFrame;
+	private double delay;
+	private double timer;
+	private int minFrame;
+	private int maxFrame;
+	private int currentFrame;
+	private boolean paused;
 
-	public Animation(String fileName, int frameWidth, int frameHeight, float delay){
-
-		super(fileName, frameWidth, frameHeight);
-		this.delay = delay;
-		this.currentFrame = 0;
-		this.timer = 0d;
-
-	}
-
-	public Animation(SpriteSheet source, float delay){
+	public Animation(SpriteSheet source, double delay){
 
 		super(source);
+
 		this.delay = delay;
-		this.currentFrame = 0;
 		this.timer = 0d;
+		this.currentFrame = 0;
+
+		this.minFrame = 0;
+		this.maxFrame = images.length;
 
 	}
 
-	public BufferedImage currentFrame(){
+	public BufferedImage getCurrentFrame(){
 
-		return this.images[currentFrame];
-
-	}
-
-	public void advanceFrame(){
-
-		currentFrame = (currentFrame < images.length - 1) ? currentFrame + 1 : 0;
+		return images[currentFrame];
 
 	}
 
-	public void setFrame(int index){
+	public void setCurrentFrame(int frame){
 
-		currentFrame = index;
+		currentFrame = frame;
+		timer = 0d;
+
+	}
+
+	public void advanceCurrentFrame(){
+
+		currentFrame = (currentFrame == maxFrame - 1) ? 0 : currentFrame + 1;
+
+	}
+
+	public void setRange(int start, int end){
+
+		minFrame = start;
+		maxFrame = end;
 
 	}
 
@@ -51,28 +56,34 @@ public class Animation extends SpriteSheet {
 
 	}
 
-	public void changeFrameImage(int index, BufferedImage image){
+	public void setFrame(int index, BufferedImage replacement){
 
-		frameSize = new Dimension(image.getWidth(), image.getHeight());
-		images[index] = image;
+		images[index] = replacement;
 
 	}
 
-	public Dimension getSize(){
+	public void pause(){
 
-		return this.frameSize;
+		paused = true;
+
+	}
+
+	public void setPaused(boolean value){
+
+		paused = value;
 
 	}
 
 	public void update(double elapsedMilliseconds){
 
-		timer += elapsedMilliseconds;
+		if (!paused){
 
-		if (timer >= delay * 1000){
+			if (timer >= delay * 1000){
 
-			timer = 0d;
-			this.advanceFrame();
+				advanceCurrentFrame();
+				timer = 0d;
 
+			}
 		}
 	}
 }
