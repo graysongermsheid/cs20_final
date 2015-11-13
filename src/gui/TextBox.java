@@ -65,7 +65,7 @@ public class TextBox extends GUIMenu {
 		
 		try {
 
-			BufferedReader reader = new BufferedReader(new FileReader("content/" + fileName));
+			BufferedReader reader = new BufferedReader(new FileReader("src/content/" + fileName));
 			String thisLine;
 			String whole = "";
 
@@ -108,9 +108,11 @@ public class TextBox extends GUIMenu {
 
 			if (lines.size() == 0 || lines.get(index) == null){
 
-				lines.add(index, words[i]);
+				lines.add(index, "");
 
-			} else if (!(font.getStringSize(lines.get(index) + " " + words[i]).width > size.width - padding.width)){
+			}
+			
+			if (!(font.getStringSize(lines.get(index) + " " + words[i]).width > size.width - padding.width)){
 
 				lines.set(index, lines.get(index) + " " + words[i]);
 
@@ -119,6 +121,8 @@ public class TextBox extends GUIMenu {
 				if (font.getStringSize(words[i]).width > size.width - padding.width){
 					
 					ArrayList<String> splitWords = splitWord(words[i]);
+					
+					index--;
 					
 					for (String s : splitWords){
 						

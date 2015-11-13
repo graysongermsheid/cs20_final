@@ -39,7 +39,7 @@ public class SpriteFont extends SpriteSheet{
 				if (character > 127 || character < 32){
 
 					i++;
-						character = -1;
+					character = -1;
 
 				}
 
@@ -293,7 +293,13 @@ public class SpriteFont extends SpriteSheet{
 
 		for (int i = 0; i < text.length(); i++){
 
-			length += images[text.charAt(i)].getWidth() * scaling + scaling;
+			int character = text.charAt(i);
+			
+			if (character < 127){
+			
+				length += images[text.charAt(i)].getWidth() * scaling + scaling;
+				
+			}
 
 		}
 

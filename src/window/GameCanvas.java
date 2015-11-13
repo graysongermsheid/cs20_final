@@ -8,7 +8,7 @@ import java.awt.image.BufferStrategy;
 import input.InputHandler;
 import game.ScreenManager;
 
-public class GameCanvas extends Canvas{
+public class GameCanvas extends Canvas {
 	
 	private BufferStrategy buffer;
 	private ScreenManager screenManager;
