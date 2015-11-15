@@ -61,7 +61,7 @@ public class ScreenManager {
 			g.setColor(new Color(0x13, 0x1B, 0x1B));
 			g.fillRect(0, 0, 640, 480);
 
-			displayFont.setScaling(4);
+			displayFont.setScaling(2.5f);
 			displayFont.setColor(new Color(0xDC, 0x3D, 0x24));
 			displayFont.setBackgroundColor(new Color(0xE3, 0xAE, 0x57));
 

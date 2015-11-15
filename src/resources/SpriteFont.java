@@ -13,7 +13,7 @@ public class SpriteFont extends SpriteSheet{
 
 	private Color currentColor;
 	private Color backgroundColor;
-	private int scaling;
+	private float scaling;
 
 	public SpriteFont(SpriteSheet source){
 
@@ -21,7 +21,7 @@ public class SpriteFont extends SpriteSheet{
 		trimLetters();
 		backgroundColor = Color.BLACK;
 		currentColor = Color.WHITE;
-		scaling = 1;
+		scaling = 1f;
 	}
 
 	public void drawText(String text, int x, int y, Graphics2D g){
@@ -45,7 +45,7 @@ public class SpriteFont extends SpriteSheet{
 
 			} while (character == -1);
 
-			if (scaling != 1){
+			if (scaling != 1f){
 
 				AffineTransform transform = new AffineTransform();
 				transform.scale(scaling, scaling);
@@ -53,7 +53,7 @@ public class SpriteFont extends SpriteSheet{
 
 				try {
 
-					drawImage = new BufferedImage(images[character].getWidth() * scaling, images[character].getHeight() * scaling, BufferedImage.TYPE_INT_ARGB);
+					drawImage = new BufferedImage((int)(images[character].getWidth() * scaling), (int)(images[character].getHeight() * scaling), BufferedImage.TYPE_INT_ARGB);
 					drawImage = scaleOp.filter(images[character], drawImage);
 
 				} catch (Exception e){
@@ -69,7 +69,7 @@ public class SpriteFont extends SpriteSheet{
 			}
 
 			g.drawImage(coloredImage(drawImage, currentColor), lastX, y, null);
-			lastX += drawImage.getWidth() + scaling;
+			lastX += drawImage.getWidth() + (int)scaling;
 
 		}
 	}
@@ -95,7 +95,7 @@ public class SpriteFont extends SpriteSheet{
 
 			} while (character == -1);
 
-			if (scaling != 1){
+			if (scaling != 1f){
 
 				AffineTransform transform = new AffineTransform();
 				transform.scale(scaling, scaling);
@@ -103,7 +103,7 @@ public class SpriteFont extends SpriteSheet{
 
 				try {
 
-					drawImage = new BufferedImage(images[character].getWidth() * scaling, images[character].getHeight() * scaling, BufferedImage.TYPE_INT_ARGB);
+					drawImage = new BufferedImage((int)(images[character].getWidth() * scaling), (int)(images[character].getHeight() * scaling), BufferedImage.TYPE_INT_ARGB);
 					drawImage = scaleOp.filter(images[character], drawImage);
 
 				} catch (Exception e){
@@ -119,12 +119,12 @@ public class SpriteFont extends SpriteSheet{
 			}
 
 			g.drawImage(coloredImage(drawImage, currentColor, backgroundColor), lastX, y, null);
-			lastX += drawImage.getWidth() + scaling;
+			lastX += drawImage.getWidth() + (int)scaling;
 
 		}
 	}
 
-	public void setScaling(int scaling){
+	public void setScaling(float scaling){
 
 		this.scaling = scaling;
 
@@ -297,7 +297,7 @@ public class SpriteFont extends SpriteSheet{
 			
 			if (character < 127){
 			
-				length += images[text.charAt(i)].getWidth() * scaling + scaling;
+				length += (int)((images[text.charAt(i)].getWidth() * scaling) + scaling);
 				
 			}
 

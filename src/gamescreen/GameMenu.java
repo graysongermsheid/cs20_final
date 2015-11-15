@@ -37,11 +37,6 @@ public class GameMenu extends MenuScreen {
 	@Override
 	public void draw(Graphics2D g){
 
-		font.setScaling(3);
-		font.setColor(Color.WHITE);
-		font.setBackgroundColor(Color.YELLOW);
-		font.drawShadowedText(getTitle(), (640 / 2) - (font.getStringSize(getTitle()).width) / 2, 32, g);
-		font.setScaling(1);
 		super.draw(g);
 
 	}

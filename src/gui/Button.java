@@ -72,18 +72,18 @@ public class Button extends GUIComponent {
 
 			case DOWN:
 
-				font.setColor(Color.WHITE);
+				font.setColor(new Color(255, 255, 85));
 				break;
 
 			case MOUSED_OVER:
 
-				font.setColor(Color.BLUE);
+				font.setColor(new Color(255, 255, 85));
 				break;
 
 			case DEFAULT:
 			default:
 
-				font.setColor(Color.BLACK);
+				font.setColor(Color.WHITE);
 				break;
 		}
 

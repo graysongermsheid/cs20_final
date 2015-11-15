@@ -2,6 +2,7 @@ package gamescreen;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Color;
 import gui.GUIComponent;
 import input.InputHandler;
 import resources.ResourceManager;
@@ -41,6 +42,12 @@ public abstract class MenuScreen implements GameScreen {
 
 	@Override
 	public void draw(Graphics2D g){
+
+		font.setScaling(3.5f);
+		font.setColor(new Color(0xDC, 0x3D, 0x24));
+		font.setBackgroundColor(new Color(0xE3, 0xAE, 0x57));
+		font.drawShadowedText(getTitle(), 320 - (font.getStringSize(getTitle()).width / 2), 32, g);
+		font.setScaling(1);
 
 		if (components == null) {return;}
 
