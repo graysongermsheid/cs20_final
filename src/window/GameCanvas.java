@@ -116,7 +116,7 @@ public class GameCanvas extends Canvas {
 
 		Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
 
-		g.setColor(new Color(0, 0, 0));
+		g.setColor(new Color(1f, 1f, 1f));
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
 		screenManager.draw(g);
