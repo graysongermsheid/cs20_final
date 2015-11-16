@@ -3,9 +3,7 @@ package gamescreen;
 import java.awt.Graphics2D;
 import gui.*;
 import resources.*;
-import game.ScreenManager;
 import java.awt.Color;
-import java.awt.Polygon;
 
 public class MainMenu extends MenuScreen {
 
@@ -49,6 +47,7 @@ public class MainMenu extends MenuScreen {
 	@Override
 	public void draw(Graphics2D g){
 
+		g.drawImage(ResourceManager.getImage("title.png"), 0, 0, null);
 		super.draw(g);
 
 	}

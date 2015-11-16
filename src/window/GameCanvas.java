@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.image.BufferStrategy;
 import input.InputHandler;
-import game.ScreenManager;
+import gamescreen.ScreenManager;
 
 public class GameCanvas extends Canvas {
 	

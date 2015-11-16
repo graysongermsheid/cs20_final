@@ -1,4 +1,4 @@
-package game;
+package gamescreen;
 
 import gamescreen.*;
 import resources.*;
