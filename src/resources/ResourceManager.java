@@ -100,7 +100,7 @@ public class ResourceManager {
 
 		try {
 
-			BufferedImage newImage = ImageIO.read(new File("src/content/" + imageName));
+			BufferedImage newImage = ImageIO.read(new File("content/" + imageName));
 			imageMap.put(imageName, newImage);
 
 		} catch (Exception e){
