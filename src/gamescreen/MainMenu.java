@@ -10,7 +10,6 @@ public class MainMenu extends MenuScreen {
 	public MainMenu(){
 
 		loadResources();
-		this.font = ResourceManager.getFont("font_special.png");
 
 	}
 
@@ -21,16 +20,16 @@ public class MainMenu extends MenuScreen {
 
 		components = new GUIComponent[3];
 
-		components[0] = new Button("Special Font", 0, 0, 128, 32){
+		components[0] = new Button("~Click~", 276, 96, 128, 32){
 
 			@Override
 			public void performAction(){
 
-				ScreenManager.switchCurrentScreen(new GameMenu(), true);
+				ScreenManager.switchCurrentScreen(new Game(), true);
 
 			}
 		};
-		components[1] = new Button("POPUP!", 32, 42, 96, 32){
+		components[1] = new Button("TextBox", 276, 136, 128, 32){
 
 			@Override
 			public void performAction(){
@@ -40,14 +39,14 @@ public class MainMenu extends MenuScreen {
 
 			}
 		};
-		components[2] = new TextBox("message.txt", 128, 128, 128, 128);
+		components[2] = new TextBox("message.txt", 192, 176, 256, 48);
 
 	}
 
 	@Override
 	public void draw(Graphics2D g){
 
-		g.drawImage(ResourceManager.getImage("title.png"), 0, 0, null);
+		//g.drawImage(ResourceManager.getImage("title.png"), 0, 0, null);
 		super.draw(g);
 
 	}
