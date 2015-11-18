@@ -84,12 +84,8 @@ public abstract class MenuScreen implements GameScreen {
 		ResourceManager.createSpriteSheet("composite_four.png", 8, 8);
 		ResourceManager.createSpriteSheet("textboxArrow.png", 11, 11);
 		ResourceManager.createSpriteSheet("textboxProceed.png", 96, 26);
-		
-<<<<<<< HEAD
+
 		this.font = ResourceManager.getFont("font_bold.png");
-=======
-		this.font = new SpriteFont(ResourceManager.getSpriteSheet("font_bold.png"));
->>>>>>> ba89c99bbc895b3894da940b13b092a304bf7b28
 
 	}
 

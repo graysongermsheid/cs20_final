@@ -25,7 +25,7 @@ public class Room {
 
 				} else if (j == 0 && (i == y - 1)){
 
-					tiles[i][j] = new Tile(CollisionType.WALL, 0, "CORNER_WALL")
+					tiles[i][j] = new Tile(CollisionType.WALL, 0, "CORNER_WALL");
 
 				}
 			}

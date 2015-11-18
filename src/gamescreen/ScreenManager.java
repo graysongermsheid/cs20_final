@@ -41,11 +41,11 @@ public class ScreenManager {
 
 			timer += elapsedMilliseconds;
 
-			if (timer >= 3000d){
+			//if (timer >= 3000d){
 
 				transition = false;
 				timer = 0d;
-			}
+			//}
 
 		} else {
 
