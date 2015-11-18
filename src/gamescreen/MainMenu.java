@@ -20,7 +20,11 @@ public class MainMenu extends MenuScreen {
 
 		components = new GUIComponent[3];
 
+<<<<<<< HEAD
 		components[0] = new Button("~Click~", 256, 96, 128, 32){
+=======
+		components[0] = new Button("~Click~", 276, 96, 128, 32){
+>>>>>>> ba89c99bbc895b3894da940b13b092a304bf7b28
 
 			@Override
 			public void performAction(){
@@ -29,7 +33,11 @@ public class MainMenu extends MenuScreen {
 
 			}
 		};
+<<<<<<< HEAD
 		components[1] = new Button("TextBox", 256, 136, 128, 32){
+=======
+		components[1] = new Button("TextBox", 276, 136, 128, 32){
+>>>>>>> ba89c99bbc895b3894da940b13b092a304bf7b28
 
 			@Override
 			public void performAction(){
