@@ -14,9 +14,9 @@ public class WorldGenerator {
 		
 	}
 	
-	public BSPRect createSpaces(int meanRoomSize){
+	public BSPNode createSpaces(int meanRoomSize){
 
-		return new BSPRect(0, 0, 640, 480, 64);
+		return new BSPNode(0, 0, 64, 64);
 		
 	}
 }

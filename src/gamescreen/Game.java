@@ -3,12 +3,12 @@ package gamescreen;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import game.BSPRect;
+import game.BSPNode;
 import game.WorldGenerator;
 
 public class Game implements GameScreen {
 	
-	BSPRect b;
+	BSPNode b;
 	
 	public Game(){
 		
@@ -26,12 +26,7 @@ public class Game implements GameScreen {
 	@Override
 	public void draw(Graphics2D g){
 
-		for (BSPRect rect : b.subRectangles){
-		
-			g.setColor(Color.RED);
-			rect.draw(g);
-
-		}
+		b.draw(g);
 	}
 
 	@Override
