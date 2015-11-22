@@ -14,10 +14,10 @@ public class CaveGenerator {
 
 	}
 
-	public boolean[][] generateMap(int seed, int steps, float percentLand){
+	public boolean[][] generateMap(int steps, float percentLand){
 
 		boolean[][] world = new boolean[gridSize.height][gridSize.width];
-		r = new Random(seed);
+		r = new Random();
 
 		for (int i = 0; i < gridSize.height; i++){
 
@@ -52,6 +52,21 @@ public class CaveGenerator {
 
 		}
 
+		for (int i = 0; i < initialGrid.length; i++){
+
+			for (int j = 0; j < initialGrid[0].length; j++){
+
+				if (i == 0 ||
+					j == 0 ||
+					i == initialGrid.length - 1 ||
+					j == initialGrid[0].length - 1){
+
+					initialGrid[i][j] = true;
+
+				}
+			}
+		}
+
 		return initialGrid;
 
 	}
@@ -60,9 +75,9 @@ public class CaveGenerator {
 
 		int neighbours = 0;
 
-		for (int i = (y - 1); i < (y + 1); i++){
+		for (int i = (y - 1); i <= (y + 1); i++){
 
-			for (int j = (x - 1); j < (x + 1); j++){
+			for (int j = (x - 1); j <= (x + 1); j++){
 
 				try {
 
@@ -72,11 +87,11 @@ public class CaveGenerator {
 			}
 		}
 
-		if (neighbours == 3 && grid[y][x]){
+		if (neighbours == 4 && grid[y][x]){
 
 			return true;
 
-		} else if (neighbours >= 4){
+		} else if (neighbours > 4){
 
 			return true;
 

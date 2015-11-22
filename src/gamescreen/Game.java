@@ -27,17 +27,22 @@ public class Game implements GameScreen {
 	@Override
 	public void draw(Graphics2D g){
 
-		g.setColor(Color.YELLOW);
-
 		for (int i = 0; i < cave.length; i++){
 
 			for (int j = 0; j < cave[0].length; j++){
 
-				if (cave[i][j]){
+				if (!cave[i][j]){
 
-					g.fillRect(j * 8, i * 8, 8, 8);
+					g.setColor(new Color(0, 0, 0));
+
+				} else {
+
+					g.setColor(new Color(255, 128, 0));
 
 				}
+
+				g.fillRect(j * 3, i * 3, 3, 3);
+
 			}
 		}
 	}
@@ -59,8 +64,8 @@ public class Game implements GameScreen {
 	@Override
 	public void loadResources(){
 		
-		CaveGenerator c = new CaveGenerator(48, 48);
-		cave = c.generateMap(0, 1, 0.4f);
+		CaveGenerator c = new CaveGenerator(128, 128);
+		cave = c.generateMap(1, 0.4f);
 
 	}
 
