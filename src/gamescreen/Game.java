@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import game.BSPNode;
-import game.WorldGenerator;
 import game.CaveGenerator;
 
 public class Game implements GameScreen {
@@ -75,5 +74,4 @@ public class Game implements GameScreen {
 
 
 	}
-
 }

@@ -1,5 +1,11 @@
 package game;
 
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Graphics2D;
+import resources.SpriteSheet;
+import resources.ResourceManager;
+
 public class Tile {
 	
 	private String name;
