@@ -18,6 +18,7 @@ public class BSPNode {
 
 	private BSPNode right;
 	private BSPNode left;
+	private Rectangle room;
 
 	private Color c = Color.GREEN;
 
@@ -36,8 +37,23 @@ public class BSPNode {
 		if (width < 8 || height < 8){
 
 			tooSmall = true;
-			//c = Color.RED;
-
+			
+		}
+		
+		if (!tooSmall && (left == null && right == null)){
+			
+			int roomWidth;
+			int roomHeight;
+			
+			do {
+				
+				roomWidth = random.nextInt(width);
+				roomHeight = random.nextInt(height);
+			
+			} while (roomWidth < 6 || roomHeight < 6);
+			
+			room = new Rectangle(x + random.nextInt(width - roomWidth), y + random.nextInt(height - roomHeight), roomWidth, roomHeight);
+			
 		}
 	}
 
@@ -58,6 +74,13 @@ public class BSPNode {
 				
 			}
 			
+			if (room != null) {
+				
+				g.setColor(Color.WHITE);
+				g.drawRect(7 * room.x, 7 * room.y, 7 * room.width, 7 * room.height);
+			
+			}
+			
 			g.setColor(c);
 			g.draw(new Rectangle((int)(x * 7), (int)(y * 7), (int)(width * 7), (int)(height * 7)));
 			
@@ -76,7 +99,7 @@ public class BSPNode {
 			}
 		}
 	}
-
+	
 	private void split(){
 
 		if ((right != null || left != null)){
