@@ -36,7 +36,7 @@ public class BSPNode {
 		if (width < 8 || height < 8){
 
 			tooSmall = true;
-			c = Color.RED;
+			//c = Color.RED;
 
 		}
 	}
@@ -45,9 +45,22 @@ public class BSPNode {
 
 		if (right == null && left == null){
 
+			g.setColor((tooSmall) ? Color.BLACK : Color.DARK_GRAY);
+			for (int i = 0; i < height; i++){
+				
+				g.drawLine(7 * x, 7 * (i + y), 7 * (x + width), 7 * (i + y));
+				
+			}
+			
+			for (int j = 0; j < width; j++){
+				
+				g.drawLine(7 * (j + x), 7 * y, 7 * (j + x), 7 * (y + height));
+				
+			}
+			
 			g.setColor(c);
 			g.draw(new Rectangle((int)(x * 7), (int)(y * 7), (int)(width * 7), (int)(height * 7)));
-
+			
 		} else {
 
 			if (left != null){
@@ -73,11 +86,11 @@ public class BSPNode {
 
 		}
 
-		if ((height >= width * 1.25) && (height >= minY * 1.25)){
+		if ((height >= width * 1.25) && canSplit()){
 
 			direction = SplitDirection.VERTICAL;
 
-		} else if ((width >= height * 1.25) && (width >= minX * 1.25)){
+		} else if ((width >= height * 1.25) && canSplit()){
 
 			direction = SplitDirection.HORIZONTAL;
 
@@ -92,32 +105,19 @@ public class BSPNode {
 		}
 
 		int splitPoint;
-		int attempts = 0;
 
 		switch (direction){
 
 			case VERTICAL:
 
-				do {
-
-					splitPoint = random.nextInt(height / 2) + 10;
-					attempts++;
-
-				} while ((attempts < 40) && (y + splitPoint > height) || (height - splitPoint < 10));
-
+				splitPoint = random.nextInt(height / 2) + (height / 5);
 				left = new BSPNode(x, y, width, splitPoint);
 				right = new BSPNode(x, y + splitPoint, width, height - splitPoint);
 				break;
 
 			case HORIZONTAL:
 
-				do {
-
-					splitPoint = random.nextInt(width / 2) + 10;
-					attempts++;
-				
-				} while ((attempts < 40) && ((x + splitPoint > width) || (width - splitPoint) < 10));
-
+				splitPoint = random.nextInt(width / 2) + (width / 5);
 				left = new BSPNode(x, y, splitPoint, height);
 				right = new BSPNode(x + splitPoint, y, width - splitPoint, height);
 				break;
@@ -130,8 +130,8 @@ public class BSPNode {
 
 	private boolean canSplit(){
 
-		if (width > minX * 1.25 ||
-			height > minY * 1.25){
+		if (width > minX * 1.5 ||
+			height > minY * 1.5){
 
 			return true;
 
