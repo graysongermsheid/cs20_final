@@ -27,7 +27,7 @@ public class Game implements GameScreen {
 	@Override
 	public void draw(Graphics2D g){
 
-		/*for (int i = 0; i < cave.length; i++){
+		for (int i = 0; i < cave.length; i++){
 
 			for (int j = 0; j < cave[0].length; j++){
 
@@ -41,12 +41,12 @@ public class Game implements GameScreen {
 
 				}
 
-				g.fillRect(j * 3, i * 3, 3, 3);
+				g.fillRect(j * 10, i * 10, 10, 10);
 
 			}
-		}*/
+		}
 		
-		bsp.draw(g);
+		//bsp.draw(g);
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class Game implements GameScreen {
 	@Override
 	public void loadResources(){
 		
-		CaveGenerator c = new CaveGenerator(128, 128);
+		CaveGenerator c = new CaveGenerator(64, 48);
 		cave = c.generateMap(4, 0.5f);
 		
 		bsp = new BSPNode(0, 0, 64, 64);
