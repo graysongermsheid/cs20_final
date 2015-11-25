@@ -4,11 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import game.BSPNode;
+import game.CaveGenerator.CaveNode;
 import game.CaveGenerator;
 
 public class Game implements GameScreen {
 	
-	boolean[][] cave;
+	CaveNode[][] cave;
 	BSPNode bsp;
 	
 	public Game(){
@@ -31,13 +32,13 @@ public class Game implements GameScreen {
 
 			for (int j = 0; j < cave[0].length; j++){
 
-				if (!cave[i][j]){
+				if (cave[i][j].empty){
 
-					g.setColor(new Color(0, 0, 0));
+					g.setColor(new Color(cave[i][j].tag * 750000));
 
 				} else {
 
-					g.setColor(new Color(255, 128, 0));
+					g.setColor(new Color(10, 10, 10));
 
 				}
 
