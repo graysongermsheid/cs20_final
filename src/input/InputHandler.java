@@ -18,6 +18,8 @@ public class InputHandler extends MouseInputAdapter implements MouseWheelListene
 	public static boolean MOUSE_CLICKED;
 	public static boolean MOUSE_DRAGGED;
 
+	public static boolean ANY_KEY_PRESSED;
+
 	public static boolean KEY_UP_PRESSED;
 	public static boolean KEY_DOWN_PRESSED;
 	public static boolean KEY_LEFT_PRESSED;
@@ -35,6 +37,8 @@ public class InputHandler extends MouseInputAdapter implements MouseWheelListene
 
 	@Override
 	public void keyPressed(KeyEvent e){
+
+		ANY_KEY_PRESSED = true;
 
 		if (KeyBindings.UP.matches(e.getKeyCode())){
 
@@ -71,6 +75,8 @@ public class InputHandler extends MouseInputAdapter implements MouseWheelListene
 
 	@Override
 	public void keyReleased(KeyEvent e){
+
+		ANY_KEY_PRESSED = false;
 
 		if (KeyBindings.UP.matches(e.getKeyCode())){
 

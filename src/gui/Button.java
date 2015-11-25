@@ -50,6 +50,7 @@ public class Button extends GUIComponent {
 		if (isClicked() && currentState	!= ButtonState.DOWN){
 
 			currentState = ButtonState.DOWN;
+			ResourceManager.playSound("button.wav");
 			performAction();
 
 		} else if (isInsideBoundaries(InputHandler.MOUSE_LOCATION) && !isClicked()){
@@ -72,12 +73,12 @@ public class Button extends GUIComponent {
 
 			case DOWN:
 
-				font.setColor(new Color(255, 255, 85));
+				font.setColor(Color.WHITE);
 				break;
 
 			case MOUSED_OVER:
 
-				font.setColor(new Color(255, 255, 85));
+				font.setColor(Color.WHITE);
 				break;
 
 			case DEFAULT:

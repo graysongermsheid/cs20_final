@@ -51,7 +51,7 @@ public class GameCanvas extends Canvas {
 
 	private void loop(){
 
-		screenManager = new ScreenManager();
+		screenManager = new ScreenManager(640, 480);
 
 		final int UPDATES_SECOND = 30;
 		final int MAX_UPDATES_FRAME = 5;

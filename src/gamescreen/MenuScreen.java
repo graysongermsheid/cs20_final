@@ -85,6 +85,8 @@ public abstract class MenuScreen implements GameScreen {
 		ResourceManager.createSpriteSheet("textboxArrow.png", 11, 11);
 		ResourceManager.createSpriteSheet("textboxProceed.png", 96, 26);
 
+		ResourceManager.addSound("switch31.wav");
+
 		this.font = ResourceManager.getFont("font_bold.png");
 
 	}

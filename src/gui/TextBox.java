@@ -194,6 +194,7 @@ public class TextBox extends Menu {
 					currentLetter++;
 
 				}
+
 			}
 
 			if (currentLine == message.size() - 1){
