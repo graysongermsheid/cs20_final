@@ -60,7 +60,7 @@ public class Game implements GameScreen {
 	@Override
 	public String getTitle(){
 
-		return "Yo! The Game.";
+		return "~ Voyageur ~";
 
 	}
 

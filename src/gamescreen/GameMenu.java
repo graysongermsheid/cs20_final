@@ -26,7 +26,7 @@ public class GameMenu extends MenuScreen {
 			@Override
 			public void performAction(){
 
-				ScreenManager.switchCurrentScreen(new MainMenu(), true);
+				ScreenManager.switchCurrentScreen(new MainMenu());
 
 			}
 		};
