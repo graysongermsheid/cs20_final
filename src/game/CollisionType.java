@@ -4,8 +4,6 @@ public enum CollisionType {
 	
 	NONE,
 	SOLID,
-	LADDER,
-	ONE_WAY,
-	DESTRUCTIBLE;
+	DOOR;
 
 }

@@ -7,36 +7,40 @@ import java.awt.Dimension;
 
 public class CaveGenerator {
 	
-	private Random r;
-	private Dimension gridSize;
+	private static Random r;
 
-	public CaveGenerator(int width, int height){
+	public CaveGenerator(int seed){
 
-		gridSize = new Dimension(width, height);
+		r = new Random(seed);
 
 	}
 
-	public CaveNode[][] generateMap(int steps, float percentLand){
+	public CaveGenerator(){
 
-		boolean[][] world = new boolean[gridSize.height][gridSize.width];
-		Random r2 = new Random();
-		r = new Random(r2.nextInt(0x4000001D));
+		r = new Random();
 
-		for (int i = 0; i < gridSize.height; i++){
+	}
 
-			for (int j = 0; j < gridSize.width; j++){
+	public CaveNode[][] generateMap(int width, int height, int steps, float percentLand){
+
+		boolean[][] world = new boolean[height][width];
+
+		for (int i = 0; i < height; i++){
+
+			for (int j = 0; j < width; j++){
 
 				world[i][j] = !(r.nextFloat() < percentLand);
 
 			}
 		}
 
+		//Run run cells then transfer data to CaveNodes
 		world = run(steps, world);
-		CaveNode[][] cave = new CaveNode[gridSize.height][gridSize.width];
+		CaveNode[][] cave = new CaveNode[height][width];
 
-		for (int i = 0; i< gridSize.height; i++){
+		for (int i = 0; i< height; i++){
 
-			for (int j = 0; j < gridSize.width; j++){
+			for (int j = 0; j < width; j++){
 
 				cave[i][j] = new CaveNode();
 				cave[i][j].empty = world[i][j];
@@ -44,11 +48,12 @@ public class CaveGenerator {
 			}
 		}
 
+		//Use flood-fill to tag all separate cave systems
 		int currentTag = 0;
 
-		for (int i = 0; i< gridSize.height; i++){
+		for (int i = 0; i< height; i++){
 
-			for (int j = 0; j < gridSize.width; j++){
+			for (int j = 0; j < width; j++){
 
 				if (cave[i][j].empty && cave[i][j].tag == 0){
 
@@ -59,17 +64,19 @@ public class CaveGenerator {
 			}
 		}
 
+
+		//Get rid of all caves except largest
 		int mostTagged = getLargestArea(cave);
 		boolean[][] taggedWorld = world.clone();
 
-		for (int i = 0; i< gridSize.height; i++){
+		for (int i = 0; i< height; i++){
 
-			for (int j = 0; j < gridSize.width; j++){
+			for (int j = 0; j < width; j++){
 
 				if (cave[i][j].tag != mostTagged){
 
-					//cave[i][j].tag = 0;
-					//cave[i][j].empty = false;
+					cave[i][j].tag = 0;
+					cave[i][j].empty = false;
 
 				}
 			}

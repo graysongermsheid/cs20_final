@@ -1,33 +1,20 @@
 package game;
 
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Graphics2D;
-import resources.SpriteSheet;
-import resources.ResourceManager;
-
 public class Tile {
 	
 	private String name;
-	//collision type
-	private Dimension size;
-	private Point location;
 	private int spriteID;
-	private SpriteSheet sheet;
 
-	public Tile(String name, int x, int y, int width, int height, int spriteID, String spriteSheet){
+	public Tile(String name, int spriteID){
 
 		this.name = name;
-		this.location = new Point(x, y);
 		this.spriteID = spriteID;
-		this.sheet = ResourceManager.getSpriteSheet(spriteSheet);
-		this.size = new Dimension(width, height);
 
 	}
 
-	public void draw(Graphics2D g){
+	public int getSpriteID(){
 
-		g.drawImage(sheet.getImage(spriteID), location.x, location.y, null);
+		return spriteID;
 
 	}
 }
