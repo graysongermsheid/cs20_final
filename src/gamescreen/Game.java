@@ -74,14 +74,15 @@ public class Game implements GameScreen {
 	public void loadResources(){
 		
 		ResourceManager.createSpriteSheet("tileset.png", 16, 16);
+		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
 
-		CaveGenerator c = new CaveGenerator(0);
+		CaveGenerator c = new CaveGenerator();
 		cave = c.generateMap(64, 48, 4, 0.5f);
 		
 		bsp = new BSPNode(0, 0, 64, 64);
 		noise = SimplexNoise.generateArray(128, 96, 0, 0, 3);
 
-		l = LevelReader.loadLevel("butts");
+		l = c.createLevel(40, 30, 4, 0.5f);
 	}
 
 	@Override

@@ -9,13 +9,13 @@ public class LevelReader {
 	private static int currentTileX = 0;
 	private static boolean tileData = false;
 	private static boolean collisionData = false;
-
+	
 	public static Level loadLevel(String fileName){
 
 		try {
 
 			currentLevel = new Level();
-			BufferedReader br = new BufferedReader(new FileReader("content/levels/" + fileName + ".lvl"));
+			BufferedReader br = new BufferedReader(new FileReader("src/content/levels/" + fileName + ".lvl"));
 			String line = null;
 			
 			while ((line = br.readLine()) != null){

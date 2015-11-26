@@ -21,6 +21,78 @@ public class CaveGenerator {
 
 	}
 
+	public Level createLevel(int width, int height, int steps, float percentLand){
+		
+		CaveNode[][] cave = generateMap(width, height, steps, percentLand);
+		Level l = new Level();
+		
+		l.tileSet = "tileset.png";
+		l.name = "cave";
+		l.width = width;
+		l.height = height;
+		l.addLayer();
+		
+		for (int i = 0; i < height; i++){
+			
+			for (int j = 0; j < width; j++){
+				
+				Tile t = new Tile(0);
+				
+				if (!cave[i][j].empty){
+					
+					boolean[] b = getCardinalNeighbours(j, i, cave);
+					
+					if ((b[0] & b[1] & b[2] & b[3])){
+						
+						t = new Tile(50);
+						
+					} else if (!b[0] && b[1] && b[2] && !b[3]){ //|-
+						
+						t = new Tile(23);
+						
+					} else if (!b[0] && !b[1] && b[2] && b[3]){ //-|
+						
+						t = new Tile(24);
+						
+					} else if (b[0] && !b[1] && !b[2] && b[3]){ // _|
+						
+						t = new Tile(34);
+						
+					} else if (b[0] && b[1] && !b[2] && !b[3]){ // |_
+						
+						t = new Tile(33);
+						
+					} else if (!b[0] && b[1] && b[3]){ //_
+						
+						t = new Tile(50);
+						
+					} else if (!b[2] && b[1] && b[3]){//--
+						
+						t = new Tile(21);
+						
+					} else if (!b[3] && b[0] && b[2]){ //|x
+						
+						t = new Tile(32);
+						
+					} else if (!b[1] && b[0] && b[2]){
+						
+						t = new Tile(30);
+						
+					}
+					
+				} else {
+					
+					t = new Tile(19);
+					
+				}
+				
+				l.addTile(t, j, i);
+			}
+		}
+		
+		return l;
+	}
+	
 	public CaveNode[][] generateMap(int width, int height, int steps, float percentLand){
 
 		boolean[][] world = new boolean[height][width];
@@ -84,6 +156,20 @@ public class CaveGenerator {
 
 		return cave;
 
+	}
+	
+	private boolean[] getCardinalNeighbours(int x, int y, CaveNode[][] cave){
+		
+		int size = 4;
+		
+		boolean[] neighbours = new boolean[4];
+		
+		neighbours[0] = (y - 1 >= 0) ? !cave[y - 1][x].empty : true;
+		neighbours[1] = (x + 1 <= cave[0].length - 1) ? !cave[y][x + 1].empty : true;
+		neighbours[2] = (y + 1 <= cave.length - 1) ? !cave[y + 1][x].empty : true;
+		neighbours[3] = (x - 1 >= 0) ? !cave[y][x - 1].empty : true;
+		
+		return neighbours;
 	}
 
 	private boolean[][] run(int steps, boolean[][] initialGrid){
