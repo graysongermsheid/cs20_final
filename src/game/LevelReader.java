@@ -95,7 +95,7 @@ public class LevelReader {
 		} else {
 
 			String[] data = line.split("/");
-			return new Tile(data[0], Integer.parseInt(data[1]));
+			return new Tile(Integer.parseInt(data[0]));
 
 		}
 	}
@@ -127,8 +127,10 @@ public class LevelReader {
 
 			currentLevel.name = line.replace("name ", "");
 
+		} else if (line.matches("tileset \\S*")){
+
+			currentLevel.tileSet = line.replace("tileset ", "");
+
 		}
-
 	}
-
 }

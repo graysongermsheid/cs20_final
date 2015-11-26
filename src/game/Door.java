@@ -8,7 +8,7 @@ public class Door extends Tile {
 
 	public Door(int spriteID, int id, String connectedRoom, int partnerID){
 
-		super("door", spriteID);
+		super(spriteID);
 
 		this.id = id;
 		this.connectedRoom = connectedRoom;

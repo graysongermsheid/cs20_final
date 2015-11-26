@@ -7,7 +7,7 @@ public class Level {
 	protected int height;
 	protected int width;
 	protected String name;
-	private String tileSet;
+	protected String tileSet;
 
 	private TileLayer[] layers;
 	//private ArrayList<Entity> entities;
@@ -31,12 +31,6 @@ public class Level {
 
 		l2[layers.length] = new TileLayer((tileSet == null) ? "default.png" : tileSet, width, height);
 		layers = l2;
-
-	}
-
-	public void setTileSet(String file){
-
-		this.tileSet = file;
 
 	}
 
