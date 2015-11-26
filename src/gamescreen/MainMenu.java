@@ -3,7 +3,6 @@ package gamescreen;
 import java.awt.Graphics2D;
 import gui.*;
 import resources.*;
-import game.ScreenManager;
 import java.awt.Color;
 import java.awt.Polygon;
 
@@ -12,7 +11,6 @@ public class MainMenu extends MenuScreen {
 	public MainMenu(){
 
 		loadResources();
-		this.font = ResourceManager.getFont("font_2.png");
 
 	}
 
@@ -21,12 +19,28 @@ public class MainMenu extends MenuScreen {
 
 		super.loadResources();
 
-		components = new GUIComponent[4];
+		components = new GUIComponent[3];
 
-		components[0] = new Button("Play Game!", 320, 240);
-		components[1] = new Button("Options", 320, 280);
-		components[2] = new Button("High Scores", 320, 320);
-		components[3] = new Button("Quit", 320, 360);
+		components[0] = new Button("~Click~", 256, 96, 128, 32){
+
+			@Override
+			public void performAction(){
+
+				ScreenManager.switchCurrentScreen(new Game());
+
+			}
+		};
+		components[1] = new Button("TextBox", 256, 136, 128, 32){
+
+			@Override
+			public void performAction(){
+
+				TextBox t = (TextBox) components[2];
+				t.show();
+
+			}
+		};
+		components[2] = new TextBox("message.txt", 192, 176, 256, 48);
 
 	}
 

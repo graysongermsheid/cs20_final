@@ -70,6 +70,7 @@ public class Button extends GUIComponent {
 		if (isClicked() && currentState	!= ButtonState.DOWN){
 
 			currentState = ButtonState.DOWN;
+			ResourceManager.playSound("button.wav");
 			performAction();
 
 		} else if (isInsideBoundaries(InputHandler.MOUSE_LOCATION) && !isClicked()){
@@ -89,25 +90,7 @@ public class Button extends GUIComponent {
 		g.drawImage(states.getCurrentFrame(), location.x, location.y, null);
 		int additionalOffset = 0;
 
-		switch(currentState){
-
-			case DOWN:
-
-				font.setColor(Color.BLACK);
-				additionalOffset = 2;
-				break;
-
-			case MOUSED_OVER:
-
-				font.setColor(Color.BLACK);
-				break;
-
-			case DEFAULT:
-			default:
-
-				font.setColor(new Color(10, 235, 10));
-				break;
-		}
+		font.setColor(Color.WHITE);
 
 		font.drawText(text, location.x + textOffset.x, location.y + textOffset.y + additionalOffset, g);
 

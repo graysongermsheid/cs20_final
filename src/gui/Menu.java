@@ -7,7 +7,7 @@ import java.awt.Point;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public class GUIMenu extends GUIComponent {
+public class Menu extends GUIComponent {
 	
 	protected Point locationRelativeToMouse;
 	protected BufferedImage background;
@@ -16,7 +16,7 @@ public class GUIMenu extends GUIComponent {
 	protected SpriteFont font;
 	private String title;
 
-	public GUIMenu(String spriteSheet, int x, int y, int width, int height){
+	public Menu(String spriteSheet, int x, int y, int width, int height){
 
 		super(spriteSheet, x, y, width, height);
 
@@ -30,7 +30,7 @@ public class GUIMenu extends GUIComponent {
 		menuButtons = new ArrayList<Button>();
 	}
 
-	public GUIMenu(String spriteSheet, int x, int y, int width, int height, String title){
+	public Menu(String spriteSheet, int x, int y, int width, int height, String title){
 
 		super(spriteSheet, x, y, width, height);
 	

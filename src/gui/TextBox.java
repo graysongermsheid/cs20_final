@@ -9,7 +9,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
-public class TextBox extends GUIMenu {
+public class TextBox extends Menu {
 
 	private ArrayList<String> message;
 	private Animation indicator;
@@ -29,7 +29,7 @@ public class TextBox extends GUIMenu {
 
 	public TextBox(String messageFile, int x, int y, int width, int height){
 
-		super("composite_four.png", x, y, width, height);
+		super("composite_three.png", x, y, width, height);
 		this.font = ResourceManager.getFont("font.png");
 		padding = new Dimension(16, 8);
 		bestFontColor = Color.WHITE;
@@ -194,6 +194,7 @@ public class TextBox extends GUIMenu {
 					currentLetter++;
 
 				}
+
 			}
 
 			if (currentLine == message.size() - 1){

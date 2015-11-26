@@ -43,12 +43,12 @@ public abstract class MenuScreen implements GameScreen {
 	@Override
 	public void draw(Graphics2D g){
 
-		font.setScaling(0.5f);
+		font.setScaling(3.5f);
 		font.setColor(new Color(0xDC, 0x3D, 0x24));
 		font.setBackgroundColor(new Color(0xE3, 0xAE, 0x57));
 		font.drawShadowedText(getTitle(), 320 - (font.getStringSize(getTitle()).width / 2), 32, g);
 		font.setScaling(1);
-
+		
 		if (components == null) {return;}
 
 		for (int i = 0; i < components.length; i++){
@@ -84,6 +84,10 @@ public abstract class MenuScreen implements GameScreen {
 		ResourceManager.createSpriteSheet("composite_four.png", 8, 8);
 		ResourceManager.createSpriteSheet("textboxArrow.png", 11, 11);
 		ResourceManager.createSpriteSheet("textboxProceed.png", 96, 26);
+
+		ResourceManager.addSound("switch31.wav");
+
+		this.font = ResourceManager.getFont("font_bold.png");
 
 	}
 

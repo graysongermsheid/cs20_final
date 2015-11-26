@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.image.BufferStrategy;
 import input.InputHandler;
-import game.ScreenManager;
+import gamescreen.ScreenManager;
 
 public class GameCanvas extends Canvas {
 	
@@ -51,7 +51,7 @@ public class GameCanvas extends Canvas {
 
 	private void loop(){
 
-		screenManager = new ScreenManager();
+		screenManager = new ScreenManager(640, 480);
 
 		final int UPDATES_SECOND = 30;
 		final int MAX_UPDATES_FRAME = 5;
@@ -116,7 +116,7 @@ public class GameCanvas extends Canvas {
 
 		Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
 
-		g.setColor(new Color(1f, 1f, 1f));
+		g.setColor(new Color(0, 0, 0));
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
 		screenManager.draw(g);

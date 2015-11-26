@@ -3,7 +3,6 @@ package gamescreen;
 import java.awt.Graphics2D;
 import java.awt.Color;
 import gui.*;
-import game.ScreenManager;
 import resources.*;
 
 public class GameMenu extends MenuScreen {
@@ -27,7 +26,7 @@ public class GameMenu extends MenuScreen {
 			@Override
 			public void performAction(){
 
-				ScreenManager.switchCurrentScreen(new MainMenu(), true);
+				ScreenManager.switchCurrentScreen(new MainMenu());
 
 			}
 		};
