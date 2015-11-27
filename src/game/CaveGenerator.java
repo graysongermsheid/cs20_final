@@ -130,7 +130,7 @@ public class CaveGenerator {
 				if (cave[i][j].empty && cave[i][j].tag == 0){
 
 					currentTag++;
-					flood(j, i, currentTag, cave);
+					flood(j, i, currentTag, 0, 0, cave);
 
 				}
 			}
@@ -139,7 +139,6 @@ public class CaveGenerator {
 
 		//Get rid of all caves except largest
 		int mostTagged = getLargestArea(cave);
-		boolean[][] taggedWorld = world.clone();
 
 		for (int i = 0; i< height; i++){
 
@@ -148,7 +147,7 @@ public class CaveGenerator {
 				if (cave[i][j].tag != mostTagged){
 
 					cave[i][j].tag = 0;
-					cave[i][j].empty = false;
+					//cave[i][j].empty = false;
 
 				}
 			}
@@ -244,32 +243,24 @@ public class CaveGenerator {
 		}
 	}
 
-	private void flood(int x, int y, int tag, CaveNode[][] map){
+	private void flood(int x, int y, int newTag, int targetTag, int depth, CaveNode[][] map){
 
-		map[y][x].tag = tag;
-
-		if ((x > 0) && (map[y][x - 1].tag != tag) && (map[y][x - 1].empty)){
-
-			flood(x - 1, y, tag, map);
-
-		}
-
-		if ((y > 0) && (map[y - 1][x].tag != tag) && (map[y - 1][x].empty)){
-
-			flood(x, y - 1, tag, map);
-
-		}
-
-		if ((x < map[0].length - 1) && (map[y][x + 1].tag != tag) && (map[y][x + 1].empty)){
-
-			flood(x + 1, y, tag, map);
-
-		}
-
-		if ((y < map.length - 1) && (map[y + 1][x].tag != tag) && (map[y + 1][x].empty)){
-
-			flood(x, y + 1, tag, map);
-
+		if ((x < 0) && (y < 0) && (x >= map[0].length) && (y >= map.length)){
+			
+			return;
+			
+		} else if (!(map[y][x].tag == targetTag) || !(map[y][x].empty) || (depth > 52000)){
+			
+			return;
+			
+		} else {
+			
+			map[y][x].tag = newTag;
+			flood(x + 1, y, newTag, targetTag, depth + 1, map);
+			flood(x - 1, y, newTag, targetTag, depth + 1, map);
+			flood(x, y - 1, newTag, targetTag, depth + 1, map);
+			flood(x, y + 1, newTag, targetTag, depth + 1, map);
+			
 		}
 	}
 

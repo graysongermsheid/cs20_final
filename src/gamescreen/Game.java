@@ -34,7 +34,7 @@ public class Game implements GameScreen {
 	@Override
 	public void draw(Graphics2D g){
 
-		/*for (int i = 0; i < cave.length; i++){
+		for (int i = 0; i < cave.length; i++){
 
 			for (int j = 0; j < cave[0].length; j++){
 
@@ -48,12 +48,12 @@ public class Game implements GameScreen {
 
 				}
 
-				g.fillRect(j * 10, i * 10, 10, 10);
+				g.fillRect(j, i, 1, 1);
 
 			}
-		}*/
+		}
 
-		l.draw(g);
+		//l.draw(g);
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class Game implements GameScreen {
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
 
 		CaveGenerator c = new CaveGenerator();
-		cave = c.generateMap(64, 48, 4, 0.5f);
+		cave = c.generateMap(640, 480, 4, 0.5f);
 		
 		bsp = new BSPNode(0, 0, 64, 64);
 		noise = SimplexNoise.generateArray(128, 96, 0, 0, 3);
