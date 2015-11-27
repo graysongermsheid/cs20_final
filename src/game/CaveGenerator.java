@@ -160,14 +160,16 @@ public class CaveGenerator {
 	
 	private boolean[] getCardinalNeighbours(int x, int y, CaveNode[][] cave){
 		
-		int size = 4;
-		
-		boolean[] neighbours = new boolean[4];
+		boolean[] neighbours = new boolean[8];
 		
 		neighbours[0] = (y - 1 >= 0) ? !cave[y - 1][x].empty : true;
 		neighbours[1] = (x + 1 <= cave[0].length - 1) ? !cave[y][x + 1].empty : true;
 		neighbours[2] = (y + 1 <= cave.length - 1) ? !cave[y + 1][x].empty : true;
 		neighbours[3] = (x - 1 >= 0) ? !cave[y][x - 1].empty : true;
+		neighbours[4] = (y - 1 >= 0 && x + 1 <= cave[0].length - 1) ? !cave[y - 1][x + 1];
+		neighbours[5] = (y + 1 <= cave.length - 1 && x + 1 <= cave[0].length - 1) ? !cave[y + 1][x + 1];
+		neighbours[6] = (y + 1 <= cave.length - 1 && x - 1 >= 0) ? !cave[y + 1][x - 1];
+		neighbours[7] = (y - 1 >= 0 && x - 1 >= 0) ? !cave[y - 1][x - 1];
 		
 		return neighbours;
 	}
