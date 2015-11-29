@@ -21,7 +21,7 @@ public class Window extends JFrame{
 
 		GameCanvas canvas = new GameCanvas();
 		this.add(canvas);
-		canvas.setPreferredSize(new Dimension(1280, 720));
+		canvas.setPreferredSize(new Dimension(1024, 640));
 		this.setResizable(false);
 		this.pack();
 		this.setLocationRelativeTo(null);

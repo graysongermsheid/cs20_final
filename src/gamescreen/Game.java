@@ -18,6 +18,7 @@ public class Game implements GameScreen {
 	
 	Random r;
 	double[][] world;
+	int[][] tileWorld;
 	boolean spaceHeld = false;
 	WorldGenerator w;
 
@@ -61,9 +62,44 @@ public class Game implements GameScreen {
 
 			for (int j = 0; j < world[0].length; j++){
 				
-				int rgb = (int) Math.pow(world[i][j], -1);
-				g.setColor(new Color(rgb, rgb, rgb));
+				switch (tileWorld[i][j]){
+
+					case -1:
+						g.setColor(Color.BLUE);
+						break;
+
+					case 0:
+						g.setColor(new Color(0xE8, 0xD8, 0x83));
+						break;
+
+					case 1:
+						g.setColor(new Color(0, 104, 10));
+						break;
+
+					case 2:
+						g.setColor(new Color(119, 119, 119));
+						break;
+
+					case 3:
+						g.setColor(new Color(153, 153, 153));
+						break;
+
+					case 4:
+						g.setColor(new Color(200, 200, 200));
+						break;
+				}
+
 				g.fillRect(j, i, 1, 1);
+			}
+		}
+
+		g.setColor(new Color(255, 0, 255));
+		for (int i = 0; i < 10; i++){
+
+			for (int j = 0; j < 16; j++){
+
+				g.drawRect(j * 64, i * 40, 64, 40);
+
 			}
 		}
 	}
@@ -73,7 +109,8 @@ public class Game implements GameScreen {
 
 		if (InputHandler.KEY_ACTION2_PRESSED && !spaceHeld){
 
-			world = w.generateWorld(1280, 720, 16, 0.6f);
+			world = w.generateWorld(1024, 640, 16, 0.6f);
+			tileWorld = w.makeTileable(world);
 			spaceHeld = true;
 
 		} else if (!InputHandler.KEY_ACTION2_PRESSED){
@@ -97,7 +134,8 @@ public class Game implements GameScreen {
 		ResourceManager.createSpriteSheet("blowhard_forest_dark.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
 		w = new WorldGenerator();
-		world = w.generateWorld(1280, 720, 16, 0.4f);
+		world = w.generateWorld(1024, 640, 16, 0.4f);
+		tileWorld = w.makeTileable(world);
 	}
 
 	@Override

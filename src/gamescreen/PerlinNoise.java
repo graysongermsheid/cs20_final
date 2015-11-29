@@ -82,7 +82,9 @@ public class PerlinNoise {
 		double X0 = interpolate(n00, n10, fadeX);
 		double X1 = interpolate(n01, n11, fadeX);
 
-		return interpolate(X0, X1, fadeY);
+		double z = interpolate(X0, X1, fadeY);
+
+		return z;
 	}
 
 	private double fade(double t){
