@@ -15,7 +15,7 @@ public class ScreenManager {
 	public ScreenManager(int width, int height){
 
 		screenSize = new Dimension(width, height);
-		currentScreen = new TitleCard();
+		currentScreen = new Game();
 
 	}
 
