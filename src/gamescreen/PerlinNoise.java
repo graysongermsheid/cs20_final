@@ -5,7 +5,7 @@ import java.util.Random;
 public class PerlinNoise {
 	
 	private int[] permutations;
-	private final double[][] gradients = {{-1.0, 1.0}, {1.0, 1.0}, {1.0, -1.0}, {-1.0, -1.0}};
+	private final double[][] gradients = {{1.0, 1.0}, {-1.0, 1.0}, {1.0, -1.0}, {-1.0, -1.0}};
 
 	public PerlinNoise(){
 
@@ -60,8 +60,8 @@ public class PerlinNoise {
 		int Y = fastFloor(y);
 
 		//get relative position;
-		x -= X;
-		y -= Y;
+		x = x - X;
+		y = y - Y;
 
 		X = X & 255;
 		Y = Y & 255;
@@ -79,10 +79,10 @@ public class PerlinNoise {
 		double fadeX = fade(x);
 		double fadeY = fade(y);
 
-		double a = interpolate(n00, n01, fadeX);
-		double b = interpolate(n10, n11, fadeX);
+		double X0 = interpolate(n00, n10, fadeX);
+		double X1 = interpolate(n01, n11, fadeX);
 
-		return 70 * interpolate(a, b, fadeY);
+		return interpolate(X0, X1, fadeY);
 	}
 
 	private double fade(double t){
