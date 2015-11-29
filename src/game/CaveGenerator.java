@@ -26,7 +26,7 @@ public class CaveGenerator {
 		CaveNode[][] cave = generateMap(width, height, steps, percentLand);
 		Level l = new Level();
 		
-		l.tileSet = "tileset.png";
+		l.tileSet = "blowhard_forest_dark.png";
 		l.name = "cave";
 		l.width = width;
 		l.height = height;
@@ -40,49 +40,157 @@ public class CaveGenerator {
 				
 				if (!cave[i][j].empty){
 					
-					boolean[] b = getCardinalNeighbours(j, i, cave);
-					
-					if ((b[0] & b[1] & b[2] & b[3])){
-						
-						t = new Tile(50);
-						
-					} else if (!b[0] && b[1] && b[2] && !b[3]){ //|-
-						
-						t = new Tile(23);
-						
-					} else if (!b[0] && !b[1] && b[2] && b[3]){ //-|
-						
-						t = new Tile(24);
-						
-					} else if (b[0] && !b[1] && !b[2] && b[3]){ // _|
-						
-						t = new Tile(34);
-						
-					} else if (b[0] && b[1] && !b[2] && !b[3]){ // |_
-						
-						t = new Tile(33);
-						
-					} else if (!b[0] && b[1] && b[3]){ //_
-						
-						t = new Tile(50);
-						
-					} else if (!b[2] && b[1] && b[3]){//--
-						
-						t = new Tile(21);
-						
-					} else if (!b[3] && b[0] && b[2]){ //|x
-						
-						t = new Tile(32);
-						
-					} else if (!b[1] && b[0] && b[2]){
-						
-						t = new Tile(30);
-						
+					t = new Tile(r.nextInt(1) == 0 ? 21 : 38);
+
+					boolean[] n = getCardinalNeighbours(j, i, cave);
+
+					if (!n[0] && n[1] && !n[2] && n[3]){
+
+						t = new Tile(54);
+
 					}
-					
+
+					if (n[0] && !n[1] && n[2] && !n[3]){
+
+						t = new Tile(71);
+
+					}
+
+					//   X
+					//  OOO
+					//
+					if (!n[0] && !n[1] && n[2] && !n[3]){
+
+						t = new Tile(17);
+
+					}
+
+					//   O
+					//  XO
+					//   O
+					if (!n[0] && n[1] && !n[2] && !n[3]){
+
+						t = new Tile(51);
+
+					}
+
+					//   O
+					//   OX
+					//   O
+					if (!n[0] && !n[1] && !n[2] && n[3]){
+
+						t = new Tile(34);
+
+					}
+
+					//
+					//  OOO
+					//   X
+					if (n[0] && !n[1] && !n[2] && !n[3]){
+
+						t = new Tile(68);
+
+					}
+
+					//  XOO
+					//  O
+					//  O
+					if (!n[0] && n[1] && n[2] && !n[3]){
+
+						t = new Tile(5);
+
+					}
+
+					//  OOX
+					//    O
+					//    O
+					if (!n[0] && !n[1] && n[2] && n[3]){
+
+						t = new Tile(7);
+
+					}
+
+					//  O
+					//  O
+					//  XOO
+					if (n[0] && n[1] && !n[2] && !n[3]){
+
+						t = new Tile(39);
+
+					}
+
+					//    O
+					//    O
+					//  OOX
+					if (n[0] && !n[1] && !n[2] && n[3]){
+
+						t = new Tile(41);
+
+					}
+
+					//  OXO
+					//  
+					//
+					if (!n[0] && n[1] && n[2] && n[3]){
+
+						t = new Tile(6);
+
+					}
+
+					//
+					//
+					//  OXO
+					if (n[0] && n[1] && !n[2] && n[3]){
+
+						t = new Tile(40);
+
+					}
+
+					//  O
+					//  X
+					//  O
+					if (n[0] && n[1] && n[2] && !n[3]){
+
+						t = new Tile(22);
+
+					}
+
+					//    O
+					//    X
+					//    O
+					if (n[0] && !n[1] && n[2] && n[3]){
+
+						t = new Tile(24);
+
+					}
+
+					if (n[0] && n[1] && n[2] && n[3]){
+
+						t = new Tile(23);
+
+					}
+
 				} else {
 					
-					t = new Tile(19);
+					switch (r.nextInt(5)){
+
+						case 0:
+							t = new Tile(0);
+							break;
+						case 1:
+							t = new Tile(1);
+							break;
+						case 2:
+							t = new Tile(2);
+							break;
+						case 3:
+							t = new Tile(18);
+							break;
+						case 4:
+							t = new Tile(19);
+							break;
+
+					}
 					
 				}
 				
@@ -94,6 +202,8 @@ public class CaveGenerator {
 	}
 	
 	public CaveNode[][] generateMap(int width, int height, int steps, float percentLand){
+
+		double timer = System.currentTimeMillis();
 
 		boolean[][] world = new boolean[height][width];
 
@@ -147,12 +257,13 @@ public class CaveGenerator {
 				if (cave[i][j].tag != mostTagged){
 
 					cave[i][j].tag = 0;
-					//cave[i][j].empty = false;
+					cave[i][j].empty = false;
 
 				}
 			}
 		}
 
+		//System.out.println("Generated [" + width + "x" + height + "] map in " + (System.currentTimeMillis() - timer) + " ms");
 		return cave;
 
 	}
@@ -177,7 +288,7 @@ public class CaveGenerator {
 
 		for (int i = 0; i < steps; i++){
 
-			System.out.println("step");
+			//System.out.println("step");
 			boolean[][] nextGen = new boolean[initialGrid.length][initialGrid[0].length];
 
 			for (int j = 0; j < initialGrid.length; j++){
@@ -249,7 +360,7 @@ public class CaveGenerator {
 			
 			return;
 			
-		} else if (!(map[y][x].tag == targetTag) || !(map[y][x].empty) || (depth > 52000)){
+		} else if (!(map[y][x].tag == targetTag) || !(map[y][x].empty) || (depth > 4800)){
 			
 			return;
 			
@@ -295,7 +406,7 @@ public class CaveGenerator {
 
 			int tag = (int) i.next();
 			
-			System.out.println("Tag: " + tag + " | " + tags.get(tag));
+			//System.out.println("Tag: " + tag + " | " + tags.get(tag));
 
 			if (tags.get(tag) > highestTagAmount){
 
@@ -306,7 +417,7 @@ public class CaveGenerator {
 
 		}
 
-		System.out.println("Highest Tag: " + highestTag + " (" + tags.get(highestTag) + ")");
+		//System.out.println("Highest Tag: " + highestTag + " (" + tags.get(highestTag) + ")");
 		return highestTag;
 
 	}

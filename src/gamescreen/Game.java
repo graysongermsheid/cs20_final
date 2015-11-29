@@ -2,24 +2,28 @@ package gamescreen;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.Random;
 
 import resources.ResourceManager;
+import input.InputHandler;
 import game.BSPNode;
 import game.CaveGenerator.CaveNode;
 import game.CaveGenerator;
 import game.LevelReader;
 import game.SimplexNoise;
 import game.Level;
+import game.WorldGenerator;
 
 public class Game implements GameScreen {
 	
-	CaveNode[][] cave;
-	BSPNode bsp;
-	int[][] noise;
-	Level l;
-	
+	Random r;
+	double[][] world;
+	boolean spaceHeld = false;
+	WorldGenerator w;
+
 	public Game(){
 		
+		r = new Random();
 		loadResources();
 		
 	}
@@ -34,32 +38,49 @@ public class Game implements GameScreen {
 	@Override
 	public void draw(Graphics2D g){
 
-		for (int i = 0; i < cave.length; i++){
+
+		//l.draw(g);
+		/*for (int i = 0; i < cave.length; i++){
 
 			for (int j = 0; j < cave[0].length; j++){
 
+				g.setColor(Color.BLACK);
+				g.fillRect(j * 10, i * 10, 10, 10);
+
 				if (cave[i][j].empty){
 
-					g.setColor(new Color(cave[i][j].tag * 750000));
-
-				} else {
-
-					g.setColor(new Color(10, 10, 10));
+					g.setColor(Color.WHITE);
+					g.fillRect(j * 10, i * 10, 10, 10);
 
 				}
 
-				g.fillRect(j, i, 1, 1);
+			}
+		}*/
 
+		for (int i = 0; i < world.length; i++){
+
+			for (int j = 0; j < world[0].length; j++){
+				
+				int rgb = (int) Math.pow(world[i][j], -1);
+				g.setColor(new Color(rgb, rgb, rgb));
+				g.fillRect(j, i, 1, 1);
 			}
 		}
-
-		//l.draw(g);
 	}
 
 	@Override
 	public void processInput(){
 
+		if (InputHandler.KEY_ACTION2_PRESSED && !spaceHeld){
 
+			world = w.generateWorld(1280, 720, 16, 0.6f);
+			spaceHeld = true;
+
+		} else if (!InputHandler.KEY_ACTION2_PRESSED){
+
+			spaceHeld = false;
+
+		}
 
 	}
 
@@ -73,16 +94,10 @@ public class Game implements GameScreen {
 	@Override
 	public void loadResources(){
 		
-		ResourceManager.createSpriteSheet("tileset.png", 16, 16);
+		ResourceManager.createSpriteSheet("blowhard_forest_dark.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
-
-		CaveGenerator c = new CaveGenerator();
-		cave = c.generateMap(640, 480, 4, 0.5f);
-		
-		bsp = new BSPNode(0, 0, 64, 64);
-		noise = SimplexNoise.generateArray(128, 96, 0, 0, 3);
-
-		l = c.createLevel(40, 30, 4, 0.5f);
+		w = new WorldGenerator();
+		world = w.generateWorld(1280, 720, 16, 0.4f);
 	}
 
 	@Override
