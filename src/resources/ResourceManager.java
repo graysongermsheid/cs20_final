@@ -5,13 +5,15 @@ import javax.imageio.*;
 import java.io.*;
 import java.util.*;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import javax.sound.sampled.*;
 
 public class ResourceManager {
 	
 	private static HashMap<String, BufferedImage> imageMap = new HashMap<String, BufferedImage>();
 	private static HashMap<String, SpriteSheet> spriteSheetMap = new HashMap<String, SpriteSheet>();
-	private static HashMap<String, SpriteFont> fontMap = new HashMap<String, SpriteFont>();
+	private static HashMap<String, Font> fontMap = new HashMap<String, Font>();
 	//private static HashMap<String, AudioStream> soundMap = new HashMap<String, AudioStream>();
 
 	public static void clearResources(){
@@ -66,7 +68,7 @@ public class ResourceManager {
 
 	}
 
-	public static SpriteFont getFont(String fontName){
+	/*public static Font getFont(String fontName){
 
 		if (fontMap.get(fontName) == null){
 
@@ -76,7 +78,7 @@ public class ResourceManager {
 
 		return fontMap.get(fontName);
 
-	}
+	}*/
 
 	public static SpriteSheet getSpriteSheet(String sheetName){
 
@@ -90,17 +92,17 @@ public class ResourceManager {
 
 	}
 
-	private static void addFont(String fontName){
+	public static void addFont(String fontName){
 
-		if (spriteSheetMap.get(fontName) == null){
+		try {
+			
+			Font f = Font.createFont(Font.TRUETYPE_FONT, new File("content/fonts/" + fontName + ".ttf"));
 
-			int size = fontName.matches("//S*_large.png") ? 32 : 16;
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(f);
 
-			createSpriteSheet(fontName, size, size);
-
-		}
-
-		fontMap.put(fontName, new SpriteFont(getSpriteSheet(fontName)));
+		} catch (Exception e) {e.printStackTrace();}
+		//fontMap.put(fontName, new SpriteFont(getSpriteSheet(fontName)));
 
 	}
 

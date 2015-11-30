@@ -2,6 +2,7 @@ package gamescreen;
 
 import gamescreen.*;
 import resources.*;
+import gui.FontHelper;
 import java.awt.Graphics2D;
 import java.awt.Dimension;
 import java.awt.Color;
@@ -9,13 +10,13 @@ import java.awt.Color;
 public class ScreenManager {
 	
 	private static GameScreen currentScreen;
-	private static SpriteFont displayFont;
+	private static FontHelper displayFont;
 	public static Dimension screenSize;
 
 	public ScreenManager(int width, int height){
 
 		screenSize = new Dimension(width, height);
-		currentScreen = new Game();
+		currentScreen = new MainMenu();
 
 	}
 

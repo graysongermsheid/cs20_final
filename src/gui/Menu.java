@@ -13,7 +13,7 @@ public class Menu extends GUIComponent {
 	protected BufferedImage background;
 	protected boolean dragged;
 	protected ArrayList<Button> menuButtons;
-	protected SpriteFont font;
+	protected FontHelper font;
 	private String title;
 
 	public Menu(String spriteSheet, int x, int y, int width, int height){
@@ -25,7 +25,7 @@ public class Menu extends GUIComponent {
 		this.background = ImageTools.combineImages(width, height, s.getAllImages());
 		this.dragged = false;
 
-		this.font = ResourceManager.getFont("font_large.png");
+		this.font = new FontHelper("font_times", 12);
 		this.title = null;
 		menuButtons = new ArrayList<Button>();
 	}
@@ -39,7 +39,7 @@ public class Menu extends GUIComponent {
 		this.background = ImageTools.combineImages(width, height, s.getAllImages());
 		this.dragged = false;
 
-		this.font = ResourceManager.getFont("font_large.png");
+		this.font = new FontHelper("font_times", 12);
 		this.title = title;
 		menuButtons = new ArrayList<Button>();
 	}

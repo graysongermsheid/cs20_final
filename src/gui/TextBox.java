@@ -30,7 +30,7 @@ public class TextBox extends Menu {
 	public TextBox(String messageFile, int x, int y, int width, int height){
 
 		super("composite_three.png", x, y, width, height);
-		this.font = ResourceManager.getFont("font.png");
+		this.font = new FontHelper("font_times", 12);
 		padding = new Dimension(16, 8);
 		bestFontColor = Color.WHITE;
 

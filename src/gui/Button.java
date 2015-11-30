@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import resources.Animation;
 import resources.ResourceManager;
-import resources.SpriteFont;
 import resources.ImageTools;
 import input.InputHandler;
 
@@ -17,14 +16,14 @@ public class Button extends GUIComponent {
 	private Animation states;
 	private ButtonState currentState;
 	private String text;
-	private SpriteFont font;
+	private FontHelper font;
 	private Point textOffset;
 
 	public Button(String text, int x, int y, int width, int height){
 
 		super("button.png", x, y, width, height);
 		states = new Animation(source, 1.0);
-		font = new SpriteFont(ResourceManager.getSpriteSheet("font_bold.png"));
+		font = new FontHelper("font_times", 12);
 		visible = true;
 		this.text = text;
 		currentState = ButtonState.DEFAULT;
@@ -42,7 +41,7 @@ public class Button extends GUIComponent {
 
 		super ("button.png", x, y, 0, 0);
 		states = new Animation(source, 1.0);
-		font = new SpriteFont(ResourceManager.getSpriteSheet("font_bold.png"));
+		font = new FontHelper("font_times", 12);
 		visible = true;
 		this.text = text;
 		currentState = ButtonState.DEFAULT;

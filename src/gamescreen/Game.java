@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.util.Random;
 
 import resources.ResourceManager;
+import gui.FontHelper;
 import input.InputHandler;
 import level.worldgen.BSPNode;
 //import level.worldgen.CaveGenerator.CaveNode;
@@ -14,11 +15,12 @@ import level.worldgen.WorldGenerator;
 
 public class Game implements GameScreen {
 	
-	Random r;
-	int[][] world;
-	int[][] tileWorld;
-	boolean spaceHeld = false;
-	WorldGenerator w;
+	private Random r;
+	private int[][] world;
+	private int[][] tileWorld;
+	private boolean spaceHeld = false;
+	private WorldGenerator w;
+	private FontHelper font;
 
 	public Game(){
 		
@@ -94,6 +96,8 @@ public class Game implements GameScreen {
 			}
 		}
 
+		font.drawCenteredText("FUKC YOU", 1024, 640, g);
+
 		/*g.setColor(new Color(255, 0, 255));
 		for (int i = 0; i < 16; i++){
 
@@ -132,7 +136,8 @@ public class Game implements GameScreen {
 	public void loadResources(){
 		
 		ResourceManager.createSpriteSheet("blowhard_forest_dark.png", 16, 16);
-		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
+		ResourceManager.addFont("font_times");
+		font = new FontHelper("font_times", 24);
 		w = new WorldGenerator();
 		world = w.generateWorld(128, 64, 16, 0.4f);
 	}

@@ -3,15 +3,16 @@ package gamescreen;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Color;
+import java.awt.Font;
+import gui.FontHelper;
 import gui.GUIComponent;
 import input.InputHandler;
 import resources.ResourceManager;
-import resources.SpriteFont;
 
 public abstract class MenuScreen implements GameScreen {
 
 	protected GUIComponent[] components;
-	protected SpriteFont font;
+	protected FontHelper font;
 
 	@Override
 	public void processInput(){
@@ -43,11 +44,11 @@ public abstract class MenuScreen implements GameScreen {
 	@Override
 	public void draw(Graphics2D g){
 
-		font.setScaling(3.5f);
+		font.setSize(48);
 		font.setColor(new Color(0xDC, 0x3D, 0x24));
-		font.setBackgroundColor(new Color(0xE3, 0xAE, 0x57));
-		font.drawShadowedText(getTitle(), 320 - (font.getStringSize(getTitle()).width / 2), 32, g);
-		font.setScaling(1);
+		//font.setBackgroundColor(new Color(0xE3, 0xAE, 0x57));
+		font.drawCenteredX(getTitle(), 1024, 32, g);
+		font.setSize(12);
 		
 		if (components == null) {return;}
 
@@ -71,11 +72,7 @@ public abstract class MenuScreen implements GameScreen {
 	@Override
 	public void loadResources(){
 
-		ResourceManager.createSpriteSheet("font.png", 16, 16);
-		ResourceManager.createSpriteSheet("font_2.png", 7, 9);
-		ResourceManager.createSpriteSheet("font_special.png", 9, 12);
-		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
-		ResourceManager.createSpriteSheet("font_large.png", 32, 32);
+		ResourceManager.addFont("font_times");
 
 		ResourceManager.createSpriteSheet("button.png", 24, 24);
 		ResourceManager.createSpriteSheet("composite_one.png", 16, 16);
@@ -87,7 +84,7 @@ public abstract class MenuScreen implements GameScreen {
 
 		ResourceManager.addSound("switch31.wav");
 
-		this.font = ResourceManager.getFont("font_bold.png");
+		this.font = new FontHelper("font_times", 12);
 
 	}
 

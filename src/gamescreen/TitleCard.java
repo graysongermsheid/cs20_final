@@ -3,7 +3,7 @@ package gamescreen;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import resources.SpriteFont;
+import gui.FontHelper;
 import resources.ResourceManager;
 import input.InputHandler;
 
@@ -13,15 +13,14 @@ public class TitleCard implements GameScreen {
 	private Point imageOffset;
 	private Point textOffset;
 	private double timer;
-	private SpriteFont font;
+	private FontHelper font;
 
 	public TitleCard(){
 
 		loadResources();
 
 		titleCard = ResourceManager.getImage("title.png");
-		font = ResourceManager.getFont("font_small.png");
-		font.setScaling(3);
+		font = new FontHelper("font_times", 12);
 		timer = 0d;
 
 		int imageOffsetX = (ScreenManager.screenSize.width / 2) - (titleCard.getWidth() / 2);
@@ -46,7 +45,7 @@ public class TitleCard implements GameScreen {
 
 		if (timer > 2500 && (int)(timer / 750.0) % 2 == 0){
 
-			font.drawText("PRESS ANY BUTTON!", textOffset.x, textOffset.y, g);
+			font.drawCenteredX("PRESS ANY BUTTON!", 1024, textOffset.y, g);
 
 		}
 
@@ -71,7 +70,7 @@ public class TitleCard implements GameScreen {
 
 	public void loadResources(){
 
-		ResourceManager.createSpriteSheet("font_small.png", 4, 6);
+		ResourceManager.addFont("font_times");
 
 	}
 
