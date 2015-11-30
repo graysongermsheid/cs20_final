@@ -1,4 +1,4 @@
-package game;
+package level.worldgen;
 
 import java.util.Random;
 

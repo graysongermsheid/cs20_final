@@ -1,4 +1,4 @@
-package game;
+package level;
 
 public class CollisionLayer {
 	
@@ -13,6 +13,14 @@ public class CollisionLayer {
 	public void set(int x, int y, CollisionType type){
 
 		collisionTypes[y][x] = type;
+
+	}
+
+	protected enum CollisionType {
+	
+		NONE,
+		SOLID,
+		DOOR;
 
 	}
 }

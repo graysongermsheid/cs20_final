@@ -6,13 +6,11 @@ import java.util.Random;
 
 import resources.ResourceManager;
 import input.InputHandler;
-import game.BSPNode;
-import game.CaveGenerator.CaveNode;
-import game.CaveGenerator;
-import game.LevelReader;
-import game.SimplexNoise;
-import game.Level;
-import game.WorldGenerator;
+import level.worldgen.BSPNode;
+//import level.worldgen.CaveGenerator.CaveNode;
+import level.worldgen.CaveGenerator;
+import level.Level;
+import level.worldgen.WorldGenerator;
 
 public class Game implements GameScreen {
 	

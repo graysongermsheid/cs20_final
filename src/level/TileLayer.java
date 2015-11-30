@@ -1,4 +1,4 @@
-package game;
+package level;
 
 import resources.ResourceManager;
 import resources.SpriteSheet;

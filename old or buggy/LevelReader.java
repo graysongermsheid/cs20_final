@@ -1,6 +1,10 @@
 package game;
 
 import java.io.*;
+import level.Level;
+import level.Tile;
+import level.Door;
+import level.CollisionLayer.CollisionType;
 
 public class LevelReader {
 	
@@ -9,6 +13,8 @@ public class LevelReader {
 	private static int currentTileX = 0;
 	private static boolean tileData = false;
 	private static boolean collisionData = false;
+	private static int width = 0;
+	private static int height = 0;
 	
 	public static Level loadLevel(String fileName){
 

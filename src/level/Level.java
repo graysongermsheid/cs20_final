@@ -1,6 +1,7 @@
-package game;
+package level;
 
 import java.awt.Graphics2D;
+import level.CollisionLayer.CollisionType;
 
 public class Level {
 	
@@ -13,8 +14,12 @@ public class Level {
 	//private ArrayList<Entity> entities;
 	private CollisionLayer collisions;
 
-	public Level(){
+	public Level(int width, int height, String name, String tileSet){
 
+		this.width = width;
+		this.height = height;
+		this.name = name;
+		this.tileSet = tileSet;
 		layers = new TileLayer[0];
 
 	}

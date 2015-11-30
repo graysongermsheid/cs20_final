@@ -1,9 +1,12 @@
-package game;
+package level.worldgen;
 
 import java.util.Random;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.awt.Dimension;
+
+import level.Level;
+import level.Tile;
 
 public class CaveGenerator {
 	
@@ -24,12 +27,8 @@ public class CaveGenerator {
 	public Level createLevel(int width, int height, int steps, float percentLand){
 		
 		CaveNode[][] cave = generateMap(width, height, steps, percentLand);
-		Level l = new Level();
-		
-		l.tileSet = "blowhard_forest_dark.png";
-		l.name = "cave";
-		l.width = width;
-		l.height = height;
+
+		Level l = new Level(width, height, "Forest", "blowhard_forest_dark.png");
 		l.addLayer();
 		
 		for (int i = 0; i < height; i++){

@@ -1,4 +1,4 @@
-package game;
+package level;
 
 public class Door extends Tile {
 	

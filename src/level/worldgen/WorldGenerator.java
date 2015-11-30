@@ -1,15 +1,9 @@
-package game;
-
-import java.util.Random;
+package level.worldgen;
 
 public class WorldGenerator {
-	
-	private Random r;
 
 	public int[][] generateWorld(int width, int height, int initialPrecision, float landChance){
 
-		r = new Random();
-		OpenSimplexNoise os = new OpenSimplexNoise(r.nextLong());
 		PerlinNoise p = new PerlinNoise();
 		double[][] world = new double[height][width];
 

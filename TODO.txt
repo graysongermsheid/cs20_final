@@ -1,5 +1,0 @@
-TODO:
-
-	(11/11/15): Refactor font trimming to actually work
-	(11/11/15): Refactor buttons - just one class
-		-in popups just automatically change button locations when it starts
