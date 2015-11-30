@@ -6,7 +6,7 @@ public class WorldGenerator {
 	
 	private Random r;
 
-	public double[][] generateWorld(int width, int height, int initialPrecision, float landChance){
+	public int[][] generateWorld(int width, int height, int initialPrecision, float landChance){
 
 		r = new Random();
 		OpenSimplexNoise os = new OpenSimplexNoise(r.nextLong());
@@ -24,33 +24,67 @@ public class WorldGenerator {
 				world[i][j] += p.noise(j / 64.0, i / 64.0) * 1.0f;
 				world[i][j] += p.noise(j / 128.0, i / 128.0) * 2.0f;
 
-				world[i][j] += (1.5f - (0.008 * i));
-
 				world[i][j] /= 6;
 				//world[i][j] += 1;
 			}
 		}
 
-	 	return normalize(world);
+		double[][] grad = new double[height][width];
 
+		for (int i = 0; i < height; i++){
+
+			for (int j = 0; j < width; j++){
+
+				grad[i][j] = gradient(j, i, width, height);
+
+			}
+		}
+
+		grad = normalize(grad);
+		world = normalize(world);
+
+	 	for (int i = 0; i < height; i++){
+
+			for (int j = 0; j < width; j++){
+
+				world[i][j] -= grad[i][j];
+
+			}
+		}
+
+		return makeTileable(bottom(world));
 	}
 
-	private double gradient(int y){
+	private double[][] bottom(double[][] in){
 
-		return 0.7 - (y * 1);
+		for (int i = 0; i < in.length; i++){
+
+			for (int j = 0; j < in[0].length; j++){
+
+				if (in[i][j] < 0){ in[i][j] = 0;}
+
+			}
+		}
+
+		return in;
+	}
+
+	private double gradient(int x, int y, int width, int height){
+
+		return 0.005 * Math.sqrt(Math.pow(y - (height / 2), 2) + Math.pow(x - (width / 2), 2));
 
 	}
 
 	public int[][] makeTileable(double[][] array){
 
 		int[][] newArr = new int[array.length][array[0].length];
-		double[][] blockedArr = new double[array.length / 4][array[0].length / 4];
+		double[][] blockedArr = new double[array.length / 2][array[0].length / 2];
 
 		for (int i = 0; i < blockedArr.length; i++){
 
 			for (int j = 0; j < blockedArr[0].length; j++){
 
-				blockedArr[i][j] = getHighestNeighbour(j * 4, i * 4, array);
+				blockedArr[i][j] = getHighestNeighbour(j * 2, i * 2, array);
 
 			}
 		}
@@ -59,29 +93,35 @@ public class WorldGenerator {
 
 			for (int j = 0; j < array[0].length; j++){
 
-				int x = (int)(blockedArr[i / 4][j / 4] * 255);
+				int x = (int)(blockedArr[i / 2][j / 2] * 255);
 
-				if (x > 224){
+				if (x > 210){
 
 					newArr[i][j] = 4;
 
-				} else if (x > 192){
+				} else if (x > 168){
 
 					newArr[i][j] = 3;
 
-				} else if (x > 160){
+				} else if (x > 126){
 
 					newArr[i][j] = 2;
 
-				} else if (x > 128){
+				} else if (x > 64){
 
 					newArr[i][j] = 1;
 
-				} else if (x > 96){
+				} else if (x > 42){
 
 					newArr[i][j] = 0;
 
 				} else {
+
+					newArr[i][j] = -1;
+
+				}
+
+				if ((i <= 1) || (j <= 1) || (i >= array.length - 2) || (j >= array[0].length - 2)){
 
 					newArr[i][j] = -1;
 

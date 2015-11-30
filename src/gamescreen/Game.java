@@ -17,7 +17,7 @@ import game.WorldGenerator;
 public class Game implements GameScreen {
 	
 	Random r;
-	double[][] world;
+	int[][] world;
 	int[][] tileWorld;
 	boolean spaceHeld = false;
 	WorldGenerator w;
@@ -62,7 +62,10 @@ public class Game implements GameScreen {
 
 			for (int j = 0; j < world[0].length; j++){
 				
-				switch (tileWorld[i][j]){
+				//int x = (int)(world[i][j] * 255);
+				//g.setColor(new Color(x, x, x));
+
+				switch (world[i][j]){
 
 					case -1:
 						g.setColor(Color.BLUE);
@@ -93,15 +96,15 @@ public class Game implements GameScreen {
 			}
 		}
 
-		g.setColor(new Color(255, 0, 255));
-		for (int i = 0; i < 10; i++){
+		/*g.setColor(new Color(255, 0, 255));
+		for (int i = 0; i < 16; i++){
 
 			for (int j = 0; j < 16; j++){
 
 				g.drawRect(j * 64, i * 40, 64, 40);
 
 			}
-		}
+		}/*/
 	}
 
 	@Override
@@ -110,7 +113,6 @@ public class Game implements GameScreen {
 		if (InputHandler.KEY_ACTION2_PRESSED && !spaceHeld){
 
 			world = w.generateWorld(1024, 640, 16, 0.6f);
-			tileWorld = w.makeTileable(world);
 			spaceHeld = true;
 
 		} else if (!InputHandler.KEY_ACTION2_PRESSED){
@@ -134,8 +136,7 @@ public class Game implements GameScreen {
 		ResourceManager.createSpriteSheet("blowhard_forest_dark.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
 		w = new WorldGenerator();
-		world = w.generateWorld(1024, 640, 16, 0.4f);
-		tileWorld = w.makeTileable(world);
+		world = w.generateWorld(128, 64, 16, 0.4f);
 	}
 
 	@Override
