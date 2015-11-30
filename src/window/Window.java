@@ -17,17 +17,17 @@ public class Window extends JFrame{
 	public Window(){
 	
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setTitle("~~~~~~~");
+		this.setTitle("Cool Title");
 
-		GameCanvas canvas = new GameCanvas();
-		this.add(canvas);
-		canvas.setPreferredSize(new Dimension(1024, 640));
+		Screen screen = new Screen();
+		this.add(screen);
+		screen.setPreferredSize(new Dimension(1024, 640));
 		this.setResizable(false);
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-		canvas.createBuffer();
+		screen.createBuffer();
 
-		canvas.run();
+		screen.run();
 	}
 }

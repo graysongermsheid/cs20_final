@@ -137,15 +137,15 @@ public class Menu extends GUIComponent {
 
 	private Point fixLocation(Point fixedPoint){
 
-		if (fixedPoint.x + size.width > window.GameCanvas.size.width){
+		if (fixedPoint.x + size.width > window.Screen.SIZE.width){
 
-			fixedPoint = new Point (window.GameCanvas.size.width - this.size.width, fixedPoint.y);
+			fixedPoint = new Point (window.Screen.SIZE.width - this.size.width, fixedPoint.y);
 
 		}
 
-		if (fixedPoint.y + size.height > window.GameCanvas.size.height){
+		if (fixedPoint.y + size.height > window.Screen.SIZE.height){
 
-			fixedPoint = new Point (fixedPoint.x, window.GameCanvas.size.height - this.size.height);
+			fixedPoint = new Point (fixedPoint.x, window.Screen.SIZE.height - this.size.height);
 
 		}
 

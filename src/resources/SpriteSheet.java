@@ -1,6 +1,7 @@
 package resources;
 
 import java.awt.image.BufferedImage;
+import resources.ResourceManager;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.io.*;
@@ -72,7 +73,7 @@ public class SpriteSheet {
 
 		try {
 
-			BufferedImage source = ImageIO.read(new File("content/" + fileName));
+			BufferedImage source = ImageIO.read(new File(ResourceManager.PATH + fileName));
 
 			int sourceWidthFrames = source.getWidth() / frameSize.width;
 			int sourceHeightFrames = source.getHeight() / frameSize.height;

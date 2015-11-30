@@ -65,7 +65,7 @@ public class TextBox extends Menu {
 		
 		try {
 
-			BufferedReader reader = new BufferedReader(new FileReader("content/" + fileName));
+			BufferedReader reader = new BufferedReader(new FileReader(ResourceManager.PATH + fileName));
 			String thisLine;
 			String whole = "";
 

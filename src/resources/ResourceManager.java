@@ -8,6 +8,8 @@ import java.awt.Color;
 import javax.sound.sampled.*;
 
 public class ResourceManager {
+
+	public static String PATH = "src/content/";
 	
 	private static HashMap<String, BufferedImage> imageMap = new HashMap<String, BufferedImage>();
 	private static HashMap<String, SpriteSheet> spriteSheetMap = new HashMap<String, SpriteSheet>();
@@ -37,7 +39,7 @@ public class ResourceManager {
    			DataLine.Info info;
     		Clip clip;
 
-    		file = new File("content/sound/" + soundName);
+    		file = new File(PATH + "sound/" + soundName);
     		stream = AudioSystem.getAudioInputStream(file);
     		format = stream.getFormat();
     		info = new DataLine.Info(Clip.class, format);
@@ -108,7 +110,7 @@ public class ResourceManager {
 
 		try {
 
-			BufferedImage newImage = ImageIO.read(new File("content/" + imageName));
+			BufferedImage newImage = ImageIO.read(new File(PATH + imageName));
 			imageMap.put(imageName, newImage);
 
 		} catch (Exception e){

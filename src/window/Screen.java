@@ -8,11 +8,11 @@ import java.awt.image.BufferStrategy;
 import input.InputHandler;
 import gamescreen.ScreenManager;
 
-public class GameCanvas extends Canvas {
+public class Screen extends Canvas {
 	
 	private BufferStrategy buffer;
 	private ScreenManager screenManager;
-	public static Dimension size;
+	public static Dimension SIZE;
 
 	public void createBuffer(){
 
@@ -23,9 +23,9 @@ public class GameCanvas extends Canvas {
 
 	public void run(){
 
-		size = getSize();
+		SIZE = getSize();
 
-		System.out.println("Canvas size: " + size);
+		System.out.println("Canvas size: " + SIZE);
 
 		InputHandler in = new InputHandler();
 

@@ -39,9 +39,10 @@ public class Level {
 
 	}
 
-	public void addTile(Tile t, int x, int y){
+	public void addTile(Tile t, int x, int y, int layer){
 
-		layers[layers.length - 1].addTile(t, x, y);
+		layer = (layer < layers.length) ? layer : layers.length - 1;
+		layers[layer].addTile(t, x, y);
 
 	}
 

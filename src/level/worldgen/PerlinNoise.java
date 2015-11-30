@@ -107,14 +107,7 @@ public class PerlinNoise {
 
 	private double dot(double[] a, double[] b){
 
-		double total = 0.0d;
-
-		for (int i = 0; i < a.length; i++){
-
-			total += a[i] * b[i];
-
-		}
-
-		return total;
+		return (a[0] * b[0]) + (a[1] * b[1]);
+		
 	}
 }
