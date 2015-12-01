@@ -15,12 +15,4 @@ public class CollisionLayer {
 		collisionTypes[y][x] = type;
 
 	}
-
-	protected enum CollisionType {
-	
-		NONE,
-		SOLID,
-		DOOR;
-
-	}
 }

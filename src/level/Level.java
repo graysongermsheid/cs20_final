@@ -1,7 +1,6 @@
 package level;
 
 import java.awt.Graphics2D;
-import level.CollisionLayer.CollisionType;
 
 public class Level {
 	
