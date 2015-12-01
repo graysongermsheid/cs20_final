@@ -1,6 +1,8 @@
 package level;
 
-public class Creature extends Entity {
+import java.awt.Point;
+
+public abstract class Creature extends Entity {
 	
 	protected int health;
 	protected Point speed;

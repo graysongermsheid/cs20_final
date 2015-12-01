@@ -14,12 +14,19 @@ import level.worldgen.WorldGenerator;
 
 public class Game implements GameScreen {
 	
-	Random r;
-	int[][] world;
-	int[][] tileWorld;
-	CaveNode[][] cave;
-	boolean spaceHeld = false;
-	WorldGenerator w;
+	///////////////////////////////////////////
+	//Game has a seed -- save the seed and for each
+	//
+	//
+	
+	
+	private Random r;
+	private int[][] world;
+	private int[][] tileWorld;
+	private CaveNode[][] cave;
+	private boolean spaceHeld = false;
+	private WorldGenerator w;
+	private CaveGenerator c;
 
 	public Game(){
 		
@@ -45,12 +52,12 @@ public class Game implements GameScreen {
 			for (int j = 0; j < cave[0].length; j++){
 
 				g.setColor(Color.BLACK);
-				g.fillRect(j * 64, i * 64, 64, 64);
+				g.fillRect(j, i, 1, 1);
 
 				if (cave[i][j].empty){
 
-					g.setColor(Color.WHITE);
-					g.fillRect(j * 2, i * 2, 2, 2);
+					g.setColor(new Color(cave[i][j].tag * 750000));
+					g.fillRect(j, i, 1, 1);
 
 				}
 			}
@@ -110,7 +117,8 @@ public class Game implements GameScreen {
 
 		if (InputHandler.KEY_ACTION2_PRESSED && !spaceHeld){
 
-			world = w.generateWorld(1024, 640, 16, 0.6f);
+			world = w.generateWorld(12, 640, 16, 0.6f);
+			cave = c.generateMap(8000, 8000, 3, 0.5f);
 			spaceHeld = true;
 
 		} else if (!InputHandler.KEY_ACTION2_PRESSED){
@@ -133,8 +141,8 @@ public class Game implements GameScreen {
 		
 		ResourceManager.createSpriteSheet("blowhard_forest_dark.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
-		CaveGenerator c = new CaveGenerator(123);
-		cave = c.generateMap(640, 480, 3, 0.5f);
+		c = new CaveGenerator(123);
+		cave = c.generateMap(8000, 8000, 3, 0.5f);
 		w = new WorldGenerator();
 		world = w.generateWorld(128, 64, 16, 0.4f);
 	}

@@ -17,11 +17,11 @@ public class Window extends JFrame{
 	public Window(){
 	
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setTitle("Cool Title");
+		this.setTitle("Cool Title - The Game");
 
 		Screen screen = new Screen();
 		this.add(screen);
-		screen.setPreferredSize(new Dimension(1280, 960));
+		screen.setPreferredSize(new Dimension(1280, 720));
 		this.setResizable(false);
 		this.pack();
 		this.setLocationRelativeTo(null);
