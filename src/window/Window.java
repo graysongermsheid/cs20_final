@@ -21,7 +21,7 @@ public class Window extends JFrame{
 
 		Screen screen = new Screen();
 		this.add(screen);
-		screen.setPreferredSize(new Dimension(1024, 640));
+		screen.setPreferredSize(new Dimension(1280, 960));
 		this.setResizable(false);
 		this.pack();
 		this.setLocationRelativeTo(null);

@@ -32,6 +32,61 @@ public class CaveGenerator {
 		
 		return null;
 	}
+
+	private Tile interpretTile(int x, int y, CaveNode[][] map){
+
+		boolean nw = (x > 0 && y > 0) ? !map[y - 1][x - 1].empty : true;                      //North-West neighbour
+		boolean n  = (y > 0) ? !map[y - 1][  x  ].empty : true;                               //North neighbour
+		boolean ne = (x < map[0].length && y > 0) ? !map[y - 1][x + 1].empty : true;          //North-East neighbour
+		boolean w  = (x > 0) ? !map[  y  ][x - 1].empty : true;                               //West neighbour
+		boolean e  = (x < map[0].length) ? !map[  y  ][x + 1].empty : true;                   //East neighbour
+		boolean se = (x > 0 && y < map.length) ? !map[y + 1][x - 1].empty : true;             //South-East neighbour
+		boolean s  = (y < map.length) ? !map[y + 1][  x  ].empty : true;                      //South neighbour
+		boolean sw = (x < map[0].length && y < map.length) ? !map[y + 1][x + 1].empty : true; //South-West neighbour
+
+		// ###
+		// #X#
+		// OOO
+
+		// OOO
+		// #X#
+		// ###
+
+		// O##
+		// OX#
+		// O##
+
+		// ##O
+		// #XO
+		// ##O
+
+		// OOO
+		// OX#
+		// O##
+
+		// OOO
+		// #XO
+		// ##O
+
+		// O##
+		// OX#
+		// OOO
+
+		// ##O
+		// #XO
+		// OOO
+
+		// ###
+		// #X#
+		// ###
+
+		// OXO
+		// ###
+		// ###
+
+		return null;
+
+	}
 	
 	public CaveNode[][] generateMap(int width, int height, int steps, float percentLand){
 
