@@ -6,11 +6,17 @@ public enum CollisionType {
 	WALL (0xF),
 	DOOR (0xD);
 
-	int value;
+	int val;
 
-	public CollisionType(int value){
+	CollisionType(int value){
 
-		this.value = value;
+		this.val = value;
 
+	}
+	
+	public int value(){
+		
+		return val;
+		
 	}
 }

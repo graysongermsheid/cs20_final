@@ -51,7 +51,7 @@ public class Screen extends Canvas {
 
 	private void loop(){
 
-		screenManager = new ScreenManager(640, 480);
+		screenManager = new ScreenManager(SIZE.width, SIZE.height);
 
 		final int UPDATES_SECOND = 30;
 		final int MAX_UPDATES_FRAME = 5;
@@ -116,8 +116,8 @@ public class Screen extends Canvas {
 
 		Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
 
-		g.setColor(new Color(32, 0, 5));
-		g.fillRect(0, 0, this.getWidth(), this.getHeight());
+		g.setColor(new Color(0, 0, 0));
+		g.fillRect(0, 0, SIZE.width, SIZE.height);
 
 		screenManager.draw(g);
 

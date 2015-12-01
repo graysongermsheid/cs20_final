@@ -1,4 +1,4 @@
-package game;
+package level;
 
 public class Player extends Creature {
 	
@@ -34,17 +34,17 @@ public class Player extends Creature {
 	@Override
 	public void processCollision(int c){
 
-		switch (c){
+		switch (CollisionType.values()[c]){
 
-			case CollisionType.NONE:
-
-				return;
-
-			case CollisionType.WALL:
+			case NONE:
 
 				return;
 
-			case CollisionType.DOOR:
+			case WALL:
+
+				return;
+
+			case DOOR:
 
 				return;
 

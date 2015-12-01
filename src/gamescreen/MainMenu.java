@@ -35,8 +35,7 @@ public class MainMenu extends MenuScreen {
 			@Override
 			public void performAction(){
 
-				TextBox t = (TextBox) components[2];
-				t.show();
+				((TextBox) components[2]).show();
 
 			}
 		};

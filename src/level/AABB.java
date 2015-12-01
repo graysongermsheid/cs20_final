@@ -1,4 +1,4 @@
-pacakge level;
+package level;
 
 import java.awt.Point;
 import java.awt.Dimension;
@@ -20,7 +20,7 @@ public class AABB {
 
 	public boolean collides(AABB a){
 
-		if (a.x1 < x || a.x > x2 ||
+		if (a.x1 < x || a.x > x1 ||
 			a.y1 < y || a.y > y1){
 
 			return false;

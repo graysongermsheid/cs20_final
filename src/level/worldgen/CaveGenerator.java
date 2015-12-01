@@ -144,12 +144,13 @@ public class CaveGenerator {
 				if (cave[i][j].tag != mostTagged){
 
 					cave[i][j].tag = 0;
-					cave[i][j].empty = false;
+					//cave[i][j].empty = false;
 
 				}
 			}
 		}
 
+		System.out.println(System.currentTimeMillis() - timer + " milliseconds");
 		return cave;
 
 	}

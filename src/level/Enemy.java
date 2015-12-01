@@ -1,6 +1,6 @@
-package game;
+package level;
 
-public class Enemy extends Creature {
+public abstract class Enemy extends Creature {
 		
 	protected int damage; //damage they deal
 	protected String name;

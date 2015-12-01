@@ -1,15 +1,16 @@
-pacakge level;
+package level;
 
 import java.awt.Point;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import resources.Animation;
 
 public abstract class Entity {
 	
 	protected AABB bounds;
 	protected Animation animations;
 
-	public abstract void update(double elapsedMilliseconds){
+	public void update(double elapsedMilliseconds){
 
 		animations.update(elapsedMilliseconds);
 
