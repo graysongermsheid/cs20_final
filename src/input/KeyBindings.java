@@ -19,18 +19,15 @@ public enum KeyBindings{
 
 	}
 
-	public boolean matches(int... values) {
+	public boolean matches(int value) {
 
 		for (int i = 0; i < bindings.length; i++){
 
-			for (int j = 0; j < values.length; j++){
-
-				if (values[j] == bindings[i]){
+				if (value == bindings[i]){
 
 					return true;
 
 				}
-			}
 		}
 
 		return false;

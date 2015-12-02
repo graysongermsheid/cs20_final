@@ -1,6 +1,7 @@
 package level;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 
 public class Level {
 	
@@ -51,11 +52,11 @@ public class Level {
 
 	}
 
-	public void draw(Graphics2D g){
+	public void draw(Point p0, Point p1, Graphics2D g){
 
 		for (TileLayer t : layers){
 
-			t.draw(g);
+			t.draw(p0, p1, g);
 
 		}
 	}
