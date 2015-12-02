@@ -24,13 +24,29 @@ public class CaveGenerator {
 
 	}
 
-	public Level createLevel(int width, int seed, int height, int steps, float percentLand){
+	public Level createLevel(int width, int height, int seed, int steps, float percentLand){
 		
 		CaveNode[][] cave = generateMap(width, height, steps, percentLand);
-
+		Level l = new Level(width, height, "Cave", "blowhard_forest_dark.png");
+		l.addLayer();
 		
+		for (int i = 0; i < cave.length; i++){
+			
+			for (int j = 0; j < cave[0].length; j++){
+				
+				if (cave[i][j].empty){
+					
+					l.addTile(new Tile(0), j, i, 0);
+					
+				} else {
+					
+					l.addTile(new Tile(4), j, i, 0);
+					
+				}
+			}
+		}
 		
-		return null;
+		return l;
 	}
 
 	private Tile interpretTile(int x, int y, CaveNode[][] map){

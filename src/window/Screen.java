@@ -54,7 +54,7 @@ public class Screen extends Canvas {
 		screenManager = new ScreenManager(SIZE.width, SIZE.height);
 
 		final int UPDATES_SECOND = 30;
-		final int MAX_UPDATES_FRAME = 5;
+		final int MAX_UPDATES_FRAME = 1;
 		final int LOOP_SPEED = 1000000000 / UPDATES_SECOND;
 
 		final int FRAMES_SECOND = 60;

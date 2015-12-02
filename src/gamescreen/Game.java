@@ -12,6 +12,8 @@ import level.worldgen.CaveGenerator;
 import level.Level;
 import level.worldgen.WorldGenerator;
 
+import game.Camera;
+
 public class Game implements GameScreen {
 	
 	///////////////////////////////////////////
@@ -29,6 +31,7 @@ public class Game implements GameScreen {
 	private boolean spaceHeld = false;
 	private WorldGenerator w;
 	private CaveGenerator c;
+	private Camera cam;
 
 	public Game(){
 		
@@ -40,7 +43,7 @@ public class Game implements GameScreen {
 	@Override
 	public void update(double elapsedMilliseconds){
 
-
+		cam.update(elapsedMilliseconds);
 
 	}
 
@@ -49,18 +52,18 @@ public class Game implements GameScreen {
 
 
 		//l.draw(g);
-		g.setColor(Color.RED);
+		/*g.setColor(Color.RED);
 		for (int i = 0; i < cave.length; i++){
 
 			for (int j = 0; j < cave[0].length; j++){
 
 				if (cave[i][j].empty){
 
-					g.fillRect(j * 10 + 320, i * 10, 10, 10);
+					g.fillRect(j + 320, i, 1, 1);
 
 				}
 			}
-		}
+		}*/
 
 		/*for (int i = 0; i < world.length; i++){
 
@@ -96,7 +99,7 @@ public class Game implements GameScreen {
 						break;
 				}
 
-				g.fillRect(j, i, 1, 1);
+				g.fillRect(j + 320, i, 1, 1);
 			}
 		}*/
 
@@ -108,7 +111,12 @@ public class Game implements GameScreen {
 				g.drawRect(j * 64, i * 40, 64, 40);
 
 			}
-		}/*/
+		}*/
+		
+		cam.draw(g);
+		g.setColor(Color.BLACK);
+		g.fillRect(128, 0, 300, 300);
+		g.fillRect(0, 128, 300, 300);
 	}
 
 	@Override
@@ -116,8 +124,8 @@ public class Game implements GameScreen {
 
 		if (InputHandler.KEY_ACTION2_PRESSED && !spaceHeld){
 
-			world = w.generateWorld(12, 640, 16, 0.6f);
-			cave = c.generateMap(64, 64, 3, 0.5f);
+			world = w.generateWorld(640, 640, 16, 0.6f);
+			cave = c.generateMap(64, 60, 3, 0.5f);
 			spaceHeld = true;
 
 		} else if (!InputHandler.KEY_ACTION2_PRESSED){
@@ -126,6 +134,7 @@ public class Game implements GameScreen {
 
 		}
 
+		cam.processInput();
 	}
 
 	@Override
@@ -141,9 +150,11 @@ public class Game implements GameScreen {
 		ResourceManager.createSpriteSheet("blowhard_forest_dark.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
 		c = new CaveGenerator(123);
-		cave = c.generateMap(64, 64, 3, 0.5f);
+		cave = c.generateMap(640, 640, 3, 0.5f);
 		w = new WorldGenerator();
 		world = w.generateWorld(128, 64, 16, 0.4f);
+		
+		cam = new Camera(0, 0, 128, 128, c.createLevel(64, 64, 12, 3, 0.5f));
 	}
 
 	@Override
