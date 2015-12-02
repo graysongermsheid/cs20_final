@@ -54,12 +54,9 @@ public class Game implements GameScreen {
 
 			for (int j = 0; j < cave[0].length; j++){
 
-				//g.setColor(Color.BLACK);
-				//g.fillRect(j * 10 + 320, i * 10, 10, 10);
-
 				if (cave[i][j].empty){
 
-					//g.fillRect(j * 10 + 320, i * 10, 10, 10);
+					g.fillRect(j * 10 + 320, i * 10, 10, 10);
 
 				}
 			}
