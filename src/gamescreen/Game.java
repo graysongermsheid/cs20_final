@@ -16,8 +16,10 @@ public class Game implements GameScreen {
 	
 	///////////////////////////////////////////
 	//Game has a seed -- save the seed and for each
-	//
-	//
+	//z level seed the rng with (seed / (caveID * z-level))
+
+	//that way the world has an ID, the each individual cave
+	//system has an id, so all the game needs to save is 2 numbers
 	
 	
 	private Random r;
@@ -47,17 +49,14 @@ public class Game implements GameScreen {
 
 
 		//l.draw(g);
+		g.setColor(Color.RED);
 		for (int i = 0; i < cave.length; i++){
 
 			for (int j = 0; j < cave[0].length; j++){
 
-				g.setColor(Color.BLACK);
-				g.fillRect(j, i, 1, 1);
-
 				if (cave[i][j].empty){
 
-					g.setColor(new Color(cave[i][j].tag * 750000));
-					g.fillRect(j, i, 1, 1);
+					g.fillRect(j * 10 + 320, i * 10, 10, 10);
 
 				}
 			}
@@ -118,7 +117,7 @@ public class Game implements GameScreen {
 		if (InputHandler.KEY_ACTION2_PRESSED && !spaceHeld){
 
 			world = w.generateWorld(12, 640, 16, 0.6f);
-			cave = c.generateMap(8000, 8000, 3, 0.5f);
+			cave = c.generateMap(64, 64, 3, 0.5f);
 			spaceHeld = true;
 
 		} else if (!InputHandler.KEY_ACTION2_PRESSED){
@@ -142,7 +141,7 @@ public class Game implements GameScreen {
 		ResourceManager.createSpriteSheet("blowhard_forest_dark.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
 		c = new CaveGenerator(123);
-		cave = c.generateMap(8000, 8000, 3, 0.5f);
+		cave = c.generateMap(64, 64, 3, 0.5f);
 		w = new WorldGenerator();
 		world = w.generateWorld(128, 64, 16, 0.4f);
 	}
