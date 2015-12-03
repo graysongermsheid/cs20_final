@@ -13,6 +13,12 @@ public class TileLayer {
 	public TileLayer(String spritesheet, int width, int height){
 
 		tiles = new Tile[height][width];
+		if (ResourceManager.getSpriteSheet(spritesheet) == null){
+			
+			ResourceManager.createSpriteSheet(spritesheet, 16, 16);
+			
+		}
+		
 		this.spritesheet = ResourceManager.getSpriteSheet(spritesheet);
 
 	}

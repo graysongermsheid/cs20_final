@@ -123,7 +123,9 @@ public class Game implements GameScreen {
 
 			world = w.generateWorld(640, 640, 16, 0.6f);
 			cave = c.generateMap(64, 60, 3, 0.5f);
+			System.out.println(cam.currentLevel.toString());
 			cam = new Camera(0, 0, 128, 128, c.createLevel(64, 64, 12, 3, 0.5f));
+			System.out.println(cam.currentLevel.toString());
 			spaceHeld = true;
 
 		} else if (!InputHandler.KEY_ACTION2_PRESSED){
@@ -147,7 +149,7 @@ public class Game implements GameScreen {
 		
 		ResourceManager.createSpriteSheet("snow.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
-		c = new CaveGenerator();
+		c = new CaveGenerator(123);
 		cave = c.generateMap(640, 640, 3, 0.5f);
 		w = new WorldGenerator();
 		world = w.generateWorld(128, 64, 16, 0.4f);

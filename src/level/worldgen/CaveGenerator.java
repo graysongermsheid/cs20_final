@@ -58,8 +58,10 @@ public class CaveGenerator {
 		boolean s  = (y < map.length - 1) ? !map[y + 1][  x  ].empty : true;                      //South neighbour
 		boolean sw = (x > 0 && y < map.length - 1) ? !map[y + 1][x - 1].empty : true; //South-West neighbour
 
-		Tile tile = new Tile(16);
+		Tile tile = new Tile(31);
 
+		//THIS IS SUPER CONFUSING AND HARD!!
+		
 		// ###
 		// #X#
 		// OOO

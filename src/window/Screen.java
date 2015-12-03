@@ -6,12 +6,16 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.image.BufferStrategy;
 import input.InputHandler;
+import resources.ResourceManager;
+import resources.SpriteFont;
 import gamescreen.ScreenManager;
 
 public class Screen extends Canvas {
 	
 	private BufferStrategy buffer;
 	private ScreenManager screenManager;
+	private SpriteFont font;
+	private double fps;
 	public static Dimension SIZE;
 
 	public void createBuffer(){
@@ -25,6 +29,8 @@ public class Screen extends Canvas {
 
 		SIZE = getSize();
 
+		resources.ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
+		font = ResourceManager.getFont("font_bold.png");
 		System.out.println("Canvas size: " + SIZE);
 
 		InputHandler in = new InputHandler();
@@ -63,6 +69,10 @@ public class Screen extends Canvas {
 		double currentTime = System.nanoTime();
 		double lastUpdate = System.nanoTime();
 		double lastRender = System.nanoTime();
+		
+		int frameCount = 0;
+		int lastSecond = (int)(lastUpdate / 1000000000);
+		fps = 0d;
 
 		while (true){
 
@@ -80,7 +90,16 @@ public class Screen extends Canvas {
 			}
 
 			render();
+			frameCount++;
 			lastRender += FRAME_SPEED;
+			int thisSecond = (int)(lastRender / 1000000000);
+			if (thisSecond > lastSecond){
+				
+				fps = frameCount;
+				lastSecond = thisSecond;
+				frameCount = 0;
+				
+			}
 
 			while (currentTime - lastUpdate < LOOP_SPEED && currentTime - lastRender < FRAME_SPEED){
 
@@ -120,7 +139,9 @@ public class Screen extends Canvas {
 		g.fillRect(0, 0, SIZE.width, SIZE.height);
 
 		screenManager.draw(g);
-
+		font.setColor(Color.BLACK);
+		font.setBackgroundColor(Color.BLACK);
+		font.drawShadowedText("FPS: " + fps, 0, 38, g);
 		buffer.show();
 
 		g.dispose();

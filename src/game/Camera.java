@@ -26,7 +26,7 @@ public class Camera {
 	private AffineTransformOp transformer;
 	private AffineTransform transform;
 	
-	private Level currentLevel;
+	public Level currentLevel;
 	
 	public Camera(int x, int y, int width, int height, Level l){
 		
@@ -99,7 +99,7 @@ public class Camera {
 		scaledImage = transformer.filter(drawImage, scaledImage);
 		g.drawImage(scaledImage, 0, 0, null);
 
-		f.setColor(java.awt.Color.RED);
+		f.setColor(java.awt.Color.GREEN);
 		f.setBackgroundColor(java.awt.Color.BLACK);
 		f.drawShadowedText("[" + location.x + "," + location.y + "]" + " [" + farLocation.x + "," + farLocation.y + "]", 0, 0, g);
 		f.drawShadowedText(currentLevel.getRealSize().width + " x " + currentLevel.getRealSize().height, 0, 18, g);
