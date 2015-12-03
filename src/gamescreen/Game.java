@@ -123,7 +123,7 @@ public class Game implements GameScreen {
 
 			world = w.generateWorld(640, 640, 16, 0.6f);
 			cave = c.generateMap(64, 60, 3, 0.5f);
-			cam.setLevel(0, 0, 128, 128, c.createLevel(32, 32, 12, 3, 0.5f));
+			cam = new Camera(0, 0, 128, 128, c.createLevel(64, 64, 12, 3, 0.5f));
 			spaceHeld = true;
 
 		} else if (!InputHandler.KEY_ACTION2_PRESSED){
@@ -145,14 +145,14 @@ public class Game implements GameScreen {
 	@Override
 	public void loadResources(){
 		
-		ResourceManager.createSpriteSheet("blowhard_forest_dark.png", 16, 16);
+		ResourceManager.createSpriteSheet("snow.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
-		c = new CaveGenerator(123);
+		c = new CaveGenerator();
 		cave = c.generateMap(640, 640, 3, 0.5f);
 		w = new WorldGenerator();
 		world = w.generateWorld(128, 64, 16, 0.4f);
 		
-		cam = new Camera(0, 0, 128, 128, c.createLevel(64, 64, 12, 3, 0.5f));
+		cam = new Camera(0, 0, 144, 144, c.createLevel(64, 64, 12, 3, 0.5f));
 	}
 
 	@Override

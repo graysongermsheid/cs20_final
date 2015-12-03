@@ -27,22 +27,14 @@ public class CaveGenerator {
 	public Level createLevel(int width, int height, int seed, int steps, float percentLand){
 		
 		CaveNode[][] cave = generateMap(width, height, steps, percentLand);
-		Level l = new Level(width, height, "Cave", "blowhard_forest_dark.png");
+		Level l = new Level(width, height, "Cave", "snow.png");
 		l.addLayer();
 		
 		for (int i = 0; i < cave.length; i++){
 			
 			for (int j = 0; j < cave[0].length; j++){
 				
-				if (cave[i][j].empty){
-					
-					l.addTile(new Tile(0), j, i, 0);
-					
-				} else {
-					
-					l.addTile(new Tile(4), j, i, 0);
-					
-				}
+				l.addTile(interpretTile(j, i, cave), j, i, 0);
 			}
 		}
 		
@@ -51,56 +43,153 @@ public class CaveGenerator {
 
 	private Tile interpretTile(int x, int y, CaveNode[][] map){
 
+		if (map[y][x].empty){
+
+			return new Tile(44);
+
+		}
+
 		boolean nw = (x > 0 && y > 0) ? !map[y - 1][x - 1].empty : true;                      //North-West neighbour
 		boolean n  = (y > 0) ? !map[y - 1][  x  ].empty : true;                               //North neighbour
-		boolean ne = (x < map[0].length && y > 0) ? !map[y - 1][x + 1].empty : true;          //North-East neighbour
+		boolean ne = (x < map[0].length - 1 && y > 0) ? !map[y - 1][x + 1].empty : true;          //North-East neighbour
 		boolean w  = (x > 0) ? !map[  y  ][x - 1].empty : true;                               //West neighbour
-		boolean e  = (x < map[0].length) ? !map[  y  ][x + 1].empty : true;                   //East neighbour
-		boolean se = (x > 0 && y < map.length) ? !map[y + 1][x - 1].empty : true;             //South-East neighbour
-		boolean s  = (y < map.length) ? !map[y + 1][  x  ].empty : true;                      //South neighbour
-		boolean sw = (x < map[0].length && y < map.length) ? !map[y + 1][x + 1].empty : true; //South-West neighbour
+		boolean e  = (x < map[0].length - 1) ? !map[  y  ][x + 1].empty : true;                   //East neighbour
+		boolean se = (x < map[0].length - 1 && y < map.length - 1) ? !map[y + 1][x + 1].empty : true;             //South-East neighbour
+		boolean s  = (y < map.length - 1) ? !map[y + 1][  x  ].empty : true;                      //South neighbour
+		boolean sw = (x > 0 && y < map.length - 1) ? !map[y + 1][x - 1].empty : true; //South-West neighbour
+
+		Tile tile = new Tile(16);
 
 		// ###
 		// #X#
 		// OOO
+		if (n & e & w & !s){
+
+			tile = new Tile(3);
+
+		} else if (n & e & w & s & !se & !sw){
+
+			tile = new Tile(40);
+
+		}
 
 		// OOO
 		// #X#
 		// ###
+		if (!n & e & w & s & sw){
+
+			tile = new Tile(21);
+
+		} else if (n & e & w & s & !ne & !nw){
+
+			tile = new Tile(33);
+
+		}
 
 		// O##
 		// OX#
 		// O##
+		if ((n & e & !w & s) || (n & e & w & s & !nw & !sw)){
+
+			tile = new Tile(13);
+
+		}
 
 		// ##O
 		// #XO
 		// ##O
+		if ((n & w & !e & s) || (n & e & w & s & !ne & !se)){
+
+			tile = new Tile(11);
+
+		}
 
 		// OOO
 		// OX#
 		// O##
+		if ((!n & e & !w & s) || 
+			(!n & e & w & s & !nw & !sw)){
+
+			tile = new Tile(0);
+
+		}
 
 		// OOO
 		// #XO
 		// ##O
+		if (!n & !e & w & s){
+
+			tile = new Tile(1);
+
+		}
 
 		// O##
 		// OX#
 		// OOO
+		if (n & e & !w & !s){
+
+			tile = new Tile(9);
+
+		}
 
 		// ##O
 		// #XO
 		// OOO
+		if (n & !e & w & !s){
+
+			tile = new Tile(10);
+
+		}
 
 		// ###
 		// #X#
 		// ###
+		if (n & s & e & w && ((ne & nw & se & sw) || !(ne & nw & se & sw))){
 
-		// OXO
-		// ###
-		// ###
+			tile = new Tile(40);
 
-		return null;
+		}
+
+		// X##
+		// #OO
+		// #OO
+		if (n & e & w & s & !se & sw & ne & nw){
+
+			tile = new Tile(11);
+
+		}
+
+		// ##X
+		// OO#
+		// OO#
+		if (n & e & w & s & se & !sw & ne & nw){
+
+			tile = new Tile(13);
+
+		}
+
+		if ((n & !e & !w & s) || 
+			(n & e & !w & s & ((ne ^ se) || (!ne & !se))) || 
+			(n & !e & w & s & ((nw ^ sw) || (!nw & !sw))) || 
+			(n & e & w & s & !ne & !nw & !se & !sw)){
+
+			tile = new Tile(32);
+
+		}
+
+		if (!n & !e & !w & s){
+
+			tile = new Tile(23);
+
+		}
+
+		if (n & !s & !e & !w){
+
+			tile = new Tile(41);
+
+		}
+
+		return tile;
 
 	}
 	
