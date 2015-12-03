@@ -114,9 +114,6 @@ public class Game implements GameScreen {
 		}*/
 		
 		cam.draw(g);
-		g.setColor(Color.BLACK);
-		g.fillRect(128, 0, 300, 300);
-		g.fillRect(0, 128, 300, 300);
 	}
 
 	@Override
@@ -126,6 +123,7 @@ public class Game implements GameScreen {
 
 			world = w.generateWorld(640, 640, 16, 0.6f);
 			cave = c.generateMap(64, 60, 3, 0.5f);
+			cam.setLevel(0, 0, 128, 128, c.createLevel(32, 32, 12, 3, 0.5f));
 			spaceHeld = true;
 
 		} else if (!InputHandler.KEY_ACTION2_PRESSED){

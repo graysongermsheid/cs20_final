@@ -43,7 +43,7 @@ public class TileLayer {
 
 			for (int j = x0; j < x1; j++){
 
-				g.drawImage(spritesheet.getImage(tiles[i][j].getSpriteID()), (j - x0) * spritesheet.getSize().width - (px.x % 16), (i - y0) * spritesheet.getSize().height - (px.y % 16), null);
+				g.drawImage(spritesheet.getImage(tiles[i][j].getSpriteID()), (j - x0) * spritesheet.getSize().width - (p0.x % 16), (i - y0) * spritesheet.getSize().height - (p0.y % 16), null);
 
 			}
 		}

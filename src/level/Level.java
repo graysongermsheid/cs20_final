@@ -2,6 +2,7 @@ package level;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Dimension;
 
 public class Level {
 	
@@ -59,5 +60,17 @@ public class Level {
 			t.draw(p0, p1, g);
 
 		}
+	}
+
+	public Dimension getSize(){
+
+		return new Dimension(width, height);
+
+	}
+
+	public Dimension getRealSize(){
+
+		return new Dimension(width * 16, height * 16);
+
 	}
 }
