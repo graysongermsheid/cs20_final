@@ -89,6 +89,8 @@ public class Camera {
 	public void draw(Graphics2D g){
 
 		Graphics2D g2 = drawImage.createGraphics();
+		g2.setColor(java.awt.Color.BLACK);
+		g2.fillRect(0, 0, drawImage.getWidth(), drawImage.getHeight());
 
 		int scale = gamescreen.ScreenManager.screenSize.height / size.height;
 		BufferedImage scaledImage = new BufferedImage(size.height * scale, size.width * scale, BufferedImage.TYPE_INT_ARGB);

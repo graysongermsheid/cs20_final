@@ -27,7 +27,7 @@ public class CaveGenerator {
 	public Level createLevel(int width, int height, int seed, int steps, float percentLand){
 		
 		CaveNode[][] cave = generateMap(width, height, steps, percentLand);
-		Level l = new Level(width, height, "Cave", "snow.png");
+		Level l = new Level(width, height, "Cave", "simple_graphics.png");
 		l.addLayer();
 		
 		for (int i = 0; i < cave.length; i++){
@@ -45,7 +45,7 @@ public class CaveGenerator {
 
 		if (map[y][x].empty){
 
-			return new Tile(44);
+			return new Tile(35);
 
 		}
 
@@ -58,138 +58,7 @@ public class CaveGenerator {
 		boolean s  = (y < map.length - 1) ? !map[y + 1][  x  ].empty : true;                      //South neighbour
 		boolean sw = (x > 0 && y < map.length - 1) ? !map[y + 1][x - 1].empty : true; //South-West neighbour
 
-		Tile tile = new Tile(31);
-
-		//THIS IS SUPER CONFUSING AND HARD!!
-		
-		// ###
-		// #X#
-		// OOO
-		if (n & e & w & !s){
-
-			tile = new Tile(3);
-
-		} else if (n & e & w & s & !se & !sw){
-
-			tile = new Tile(40);
-
-		}
-
-		// OOO
-		// #X#
-		// ###
-		if (!n & e & w & s & sw){
-
-			tile = new Tile(21);
-
-		} else if (n & e & w & s & !ne & !nw){
-
-			tile = new Tile(33);
-
-		}
-
-		// O##
-		// OX#
-		// O##
-		if ((n & e & !w & s) || (n & e & w & s & !nw & !sw)){
-
-			tile = new Tile(13);
-
-		}
-
-		// ##O
-		// #XO
-		// ##O
-		if ((n & w & !e & s) || (n & e & w & s & !ne & !se)){
-
-			tile = new Tile(11);
-
-		}
-
-		// OOO
-		// OX#
-		// O##
-		if ((!n & e & !w & s) || 
-			(!n & e & w & s & !nw & !sw)){
-
-			tile = new Tile(0);
-
-		}
-
-		// OOO
-		// #XO
-		// ##O
-		if (!n & !e & w & s){
-
-			tile = new Tile(1);
-
-		}
-
-		// O##
-		// OX#
-		// OOO
-		if (n & e & !w & !s){
-
-			tile = new Tile(9);
-
-		}
-
-		// ##O
-		// #XO
-		// OOO
-		if (n & !e & w & !s){
-
-			tile = new Tile(10);
-
-		}
-
-		// ###
-		// #X#
-		// ###
-		if (n & s & e & w && ((ne & nw & se & sw) || !(ne & nw & se & sw))){
-
-			tile = new Tile(40);
-
-		}
-
-		// X##
-		// #OO
-		// #OO
-		if (n & e & w & s & !se & sw & ne & nw){
-
-			tile = new Tile(11);
-
-		}
-
-		// ##X
-		// OO#
-		// OO#
-		if (n & e & w & s & se & !sw & ne & nw){
-
-			tile = new Tile(13);
-
-		}
-
-		if ((n & !e & !w & s) || 
-			(n & e & !w & s & ((ne ^ se) || (!ne & !se))) || 
-			(n & !e & w & s & ((nw ^ sw) || (!nw & !sw))) || 
-			(n & e & w & s & !ne & !nw & !se & !sw)){
-
-			tile = new Tile(32);
-
-		}
-
-		if (!n & !e & !w & s){
-
-			tile = new Tile(23);
-
-		}
-
-		if (n & !s & !e & !w){
-
-			tile = new Tile(41);
-
-		}
+		Tile tile = new Tile(34);
 
 		return tile;
 

@@ -16,6 +16,7 @@ public class Screen extends Canvas {
 	private ScreenManager screenManager;
 	private SpriteFont font;
 	private double fps;
+	private double ups;
 	public static Dimension SIZE;
 
 	public void createBuffer(){
@@ -71,8 +72,10 @@ public class Screen extends Canvas {
 		double lastRender = System.nanoTime();
 		
 		int frameCount = 0;
+		int updateCount = 0;
 		int lastSecond = (int)(lastUpdate / 1000000000);
 		fps = 0d;
+		ups = 0d;
 
 		while (true){
 
@@ -89,15 +92,25 @@ public class Screen extends Canvas {
 
 			}
 
+			if (currentTime - lastUpdate > LOOP_SPEED){
+
+				lastUpdate = currentTime - LOOP_SPEED;
+
+			}
+
+			updateCount += updates;
+
 			render();
 			frameCount++;
 			lastRender += FRAME_SPEED;
 			int thisSecond = (int)(lastRender / 1000000000);
 			if (thisSecond > lastSecond){
 				
+				ups = updateCount;
 				fps = frameCount;
 				lastSecond = thisSecond;
 				frameCount = 0;
+				updateCount = 0;
 				
 			}
 
@@ -141,7 +154,7 @@ public class Screen extends Canvas {
 		screenManager.draw(g);
 		font.setColor(Color.BLACK);
 		font.setBackgroundColor(Color.BLACK);
-		font.drawShadowedText("FPS: " + fps, 0, 38, g);
+		font.drawShadowedText("FPS: " + fps + " UPDATES: " + ups, 0, 38, g);
 		buffer.show();
 
 		g.dispose();

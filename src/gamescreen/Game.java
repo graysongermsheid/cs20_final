@@ -147,14 +147,14 @@ public class Game implements GameScreen {
 	@Override
 	public void loadResources(){
 		
-		ResourceManager.createSpriteSheet("snow.png", 16, 16);
+		ResourceManager.createSpriteSheet("simple_graphics.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
 		c = new CaveGenerator(123);
 		cave = c.generateMap(640, 640, 3, 0.5f);
 		w = new WorldGenerator();
 		world = w.generateWorld(128, 64, 16, 0.4f);
 		
-		cam = new Camera(0, 0, 144, 144, c.createLevel(64, 64, 12, 3, 0.5f));
+		cam = new Camera(0, 0, 720, 720, c.createLevel(64, 64, 12, 3, 0.5f));
 	}
 
 	@Override
