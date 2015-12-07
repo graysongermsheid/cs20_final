@@ -34,9 +34,10 @@ public class Camera {
 		transform = new AffineTransform();
 
 		Dimension screenSize = gamescreen.ScreenManager.screenSize;
-		int scaleAmount = (screenSize.height / height != 0) ? screenSize.height / height : 1;
+		float scaleVert = screenSize.height / (float)height;
+		float scaleHoriz = screenSize.width / (float)width;
 
-		transform.scale(scaleAmount, scaleAmount);
+		transform.scale(scaleHoriz, scaleVert);
 		transformer = new AffineTransformOp(transform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR); //that's a weird way to spell neighbour
 
 		drawImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
@@ -101,9 +102,12 @@ public class Camera {
 		g2.setColor(java.awt.Color.BLACK);
 		g2.fillRect(0, 0, drawImage.getWidth(), drawImage.getHeight());
 
-		int scale = gamescreen.ScreenManager.screenSize.height / size.height;
-		BufferedImage scaledImage = new BufferedImage(size.height * scale, size.width * scale, BufferedImage.TYPE_INT_ARGB);
+		float scaleV = gamescreen.ScreenManager.screenSize.height / (float)size.height;
+		float scaleH = gamescreen.ScreenManager.screenSize.width / (float)size.width;
+		BufferedImage scaledImage = new BufferedImage((int)(size.height * scaleH), (int)(size.width * scaleV), BufferedImage.TYPE_INT_ARGB);
 		currentLevel.draw(location, farLocation, g2);
+		g2.setColor(java.awt.Color.GREEN);
+		g2.drawRect(0, 0, drawImage.getWidth(), drawImage.getHeight());
 
 		g2.dispose();
 

@@ -120,7 +120,7 @@ public class Game implements GameScreen {
 
 		if (InputHandler.KEY_ACTION2_PRESSED && !spaceHeld){
 
-			cam.setLevel(0, 0, 144, 144 , c.createLevel(64, 64, 12, 3, 0.5f));
+			cam.setLevel(0, 0, 288, 288 , c.createLevel(64, 64, 12, 3, 0.5f));
 			spaceHeld = true;
 
 		} else if (!InputHandler.KEY_ACTION2_PRESSED){
@@ -145,7 +145,7 @@ public class Game implements GameScreen {
 		ResourceManager.createSpriteSheet("simple_graphics.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
 		c = new CaveGenerator();
-		cam = new Camera(0, 0, 144, 144, c.createLevel(1280, 720, 13, 3, 0.5f));
+		cam = new Camera(0, 0, 320, 180, c.createLevel(1280, 720, 13, 3, 0.5f));
 	}
 
 	@Override
