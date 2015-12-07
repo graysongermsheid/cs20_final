@@ -152,7 +152,7 @@ public class Screen extends Canvas {
 		g.fillRect(0, 0, SIZE.width, SIZE.height);
 
 		screenManager.draw(g);
-		font.setColor(Color.BLACK);
+		font.setColor(Color.GREEN);
 		font.setBackgroundColor(Color.BLACK);
 		font.drawShadowedText("FPS: " + fps + " UPDATES: " + ups, 0, 38, g);
 		buffer.show();

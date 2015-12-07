@@ -3,12 +3,18 @@ package level;
 public class Player extends Creature {
 	
 	private final double ATTACK_COOLDOWN = 1500.0;
-	private double cooldownTimer;
-
+	private static double cooldownTimer;
+	
 	public Player(String savefile){
 
+		//Maybe load a save file... who knows?
 
-
+	}
+	
+	public Player(int x, int y){
+		
+		this.bounds = new AABB(x, y, 16, 16);
+		
 	}
 
 	public void processInput(){

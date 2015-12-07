@@ -29,7 +29,6 @@ public class Game implements GameScreen {
 	private int[][] tileWorld;
 	private CaveNode[][] cave;
 	private boolean spaceHeld = false;
-	private WorldGenerator w;
 	private CaveGenerator c;
 	private Camera cam;
 
@@ -121,11 +120,7 @@ public class Game implements GameScreen {
 
 		if (InputHandler.KEY_ACTION2_PRESSED && !spaceHeld){
 
-			world = w.generateWorld(640, 640, 16, 0.6f);
-			cave = c.generateMap(64, 60, 3, 0.5f);
-			System.out.println(cam.currentLevel.toString());
-			cam = new Camera(0, 0, 144, 144 , c.createLevel(64, 64, 12, 3, 0.5f));
-			System.out.println(cam.currentLevel.toString());
+			cam.setLevel(0, 0, 144, 144 , c.createLevel(64, 64, 12, 3, 0.5f));
 			spaceHeld = true;
 
 		} else if (!InputHandler.KEY_ACTION2_PRESSED){
@@ -149,12 +144,8 @@ public class Game implements GameScreen {
 		
 		ResourceManager.createSpriteSheet("simple_graphics.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
-		c = new CaveGenerator(123);
-		cave = c.generateMap(640, 640, 3, 0.5f);
-		w = new WorldGenerator();
-		world = w.generateWorld(128, 64, 16, 0.4f);
-		
-		cam = new Camera(0, 0, 720, 720, c.createLevel(64, 64, 12, 3, 0.5f));
+		c = new CaveGenerator();
+		cam = new Camera(0, 0, 144, 144, c.createLevel(1280, 720, 13, 3, 0.5f));
 	}
 
 	@Override

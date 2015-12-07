@@ -50,10 +50,19 @@ public class Camera {
 	public void setLevel(int x, int y, int width, int height, Level l){
 
 		location = new Point(x, y);
+		transform = new AffineTransform();
+
+		Dimension screenSize = gamescreen.ScreenManager.screenSize;
+		int scaleAmount = (screenSize.height / height != 0) ? screenSize.height / height : 1;
+
+		transform.scale(scaleAmount, scaleAmount);
+		transformer = new AffineTransformOp(transform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR); //that's a weird way to spell neighbour
+
+		drawImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		f = ResourceManager.getFont("font_bold.png");
 		farLocation = new Point(x + width, y + height);
 		size = new Dimension(width, height);
 		currentLevel = l;
-
 
 	}
 	

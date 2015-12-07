@@ -66,8 +66,6 @@ public class CaveGenerator {
 	
 	public CaveNode[][] generateMap(int width, int height, int steps, float percentLand){
 
-		double timer = System.currentTimeMillis();
-
 		boolean[][] world = new boolean[height][width];
 
 		for (int i = 0; i < height; i++){
@@ -125,8 +123,7 @@ public class CaveGenerator {
 				}
 			}
 		}
-
-		System.out.println(System.currentTimeMillis() - timer + " milliseconds");
+		
 		return cave;
 
 	}
@@ -254,8 +251,6 @@ public class CaveGenerator {
 		while (i.hasNext()){
 
 			int tag = (int) i.next();
-			
-			//System.out.println("Tag: " + tag + " | " + tags.get(tag));
 
 			if (tags.get(tag) > highestTagAmount){
 
@@ -265,8 +260,7 @@ public class CaveGenerator {
 			}
 
 		}
-
-		//System.out.println("Highest Tag: " + highestTag + " (" + tags.get(highestTag) + ")");
+		
 		return highestTag;
 
 	}

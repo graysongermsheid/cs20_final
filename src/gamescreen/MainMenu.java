@@ -10,7 +10,7 @@ public class MainMenu extends MenuScreen {
 
 	public MainMenu(){
 
-		loadResources();
+		
 
 	}
 

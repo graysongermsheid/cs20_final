@@ -152,11 +152,8 @@ public class InputHandler extends MouseInputAdapter implements MouseWheelListene
 	@Override
 	public void mouseDragged(MouseEvent e){
 
-		//System.out.println("Mouse Dragged");
-
 		MOUSE_DRAGGED = true;
 		MOUSE_CLICKED = true;
-		//MOUSE_CLICK_LOCATION = e.getPoint();
 		MOUSE_LOCATION = e.getPoint();
 	}
 

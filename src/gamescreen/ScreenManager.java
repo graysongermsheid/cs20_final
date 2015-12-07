@@ -16,6 +16,7 @@ public class ScreenManager {
 
 		screenSize = new Dimension(width, height);
 		currentScreen = new MainMenu();
+		currentScreen.loadResources();
 
 	}
 
@@ -41,6 +42,7 @@ public class ScreenManager {
 		
 		currentScreen.unloadResources();
 		currentScreen = newScreen;
+		currentScreen.loadResources();
 
 	}
 }

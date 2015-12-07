@@ -9,18 +9,15 @@ import javax.sound.sampled.*;
 
 public class ResourceManager {
 
-	public static String PATH = "content/";
+	public static String PATH = "src/content/";
 	
 	private static HashMap<String, BufferedImage> imageMap = new HashMap<String, BufferedImage>();
 	private static HashMap<String, SpriteSheet> spriteSheetMap = new HashMap<String, SpriteSheet>();
 	private static HashMap<String, SpriteFont> fontMap = new HashMap<String, SpriteFont>();
-	//private static HashMap<String, AudioStream> soundMap = new HashMap<String, AudioStream>();
 
 	public static void clearResources(){
 
-		System.out.println("###Clearing Resource Manager Resources###");
 		imageMap.clear();
-		//soundMap.clear();
 		spriteSheetMap.clear();
 		fontMap.clear();
 
