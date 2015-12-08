@@ -24,10 +24,10 @@ public class CaveGenerator {
 
 	}
 
-	public Level createLevel(int width, int height, int seed, int steps, float percentLand){
+	public Level createLevel(int width, int height, int steps, float percentLand){
 		
 		CaveNode[][] cave = generateMap(width, height, steps, percentLand);
-		Level l = new Level(width, height, "Cave", "simple_graphics.png");
+		Level l = new Level(width, height, "Cave", "font_bold.png");
 		l.addLayer();
 		
 		for (int i = 0; i < cave.length; i++){
@@ -45,7 +45,7 @@ public class CaveGenerator {
 
 		if (map[y][x].empty){
 
-			return new Tile(35);
+			return new Tile(0);
 
 		}
 
@@ -58,7 +58,7 @@ public class CaveGenerator {
 		boolean s  = (y < map.length - 1) ? !map[y + 1][  x  ].empty : true;                      //South neighbour
 		boolean sw = (x > 0 && y < map.length - 1) ? !map[y + 1][x - 1].empty : true; //South-West neighbour
 
-		Tile tile = new Tile(34);
+		Tile tile = new Tile(35);
 
 		return tile;
 
@@ -117,8 +117,8 @@ public class CaveGenerator {
 
 				if (cave[i][j].tag != mostTagged){
 
-					cave[i][j].tag = 0;
-					cave[i][j].empty = false;
+					//cave[i][j].tag = 0;
+					//cave[i][j].empty = false;
 
 				}
 			}

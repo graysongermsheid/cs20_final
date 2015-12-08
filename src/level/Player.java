@@ -2,7 +2,7 @@ package level;
 
 public class Player extends Creature {
 	
-	private final double ATTACK_COOLDOWN = 1500.0;
+	private final double ATTACK_COOLDOWN = 1500.0; //IDK this is so ambiguous I'm confused
 	private static double cooldownTimer;
 	
 	public Player(String savefile){

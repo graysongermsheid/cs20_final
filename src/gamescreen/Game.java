@@ -51,18 +51,18 @@ public class Game implements GameScreen {
 
 
 		//l.draw(g);
-		/*g.setColor(Color.RED);
 		for (int i = 0; i < cave.length; i++){
 
 			for (int j = 0; j < cave[0].length; j++){
 
 				if (cave[i][j].empty){
 
-					g.fillRect(j + 320, i, 1, 1);
+					g.setColor(new Color(cave[i][j].tag * 750000));
+					g.fillRect(j, i, 1, 1);
 
 				}
 			}
-		}*/
+		}
 
 		/*for (int i = 0; i < world.length; i++){
 
@@ -112,7 +112,7 @@ public class Game implements GameScreen {
 			}
 		}*/
 		
-		cam.draw(g);
+		//cam.draw(g);
 	}
 
 	@Override
@@ -120,7 +120,8 @@ public class Game implements GameScreen {
 
 		if (InputHandler.KEY_ACTION2_PRESSED && !spaceHeld){
 
-			cam.setLevel(0, 0, 288, 288 , c.createLevel(64, 64, 12, 3, 0.5f));
+			cave = c.generateMap(1280,  720,  4,  0.5f);
+			cam.setLevel(0, 0, c.createLevel(64, 64, 3, 0.5f));
 			spaceHeld = true;
 
 		} else if (!InputHandler.KEY_ACTION2_PRESSED){
@@ -145,7 +146,8 @@ public class Game implements GameScreen {
 		ResourceManager.createSpriteSheet("simple_graphics.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
 		c = new CaveGenerator();
-		cam = new Camera(0, 0, 320, 180, c.createLevel(1280, 720, 13, 3, 0.5f));
+		cave = c.generateMap(1280, 720, 3, 0.5f);
+		cam = new Camera(0, 0, 320, 180, c.createLevel(1280, 720, 3, 0.5f));
 	}
 
 	@Override

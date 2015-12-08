@@ -48,23 +48,29 @@ public class Camera {
 		
 	}
 
-	public void setLevel(int x, int y, int width, int height, Level l){
+	public void setLevel(int x, int y, Level l){
 
 		location = new Point(x, y);
 		transform = new AffineTransform();
-
-		Dimension screenSize = gamescreen.ScreenManager.screenSize;
-		int scaleAmount = (screenSize.height / height != 0) ? screenSize.height / height : 1;
-
-		transform.scale(scaleAmount, scaleAmount);
-		transformer = new AffineTransformOp(transform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR); //that's a weird way to spell neighbour
-
-		drawImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		f = ResourceManager.getFont("font_bold.png");
-		farLocation = new Point(x + width, y + height);
-		size = new Dimension(width, height);
+		farLocation = new Point(x + size.width, y + size.height);
 		currentLevel = l;
 
+	}
+	
+	public void setSize(int width, int height){
+		
+		size = new Dimension(width, height);
+		farLocation = new Point(location.x + width, location.y + height);
+		drawImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		transform = new AffineTransform();
+
+		Dimension screenSize = gamescreen.ScreenManager.screenSize;
+		float scaleVert = screenSize.height / (float)height;
+		float scaleHoriz = screenSize.width / (float)width;
+
+		transform.scale(scaleHoriz, scaleVert);
+		transformer = new AffineTransformOp(transform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR); //that's a weird way to spell neighbour
+		
 	}
 	
 	public void update(double elapsedMilliseconds){
@@ -104,16 +110,16 @@ public class Camera {
 
 		float scaleV = gamescreen.ScreenManager.screenSize.height / (float)size.height;
 		float scaleH = gamescreen.ScreenManager.screenSize.width / (float)size.width;
-		BufferedImage scaledImage = new BufferedImage((int)(size.height * scaleH), (int)(size.width * scaleV), BufferedImage.TYPE_INT_ARGB);
+		BufferedImage scaledImage = new BufferedImage((int)(size.width * scaleH), (int)(size.height * scaleV), BufferedImage.TYPE_INT_ARGB);
 		currentLevel.draw(location, farLocation, g2);
-		g2.setColor(java.awt.Color.GREEN);
-		g2.drawRect(0, 0, drawImage.getWidth(), drawImage.getHeight());
 
 		g2.dispose();
 
+		//Scale the original image to fit the screen
 		scaledImage = transformer.filter(drawImage, scaledImage);
 		g.drawImage(scaledImage, 0, 0, null);
 
+		//Draw camera information to the screen
 		f.setColor(java.awt.Color.GREEN);
 		f.setBackgroundColor(java.awt.Color.BLACK);
 		f.drawShadowedText("[" + location.x + "," + location.y + "]" + " [" + farLocation.x + "," + farLocation.y + "]", 0, 0, g);
