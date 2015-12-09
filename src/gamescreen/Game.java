@@ -51,7 +51,7 @@ public class Game implements GameScreen {
 
 
 		//l.draw(g);
-		for (int i = 0; i < cave.length; i++){
+		/*for (int i = 0; i < cave.length; i++){
 
 			for (int j = 0; j < cave[0].length; j++){
 
@@ -62,7 +62,7 @@ public class Game implements GameScreen {
 
 				}
 			}
-		}
+		}*/
 
 		/*for (int i = 0; i < world.length; i++){
 
@@ -112,7 +112,7 @@ public class Game implements GameScreen {
 			}
 		}*/
 		
-		//cam.draw(g);
+		cam.draw(g);
 	}
 
 	@Override
