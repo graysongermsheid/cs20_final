@@ -51,6 +51,18 @@ public class TileLayer {
 
 				g.drawImage(spritesheet.getImage(tiles[i][j].getSpriteID()), (j - x0) * spritesheet.getSize().width - (p0.x % 16), (i - y0) * spritesheet.getSize().height - (p0.y % 16), null);
 
+				if (j % 2 == i % 2){
+					
+					g.setColor(new java.awt.Color(255, 0, 0, 64));
+					
+				} else {
+					
+					g.setColor(new java.awt.Color(0, 255, 0, 64));
+					
+				}
+				
+				//g.fillRect( (j - x0) * spritesheet.getSize().width - (p0.x % 16), (i - y0) * spritesheet.getSize().height - (p0.y % 16), 16, 16);
+				
 			}
 		}
 	}

@@ -27,7 +27,7 @@ public class CaveGenerator {
 	public Level createLevel(int width, int height, int steps, float percentLand){
 		
 		CaveNode[][] cave = generateMap(width, height, steps, percentLand);
-		Level l = new Level(width, height, "Cave", "simple_graphics.png");
+		Level l = new Level(width, height, "Cave", "Tolos.png");
 		l.addLayer();
 		
 		for (int i = 0; i < cave.length; i++){
@@ -43,7 +43,7 @@ public class CaveGenerator {
 
 	private Tile interpretTile(int x, int y, CaveNode[][] map){
 
-		Tile t = new Tile(35);
+		Tile t = new Tile(7);
 		
 		if (map[y][x].empty){
 			
@@ -51,19 +51,7 @@ public class CaveGenerator {
 
 		}
 		
-		switch (r.nextInt(3)){
-		
-			case 0:
-				t = new Tile(16);
-				break;
-			case 1:
-				t = new Tile(17);
-				break;
-			case 2:
-				t = new Tile(18);
-				break;
-		
-		}
+		t = new Tile(35);
 
 		boolean nw = (x > 0 && y > 0) ? !map[y - 1][x - 1].empty : true;                      //North-West neighbour
 		boolean n  = (y > 0) ? !map[y - 1][  x  ].empty : true;                               //North neighbour
@@ -76,6 +64,130 @@ public class CaveGenerator {
 
 		//Tile tile = new Tile(90);
 
+		if (n & w & s & !se & e){
+			
+			t = new Tile(0);
+			
+		} else if (n & e & w & !s){
+			
+			t = new Tile(1);
+			
+		} else if (n & w & s & !sw & e){
+			
+			t = new Tile(2);
+			
+		} else if (n & w & !e & s){
+			
+			t = new Tile(6);
+			
+		} else if (n & !w & e & s){
+			
+			t = new Tile(8);
+			
+		} else if (n & w & e & s & !ne){
+			
+			t = new Tile(12);
+		
+		} else if (!n & w & e & s){
+			
+			t = new Tile(13);
+			
+		} else if (n & w & e & s & !nw){
+			
+			t = new Tile(14);
+			
+		} else if (!n & !w & e & s){
+			
+			t = new Tile(3);
+			
+		} else if (!n & w & !e & s){
+			
+			t = new Tile(4);
+			
+		} else if (n & !w & e & !s){
+			
+			t = new Tile(9);
+			
+		} else if (n & w & !e & !s){
+			
+			t = new Tile(10);
+			
+		} else if (!n & !w & !e & s){
+			
+			t = new Tile(19);
+			
+		} else if (!n & !w & e & !s){
+			
+			t = new Tile(24);
+			
+		} else if (n & !w & !e & !s){
+			
+			t = new Tile(31);
+			
+		} else if (!n & w & !e & !s){
+			
+			t = new Tile(26);
+			
+		} else if (n & !w & !e & s){
+			
+			t = new Tile(17);
+			
+		} else if (!n & e & w & !s){
+			
+			t = new Tile(11);
+			
+		}
+
+		if (n & w & s & e){
+
+			if (!nw & !ne & !sw & !se){
+			
+				t = new Tile(25);
+			
+			} else if (!nw & !se & !sw){
+
+				t = new Tile(21);
+
+			} else if (!sw & !ne & !se){
+
+				t = new Tile(22);
+
+			} else if (!sw & !ne & !nw){
+
+				t = new Tile(15);
+
+			} else if (!sw & !se & !ne){
+
+				t = new Tile(16);
+
+			} else if (!nw & !ne){
+			
+				t = new Tile(20);
+			
+			} else if (!nw & !sw){
+				
+				t = new Tile(18);
+			
+			} else if (!sw & !se){
+			
+				t = new Tile(30);
+			
+			} else if (!ne & !se){
+			
+				t = new Tile(32);
+			
+			} else if (!ne & !sw){
+
+				t = new Tile(27);
+
+			} else if (!nw & !se){
+
+				t = new Tile(28);
+
+			}
+
+		}
+		
 		return t;
 
 	}

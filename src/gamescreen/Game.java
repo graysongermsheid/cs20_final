@@ -143,7 +143,7 @@ public class Game implements GameScreen {
 	@Override
 	public void loadResources(){
 		
-		ResourceManager.createSpriteSheet("simple_graphics.png", 16, 16);
+		ResourceManager.createSpriteSheet("Tolos.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
 		c = new CaveGenerator();
 		cave = c.generateMap(1280, 720, 3, 0.5f);
