@@ -70,7 +70,23 @@ public class CaveGenerator {
 			
 		} else if (n & e & w & !s){
 			
-			t = new Tile(1);
+			if (!ne & !nw){
+				
+				t = new Tile(41);
+				
+			} else if (!ne){
+				
+				t = new Tile(29);
+				
+			} else if (!nw){
+				
+				t = new Tile(39);
+				
+			} else {
+				
+				t = new Tile(1);
+				
+			}
 			
 		} else if (n & w & s & !sw & e){
 			
@@ -78,11 +94,43 @@ public class CaveGenerator {
 			
 		} else if (n & w & !e & s){
 			
-			t = new Tile(6);
+			if (!nw & !sw){
+				
+				t = new Tile(34);
+				
+			} else if (!nw){
+				
+				t = new Tile(37);
+				
+			} else if (!sw){
+				
+				t = new Tile(43);
+				
+			} else {
+				
+				t = new Tile(6);
+				
+			}
 			
 		} else if (n & !w & e & s){
 			
-			t = new Tile(8);
+			if (!ne & !se){
+				
+				t = new Tile(33);
+				
+			} else if (!ne){
+				
+				t = new Tile(36);
+				
+			} else if (!se){
+				
+				t = new Tile(42);
+				
+			} else {
+				
+				t = new Tile(8);
+				
+			}
 			
 		} else if (n & w & e & s & !ne){
 			
@@ -90,7 +138,23 @@ public class CaveGenerator {
 		
 		} else if (!n & w & e & s){
 			
-			t = new Tile(13);
+			if (!sw & !se){
+				
+				t = new Tile(40);
+				
+			} else if (!sw){
+				
+				t = new Tile(23);
+				
+			} else if (!se){
+				
+				t = new Tile(38);
+				
+			} else {
+				
+				t = new Tile(13);
+				
+			}
 			
 		} else if (n & w & e & s & !nw){
 			
@@ -98,19 +162,51 @@ public class CaveGenerator {
 			
 		} else if (!n & !w & e & s){
 			
-			t = new Tile(3);
+			if (!se){
+				
+				t = new Tile(44);
+				
+			} else {
+				
+				t = new Tile(3);
+				
+			}
 			
 		} else if (!n & w & !e & s){
 			
-			t = new Tile(4);
+			if (!sw){
+				
+				t = new Tile(45);
+				
+			} else {
+				
+				t = new Tile(4);
+				
+			}
 			
 		} else if (n & !w & e & !s){
 			
-			t = new Tile(9);
+			if (!ne){
+				
+				t = new Tile(46);
+				
+			} else {
+				
+				t = new Tile(9);
+				
+			}
 			
 		} else if (n & w & !e & !s){
 			
-			t = new Tile(10);
+			if (!nw){
+				
+				t = new Tile(47);
+				
+			} else {
+				
+				t = new Tile(10);
+				
+			}
 			
 		} else if (!n & !w & !e & s){
 			
@@ -156,7 +252,7 @@ public class CaveGenerator {
 
 				t = new Tile(15);
 
-			} else if (!sw & !se & !ne){
+			} else if (!nw & !se & !ne){
 
 				t = new Tile(16);
 
