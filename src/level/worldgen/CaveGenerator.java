@@ -47,6 +47,20 @@ public class CaveGenerator {
 		
 		if (map[y][x].empty){
 			
+			switch (r.nextInt(1000000)){
+			
+				case 0:
+					t = new Tile(48);
+					break;
+				case 1:
+					t = new Tile(50);
+					break;
+				default:
+					t = new Tile(52);
+					break;
+			
+			}
+			
 			return t;
 
 		}
@@ -64,7 +78,11 @@ public class CaveGenerator {
 
 		//Tile tile = new Tile(90);
 
-		if (n & w & s & !se & e){
+		if (!n & !w & !e & !s){
+			
+			t = new Tile(53);
+			
+		} else if (n & w & s & !se & e){
 			
 			t = new Tile(0);
 			
@@ -357,6 +375,7 @@ public class CaveGenerator {
 
 		for (int i = 0; i < steps; i++){
 
+			System.out.println("step");
 			boolean[][] nextGen = new boolean[initialGrid.length][initialGrid[0].length];
 
 			for (int j = 0; j < initialGrid.length; j++){

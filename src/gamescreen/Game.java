@@ -30,6 +30,7 @@ public class Game implements GameScreen {
 	private CaveNode[][] cave;
 	private boolean spaceHeld = false;
 	private CaveGenerator c;
+	private WorldGenerator w;
 	private Camera cam;
 
 	public Game(){
@@ -98,7 +99,7 @@ public class Game implements GameScreen {
 						break;
 				}
 
-				g.fillRect(j + 320, i, 1, 1);
+				g.fillRect(j * 2, i * 2, 2, 2);
 			}
 		}*/
 
@@ -121,7 +122,8 @@ public class Game implements GameScreen {
 		if (InputHandler.KEY_ACTION2_PRESSED && !spaceHeld){
 
 			cave = c.generateMap(1280,  720,  4,  0.5f);
-			cam.setLevel(0, 0, c.createLevel(64, 64, 3, 0.5f));
+			cam.setLevel(0, 0, c.createLevel(64, 64, 0, 0.5f));
+			world = w.generateWorld(64, 64, 0, 0);
 			spaceHeld = true;
 
 		} else if (!InputHandler.KEY_ACTION2_PRESSED){
@@ -146,6 +148,8 @@ public class Game implements GameScreen {
 		ResourceManager.createSpriteSheet("Tolos.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
 		c = new CaveGenerator();
+		w = new WorldGenerator();
+		world = w.generateWorld(640, 360, 0, 0);
 		cave = c.generateMap(1280, 720, 3, 0.5f);
 		cam = new Camera(0, 0, 320, 180, c.createLevel(1280, 720, 3, 0.5f));
 	}
