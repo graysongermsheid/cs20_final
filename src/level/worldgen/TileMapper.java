@@ -13,7 +13,7 @@ public class TileMapper {
 		
 		if (!map[y][x]){
 			
-			switch (r.nextInt(1000000)){
+			switch (r.nextInt(8)){
 			
 				case 0:
 					t = new Tile(48);

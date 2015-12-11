@@ -122,7 +122,7 @@ public class Game implements GameScreen {
 		if (InputHandler.KEY_ACTION2_PRESSED && !spaceHeld){
 
 			//cave = c.generateMap(1280,  720,  4,  0.5f);
-			cam.setLevel(0, 0, w.generateWorld(64, 64));
+			cam.setLevel(0, 0, c.createLevel(64, 64, 3, 0.5f));
 			spaceHeld = true;
 
 		} else if (!InputHandler.KEY_ACTION2_PRESSED){
