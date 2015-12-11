@@ -1,8 +1,10 @@
 package level.worldgen;
 
+import level.Level;
+
 public class WorldGenerator {
 
-	public int[][] generateWorld(int width, int height, int initialPrecision, float landChance){
+	public Level generateWorld(int width, int height){
 
 		PerlinNoise p = new PerlinNoise();
 		double[][] world = new double[height][width];
@@ -46,7 +48,45 @@ public class WorldGenerator {
 			}
 		}
 
-		return makeTileable(bottom(world));
+		int[][] q = makeTileable(bottom(world));
+		
+		boolean[][] water = new boolean[q.length][q[0].length];
+		boolean[][] grass0 = new boolean[q.length][q[0].length];
+		boolean[][] grass1 = new boolean[q.length][q[0].length];
+		boolean[][] mountain0 = new boolean[q.length][q[0].length];
+		boolean[][] mountain1 = new boolean[q.length][q[0].length];
+		boolean[][] mountain2 = new boolean[q.length][q[0].length];
+		
+		Level l = new Level(width / 2, height / 2, "Overworld");
+		l.addLayer("water.png");
+		l.addLayer("grass.png");
+		l.addLayer("grass.png");
+		l.addLayer("mountain.png");
+		l.addLayer("mountain.png");
+		l.addLayer("mountain.png");
+		
+		for (int i = 0; i < height / 2; i++){
+			
+			for (int j = 0; j < width / 2; j++){
+				
+				water[i][j] = q[i*2][j*2] == -1;
+				grass0[i][j] = q[i*2][j*2] == 0;
+				grass1[i][j] = q[i*2][j*2] == 1;
+				mountain0[i][j] = q[i*2][j*2] == 2;
+				mountain1[i][j] = q[i*2][j*2] == 3;
+				mountain2[i][j] = q[i*2][j*2] == 4;
+				
+				l.addTile(TileMapper.processTile(j, i, water), j, i, 0);
+				l.addTile(TileMapper.processTile(j, i, grass0), j, i, 1);
+				l.addTile(TileMapper.processTile(j, i, grass1), j, i, 2);
+				l.addTile(TileMapper.processTile(j, i, mountain0), j, i, 3);
+				l.addTile(TileMapper.processTile(j, i, mountain1), j, i, 4);
+				l.addTile(TileMapper.processTile(j, i, mountain2), j, i, 5);
+				
+			}
+		}
+		
+		return l;
 	}
 
 	private double[][] bottom(double[][] in){

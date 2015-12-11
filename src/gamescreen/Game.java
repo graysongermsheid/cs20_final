@@ -121,9 +121,8 @@ public class Game implements GameScreen {
 
 		if (InputHandler.KEY_ACTION2_PRESSED && !spaceHeld){
 
-			cave = c.generateMap(1280,  720,  4,  0.5f);
-			cam.setLevel(0, 0, c.createLevel(64, 64, 0, 0.5f));
-			world = w.generateWorld(64, 64, 0, 0);
+			//cave = c.generateMap(1280,  720,  4,  0.5f);
+			cam.setLevel(0, 0, w.generateWorld(64, 64));
 			spaceHeld = true;
 
 		} else if (!InputHandler.KEY_ACTION2_PRESSED){
@@ -146,12 +145,15 @@ public class Game implements GameScreen {
 	public void loadResources(){
 		
 		ResourceManager.createSpriteSheet("Tolos.png", 16, 16);
+		ResourceManager.createSpriteSheet("sand.png", 16, 16);
+		ResourceManager.createSpriteSheet("water.png", 16, 16);
+		ResourceManager.createSpriteSheet("grass.png", 16, 16);
+		ResourceManager.createSpriteSheet("mountain.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
 		c = new CaveGenerator();
 		w = new WorldGenerator();
-		world = w.generateWorld(640, 360, 0, 0);
 		cave = c.generateMap(1280, 720, 3, 0.5f);
-		cam = new Camera(0, 0, 320, 180, c.createLevel(1280, 720, 3, 0.5f));
+		cam = new Camera(0, 0, 320, 180, c.createLevel(1280, 720, 4, 0.5f));
 	}
 
 	@Override

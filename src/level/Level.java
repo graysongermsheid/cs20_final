@@ -9,23 +9,21 @@ public class Level {
 	protected int height;
 	protected int width;
 	protected String name;
-	protected String tileSet;
 
 	private TileLayer[] layers;
 	//private ArrayList<Entity> entities;
 	private CollisionLayer collisions;
 
-	public Level(int width, int height, String name, String tileSet){
+	public Level(int width, int height, String name){
 
 		this.width = width;
 		this.height = height;
 		this.name = name;
-		this.tileSet = tileSet;
 		layers = new TileLayer[0];
 
 	}
 
-	public void addLayer(){
+	public void addLayer(String tileSet){
 
 		TileLayer l2[] = new TileLayer[layers.length + 1];
 

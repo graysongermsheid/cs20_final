@@ -106,7 +106,7 @@ public class Camera {
 
 		Graphics2D g2 = drawImage.createGraphics();
 		g2.setColor(java.awt.Color.BLACK);
-		g2.fillRect(0, 0, drawImage.getWidth(), drawImage.getHeight());
+		//g2.fillRect(0, 0, drawImage.getWidth(), drawImage.getHeight());
 
 		float scaleV = gamescreen.ScreenManager.screenSize.height / (float)size.height;
 		float scaleH = gamescreen.ScreenManager.screenSize.width / (float)size.width;
