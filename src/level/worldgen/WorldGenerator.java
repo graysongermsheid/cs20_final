@@ -59,29 +59,36 @@ public class WorldGenerator {
 		
 		Level l = new Level(width / 2, height / 2, "Overworld");
 		l.addLayer("water.png");
+		l.addLayer("sand.png");
 		l.addLayer("grass.png");
-		l.addLayer("grass.png");
 		l.addLayer("mountain.png");
-		l.addLayer("mountain.png");
-		l.addLayer("mountain.png");
+		l.addLayer("mountain_high.png");
+		l.addLayer("mountain_high.png");
 		
 		for (int i = 0; i < height / 2; i++){
 			
 			for (int j = 0; j < width / 2; j++){
 				
 				water[i][j] = q[i*2][j*2] == -1;
-				grass0[i][j] = q[i*2][j*2] == 0;
-				grass1[i][j] = q[i*2][j*2] == 1;
-				mountain0[i][j] = q[i*2][j*2] == 2;
-				mountain1[i][j] = q[i*2][j*2] == 3;
+				grass0[i][j] = q[i*2][j*2] >= 0;
+				grass1[i][j] = q[i*2][j*2] >= 1;
+				mountain0[i][j] = q[i*2][j*2] >= 2;
+				mountain1[i][j] = q[i*2][j*2] >= 3;
 				mountain2[i][j] = q[i*2][j*2] == 4;
 				
-				l.addTile(TileMapper.processTile(j, i, water), j, i, 0);
-				l.addTile(TileMapper.processTile(j, i, grass0), j, i, 1);
-				l.addTile(TileMapper.processTile(j, i, grass1), j, i, 2);
-				l.addTile(TileMapper.processTile(j, i, mountain0), j, i, 3);
-				l.addTile(TileMapper.processTile(j, i, mountain1), j, i, 4);
-				l.addTile(TileMapper.processTile(j, i, mountain2), j, i, 5);
+			}
+		}
+		
+		for (int i = 0; i < height / 2; i++){
+			
+			for (int j = 0; j < width / 2; j++){
+				
+				l.addTile(TileMapper.processTile(j, i, water, false), j, i, 0);
+				l.addTile(TileMapper.processTile(j, i, grass0, false), j, i, 1);
+				l.addTile(TileMapper.processTile(j, i, grass1, false), j, i, 2);
+				l.addTile(TileMapper.processTile(j, i, mountain0, false), j, i, 3);
+				l.addTile(TileMapper.processTile(j, i, mountain1, false), j, i, 4);
+				l.addTile(TileMapper.processTile(j, i, mountain2, false), j, i, 5);
 				
 			}
 		}

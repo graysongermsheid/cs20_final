@@ -49,20 +49,25 @@ public class TileLayer {
 
 			for (int j = x0; j < x1; j++){
 
-				g.drawImage(spritesheet.getImage(tiles[i][j].getSpriteID()), (j - x0) * spritesheet.getSize().width - (p0.x % 16), (i - y0) * spritesheet.getSize().height - (p0.y % 16), null);
+				if (tiles[i][j] != null){
 
-				/*if (j % 2 == i % 2){
-					
-					g.setColor(new java.awt.Color(255, 0, 0, 32));
-					
-				} else {
-					
-					g.setColor(new java.awt.Color(0, 0, 255, 32));
-				
+					g.drawImage(spritesheet.getImage(tiles[i][j].getSpriteID()), (j - x0) * spritesheet.getSize().width - (p0.x % 16), (i - y0) * spritesheet.getSize().height - (p0.y % 16), null);
+
 				}
 				
-				g.fillRect( (j - x0) * spritesheet.getSize().width - (p0.x % 16), (i - y0) * spritesheet.getSize().height - (p0.y % 16), 16, 16);
-			*/
+				
+				//if (j % 2 == i % 2){
+					
+					//g.setColor(new java.awt.Color(255, 0, 0, 32));
+					
+				//} else {
+					
+					//g.setColor(new java.awt.Color(0, 0, 255, 32));
+				
+				//}
+				
+				//g.fillRect( (j - x0) * spritesheet.getSize().width - (p0.x % 16), (i - y0) * spritesheet.getSize().height - (p0.y % 16), 16, 16);
+			
 			}
 		}
 	}

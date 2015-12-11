@@ -45,7 +45,7 @@ public class CaveGenerator {
 			
 			for (int j = 0; j < cave[0].length; j++){
 				
-				l.addTile(TileMapper.processTile(j, i, cave), j, i, 0);
+				l.addTile(TileMapper.processTile(j, i, cave, true), j, i, 0);
 			}
 		}
 		

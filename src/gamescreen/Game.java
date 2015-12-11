@@ -122,7 +122,7 @@ public class Game implements GameScreen {
 		if (InputHandler.KEY_ACTION2_PRESSED && !spaceHeld){
 
 			//cave = c.generateMap(1280,  720,  4,  0.5f);
-			cam.setLevel(0, 0, c.createLevel(64, 64, 3, 0.5f));
+			cam.setLevel(4000, 4000, w.generateWorld(1024, 1024));
 			spaceHeld = true;
 
 		} else if (!InputHandler.KEY_ACTION2_PRESSED){
@@ -149,11 +149,12 @@ public class Game implements GameScreen {
 		ResourceManager.createSpriteSheet("water.png", 16, 16);
 		ResourceManager.createSpriteSheet("grass.png", 16, 16);
 		ResourceManager.createSpriteSheet("mountain.png", 16, 16);
+		ResourceManager.createSpriteSheet("mountain_high.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
 		c = new CaveGenerator();
 		w = new WorldGenerator();
 		cave = c.generateMap(1280, 720, 3, 0.5f);
-		cam = new Camera(0, 0, 320, 180, c.createLevel(1280, 720, 4, 0.5f));
+		cam = new Camera(0, 0, 640, 360, c.createLevel(1280, 720, 4, 0.5f));
 	}
 
 	@Override

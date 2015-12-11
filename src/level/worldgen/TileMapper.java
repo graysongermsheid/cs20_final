@@ -7,7 +7,7 @@ public class TileMapper {
 
 	private static Random r = new Random();
 	
-	public static Tile processTile(int x, int y, boolean[][] map){
+	public static Tile processTile(int x, int y, boolean[][] map, boolean falseFloor){
 		
 		Tile t = new Tile(7);
 		
@@ -27,8 +27,15 @@ public class TileMapper {
 			
 			}
 			
-			return t;
+			if (falseFloor){
 
+				return t;
+				
+			} else {
+				
+				return null;
+				
+			}
 		}
 		
 		t = new Tile(35);
@@ -46,7 +53,7 @@ public class TileMapper {
 
 		if (!n & !w & !e & !s){
 			
-			t = new Tile(53);
+			t = new Tile(5);
 			
 		} else if (n & w & s & !se & e){
 			
