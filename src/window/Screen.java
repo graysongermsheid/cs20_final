@@ -114,7 +114,7 @@ public class Screen extends Canvas {
 				
 			}
 
-			while (currentTime - lastUpdate < LOOP_SPEED && currentTime - lastRender < FRAME_SPEED){
+			while (/*currentTime - lastUpdate < LOOP_SPEED && */currentTime - lastRender < FRAME_SPEED){
 
 				Thread.yield();
 				try { Thread.sleep(1); } catch (Exception e) {}

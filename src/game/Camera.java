@@ -94,11 +94,11 @@ public class Camera {
 	
 	public void processInput(){
 		
-		location.x += (InputHandler.KEY_RIGHT_PRESSED && farLocation.x + 1 < currentLevel.getRealSize().width) ? 1 : 0;
-		location.x -= (InputHandler.KEY_LEFT_PRESSED && location.x > 0) ? 1 : 0;
+		location.x += (InputHandler.KEY_RIGHT_PRESSED && farLocation.x + 3 < currentLevel.getRealSize().width) ? 3 : 0;
+		location.x -= (InputHandler.KEY_LEFT_PRESSED && location.x > 2) ? 3 : 0;
 
-		location.y += (InputHandler.KEY_DOWN_PRESSED && farLocation.y + 1 < currentLevel.getRealSize().height) ? 1 : 0;
-		location.y -= (InputHandler.KEY_UP_PRESSED && location.y > 0) ? 1 : 0;
+		location.y += (InputHandler.KEY_DOWN_PRESSED && farLocation.y + 3 < currentLevel.getRealSize().height) ? 3 : 0;
+		location.y -= (InputHandler.KEY_UP_PRESSED && location.y > 2) ? 3 : 0;
 			
 	}
 	

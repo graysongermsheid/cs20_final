@@ -26,6 +26,7 @@ public class Game implements GameScreen {
 	
 	private Random r;
 	private int[][] world;
+	private double[][] noise;
 	private int[][] tileWorld;
 	private CaveNode[][] cave;
 	private boolean spaceHeld = false;
@@ -65,6 +66,19 @@ public class Game implements GameScreen {
 			}
 		}*/
 
+		for (int i = 0; i < noise.length; i++){
+	
+			for (int j = 0; j < noise[0].length; j++){
+				
+				int c = (int)(Math.round(noise[i][j] * 255));
+				
+				g.setColor(new Color(c, c, c));
+			
+				g.fillRect(i, j, 1, 1);
+				
+			}
+		}
+		
 		/*for (int i = 0; i < world.length; i++){
 
 			for (int j = 0; j < world[0].length; j++){
@@ -99,7 +113,7 @@ public class Game implements GameScreen {
 						break;
 				}
 
-				g.fillRect(j * 2, i * 2, 2, 2);
+				g.fillRect(j, i, 1, 1);
 			}
 		}*/
 
@@ -113,7 +127,7 @@ public class Game implements GameScreen {
 			}
 		}*/
 		
-		cam.draw(g);
+		//cam.draw(g);
 	}
 
 	@Override
@@ -122,7 +136,9 @@ public class Game implements GameScreen {
 		if (InputHandler.KEY_ACTION2_PRESSED && !spaceHeld){
 
 			//cave = c.generateMap(1280,  720,  4,  0.5f);
-			cam.setLevel(4000, 4000, w.generateWorld(1024, 1024));
+			//cam.setLevel(2000, 2000, w.generateWorld(1024, 1024));
+			//world = w.generateInts(1280, 720);
+			noise = w.getRaw(1280, 720);
 			spaceHeld = true;
 
 		} else if (!InputHandler.KEY_ACTION2_PRESSED){
@@ -154,7 +170,9 @@ public class Game implements GameScreen {
 		c = new CaveGenerator();
 		w = new WorldGenerator();
 		cave = c.generateMap(1280, 720, 3, 0.5f);
-		cam = new Camera(0, 0, 640, 360, c.createLevel(1280, 720, 4, 0.5f));
+		//world = w.generateInts(1280, 720);
+		noise = w.getRaw(1280, 720);
+		cam = new Camera(0, 0, 1280, 720, c.createLevel(1280, 720, 4, 0.5f));
 	}
 
 	@Override
