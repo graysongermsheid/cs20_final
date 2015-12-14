@@ -95,6 +95,77 @@ public class WorldGenerator {
 		
 		return l;
 	}
+	
+	public int[][] generateInts(int width, int height){
+
+		PerlinNoise p = new PerlinNoise();
+		double[][] world = new double[height][width];
+
+		for (int i = 0; i < height; i++){
+
+			for (int j = 0; j < width; j++){
+
+				world[i][j] += p.noise(j / 4.0, i / 4.0) * 0.0625;
+				world[i][j] += p.noise(j / 8.0, i / 8.0) * 0.125f;
+				world[i][j] += p.noise(j / 16.0, i / 16.0) * 0.25f;
+				world[i][j] += p.noise(j / 32.0, i / 32.0) * 0.5f;
+				world[i][j] += p.noise(j / 64.0, i / 64.0) * 1.0f;
+				world[i][j] += p.noise(j / 128.0, i / 128.0) * 2.0f;
+
+				world[i][j] /= 6;
+				//world[i][j] += 1;
+			}
+		}
+
+		double[][] grad = new double[height][width];
+
+		for (int i = 0; i < height; i++){
+
+			for (int j = 0; j < width; j++){
+
+				grad[i][j] = gradient(j, i, width, height);
+
+			}
+		}
+
+		grad = normalize(grad);
+		world = normalize(world);
+
+	 	/*for (int i = 0; i < height; i++){
+
+			for (int j = 0; j < width; j++){
+
+				world[i][j] -= grad[i][j];
+
+			}
+		}*/
+	 	
+	 	return makeTileable(world);
+	}
+	
+	public double[][] getRaw(int width, int height){
+		
+		PerlinNoise p = new PerlinNoise();
+		double[][] world = new double[height][width];
+
+		for (int i = 0; i < height; i++){
+
+			for (int j = 0; j < width; j++){
+
+				world[i][j] += p.noise(j / 4.0, i / 4.0) * 0.0625;
+				world[i][j] += p.noise(j / 8.0, i / 8.0) * 0.125f;
+				world[i][j] += p.noise(j / 16.0, i / 16.0) * 0.25f;
+				world[i][j] += p.noise(j / 32.0, i / 32.0) * 0.5f;
+				world[i][j] += p.noise(j / 64.0, i / 64.0) * 1.0f;
+				world[i][j] += p.noise(j / 128.0, i / 128.0) * 2.0f;
+
+				world[i][j] /= 6;
+				//world[i][j] += 1;
+			}
+		}
+		
+		return normalize(world);
+	}
 
 	private double[][] bottom(double[][] in){
 
