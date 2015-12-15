@@ -70,8 +70,11 @@ public class Game implements GameScreen {
 	
 			for (int j = 0; j < noise[0].length; j++){
 				
-				int c = (int)(Math.round(noise[i][j] * 5000));
+				int c = (int)(Math.round(noise[i][j] * 255));
 				
+				c = c << 18;
+				//c = c & 512;
+			
 				g.setColor(new Color(c));
 			
 				g.fillRect(j, i, 1, 1);
