@@ -153,13 +153,13 @@ public class WorldGenerator {
 			for (int j = 0; j < width; j++){
 
 				world[i][j] += p.noise(j / 4.0, i / 4.0) * 0.0625;
-				world[i][j] += p.noise(j / 8.0, i / 8.0) * 0.125f;
-				world[i][j] += p.noise(j / 16.0, i / 16.0) * 0.25f;
-				world[i][j] += p.noise(j / 32.0, i / 32.0) * 0.5f;
-				world[i][j] += p.noise(j / 64.0, i / 64.0) * 1.0f;
-				world[i][j] += p.noise(j / 128.0, i / 128.0) * 2.0f;
+				//world[i][j] += p.noise(j / 8.0, i / 8.0) * 0.125f;
+				//world[i][j] += p.noise(j / 16.0, i / 16.0) * 0.25f;
+				//world[i][j] += p.noise(j / 32.0, i / 32.0) * 0.5f;
+				//world[i][j] += p.noise(j / 64.0, i / 64.0) * 1.0f;
+				world[i][j] += p.noise(j / 512.0, i / 512.0) * 2.0f;
 
-				world[i][j] /= 6;
+				//world[i][j] /= 6;
 				//world[i][j] += 1;
 			}
 		}
