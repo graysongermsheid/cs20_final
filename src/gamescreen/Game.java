@@ -70,13 +70,22 @@ public class Game implements GameScreen {
 	
 			for (int j = 0; j < noise[0].length; j++){
 				
-				int c = (int)(Math.round(noise[i][j] * 255));
+				int c = (int)(Math.round(noise[i][j] * 2550));
+
+				int r = c & 255;
+				int gr = (c / 2 & 255) & 0xff;
+				int b = (c / 4 & 255) & 0xff;
 				
-				c = c << 18;
-				//c = c & 512;
-			
-				g.setColor(new Color(c));
-			
+				if (c < 1440){
+					
+					r = 0;
+					gr = 0;
+					b = 0;
+					
+				}
+				
+				g.setColor(new Color(r, gr, b));
+				
 				g.fillRect(j, i, 1, 1);
 				
 			}
@@ -136,7 +145,7 @@ public class Game implements GameScreen {
 	@Override
 	public void processInput(){
 
-		if (InputHandler.KEY_ACTION2_PRESSED && !spaceHeld){
+		if (InputHandler.KEY_ACTION2_PRESSED/* && !spaceHeld*/){
 
 			//cave = c.generateMap(1280,  720,  4,  0.5f);
 			//cam.setLevel(2000, 2000, w.generateWorld(1024, 1024));

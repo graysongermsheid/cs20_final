@@ -66,10 +66,10 @@ public class PerlinNoise {
 		X = X & 255;
 		Y = Y & 255;
 
-		double[] grad00 = gradients[permutations[X + permutations[Y]] % 8];
-		double[] grad01 = gradients[permutations[X + permutations[Y + 1]] % 8];
-		double[] grad10 = gradients[permutations[X + 1 + permutations[Y]] % 8];
-		double[] grad11 = gradients[permutations[X + 1 + permutations[Y + 1]] % 8];
+		double[] grad00 = gradients[permutations[X + permutations[Y]] % 4 + 4];
+		double[] grad01 = gradients[permutations[X + permutations[Y + 1]] % 4 + 4];
+		double[] grad10 = gradients[permutations[X + 1 + permutations[Y]] % 4 + 4];
+		double[] grad11 = gradients[permutations[X + 1 + permutations[Y + 1]] % 4 + 4];
 
 		double n00 = dot(grad00, new double[] {x, y});
 		double n01 = dot(grad01, new double[] {x, y - 1});
