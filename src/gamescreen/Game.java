@@ -6,11 +6,8 @@ import java.util.Random;
 
 import resources.ResourceManager;
 import input.InputHandler;
-import level.worldgen.BSPNode;
-import level.worldgen.CaveGenerator.CaveNode;
 import level.worldgen.CaveGenerator;
-import level.Level;
-import level.worldgen.WorldGenerator;
+import gui.*;
 
 import game.Camera;
 
@@ -23,20 +20,17 @@ public class Game implements GameScreen {
 	//that way the world has an ID, the each individual cave
 	//system has an id, so all the game needs to save is 2 numbers
 	
-	
-	private Random r;
-	private int[][] world;
-	private double[][] noise;
-	private int[][] tileWorld;
-	private CaveNode[][] cave;
-	private boolean spaceHeld = false;
+	private boolean paused;
+	private boolean escHeld;
 	private CaveGenerator c;
-	private WorldGenerator w;
 	private Camera cam;
+	private Menu pauseMenu;
 
 	public Game(){
 		
-		r = new Random();
+		paused = false;
+		escHeld = false;
+		pauseMenu = new Menu("composite_four.png", 512, 104, 256, 512);
 		loadResources();
 		
 	}
@@ -50,116 +44,35 @@ public class Game implements GameScreen {
 
 	@Override
 	public void draw(Graphics2D g){
-
-
-		//l.draw(g);
-		/*for (int i = 0; i < cave.length; i++){
-
-			for (int j = 0; j < cave[0].length; j++){
-
-				if (cave[i][j].empty){
-
-					g.setColor(new Color(cave[i][j].tag * 750000));
-					g.fillRect(j, i, 1, 1);
-
-				}
-			}
-		}*/
-
-		for (int i = 0; i < noise.length; i++){
-	
-			for (int j = 0; j < noise[0].length; j++){
-				
-				int c = (int)(Math.round(noise[i][j] * 2550));
-
-				int r = c & 255;
-				int gr = (c / 2 & 255) & 0xff;
-				int b = (c / 4 & 255) & 0xff;
-				
-				if (c < 1440){
-					
-					r = 0;
-					gr = 0;
-					b = 0;
-					
-				}
-				
-				g.setColor(new Color(r, gr, b));
-				
-				g.fillRect(j, i, 1, 1);
-				
-			}
-		}
 		
-		/*for (int i = 0; i < world.length; i++){
-
-			for (int j = 0; j < world[0].length; j++){
-				
-				//int x = (int)(world[i][j] * 255);
-				//g.setColor(new Color(x, x, x));
-
-				switch (world[i][j]){
-
-					case -1:
-						g.setColor(Color.BLUE);
-						break;
-
-					case 0:
-						g.setColor(new Color(0xE8, 0xD8, 0x83));
-						break;
-
-					case 1:
-						g.setColor(new Color(0, 104, 10));
-						break;
-
-					case 2:
-						g.setColor(new Color(119, 119, 119));
-						break;
-
-					case 3:
-						g.setColor(new Color(153, 153, 153));
-						break;
-
-					case 4:
-						g.setColor(new Color(200, 200, 200));
-						break;
-				}
-
-				g.fillRect(j, i, 1, 1);
-			}
-		}*/
-
-		/*g.setColor(new Color(255, 0, 255));
-		for (int i = 0; i < 16; i++){
-
-			for (int j = 0; j < 16; j++){
-
-				g.drawRect(j * 64, i * 40, 64, 40);
-
-			}
-		}*/
-		
-		//cam.draw(g);
+		cam.draw(g);
 	}
 
 	@Override
 	public void processInput(){
-
-		if (InputHandler.KEY_ACTION2_PRESSED/* && !spaceHeld*/){
-
-			//cave = c.generateMap(1280,  720,  4,  0.5f);
-			//cam.setLevel(2000, 2000, w.generateWorld(1024, 1024));
-			//world = w.generateInts(1280, 720);
-			noise = w.getRaw(1280, 720);
-			spaceHeld = true;
-
-		} else if (!InputHandler.KEY_ACTION2_PRESSED){
-
-			spaceHeld = false;
-
+		
+		if (InputHandler.KEY_ESCAPE_PRESSED && !escHeld){
+			
+			escHeld = true;
+			paused = !paused;
+			System.out.println("Paused opr whateer");
+			
+		} else if (escHeld){
+			
+			escHeld = false;
+			
 		}
+		
+		if (!paused){
 
-		cam.processInput();
+			cam.processInput();
+			
+		} else {
+			
+			pauseMenu.setVisible(true);
+			
+		}
+		
 	}
 
 	@Override
@@ -172,25 +85,22 @@ public class Game implements GameScreen {
 	@Override
 	public void loadResources(){
 		
-		ResourceManager.createSpriteSheet("Tolos.png", 16, 16);
+		ResourceManager.createSpriteSheet("caves.png", 16, 16);
 		ResourceManager.createSpriteSheet("sand.png", 16, 16);
 		ResourceManager.createSpriteSheet("water.png", 16, 16);
 		ResourceManager.createSpriteSheet("grass.png", 16, 16);
 		ResourceManager.createSpriteSheet("mountain.png", 16, 16);
 		ResourceManager.createSpriteSheet("mountain_high.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
+		ResourceManager.createSpriteSheet("composite_four.png", 8, 8);
 		c = new CaveGenerator();
-		w = new WorldGenerator();
-		cave = c.generateMap(1280, 720, 3, 0.5f);
-		//world = w.generateInts(1280, 720);
-		noise = w.getRaw(1280, 720);
-		cam = new Camera(0, 0, 1280, 720, c.createLevel(1280, 720, 4, 0.5f));
+		cam = new Camera(0, 0, 128, 72, c.createLevel(64, 64, 4, 0.5f));
 	}
 
 	@Override
 	public void unloadResources(){
 
-
+		ResourceManager.clearResources();
 
 	}
 }

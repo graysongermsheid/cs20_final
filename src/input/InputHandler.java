@@ -26,6 +26,7 @@ public class InputHandler extends MouseInputAdapter implements MouseWheelListene
 	public static boolean KEY_RIGHT_PRESSED;
 	public static boolean KEY_ACTION_PRESSED;
 	public static boolean KEY_ACTION2_PRESSED;
+	public static boolean KEY_ESCAPE_PRESSED;
 
 	public static boolean KEY_UP_RELEASED;
 	public static boolean KEY_DOWN_RELEASED;
@@ -33,6 +34,7 @@ public class InputHandler extends MouseInputAdapter implements MouseWheelListene
 	public static boolean KEY_RIGHT_RELEASED;
 	public static boolean KEY_ACTION_RELEASED;
 	public static boolean KEY_ACTION2_RELEASED;
+	public static boolean KEY_ESCAPE_RELEASED;
 
 
 	@Override
@@ -69,6 +71,11 @@ public class InputHandler extends MouseInputAdapter implements MouseWheelListene
 
 			KEY_ACTION2_PRESSED = true;
 			KEY_ACTION2_RELEASED = false;
+			
+		} else if (KeyBindings.ESCAPE.matches(e.getKeyCode())){
+			
+			KEY_ESCAPE_PRESSED = true;
+			KEY_ESCAPE_RELEASED = false;
 			
 		}
 	}
@@ -107,6 +114,11 @@ public class InputHandler extends MouseInputAdapter implements MouseWheelListene
 
 			KEY_ACTION2_PRESSED = false;
 			KEY_ACTION2_RELEASED = true;
+			
+		} else if (KeyBindings.ESCAPE.matches(e.getKeyCode())){
+			
+			KEY_ESCAPE_PRESSED = false;
+			KEY_ESCAPE_RELEASED = true;
 			
 		}
 
@@ -159,11 +171,12 @@ public class InputHandler extends MouseInputAdapter implements MouseWheelListene
 
 	public static void resetKeys(){
 
-		boolean KEY_UP_RELEASED = false;
-		boolean KEY_DOWN_RELEASED = false;
-		boolean KEY_LEFT_RELEASED = false;
-		boolean KEY_RIGHT_RELEASED = false;
-		boolean KEY_ACTION_RELEASED = false;
-		boolean KEY_ACTION2_RELEASED = false;
+		KEY_UP_RELEASED = false;
+		KEY_DOWN_RELEASED = false;
+		KEY_LEFT_RELEASED = false;
+		KEY_RIGHT_RELEASED = false;
+		KEY_ACTION_RELEASED = false;
+		KEY_ACTION2_RELEASED = false;
+		KEY_ESCAPE_RELEASED = false;
 	}
 }

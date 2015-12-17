@@ -39,7 +39,7 @@ public class CaveGenerator {
 		}
 		
 		Level l = new Level(width, height, "Cave");
-		l.addLayer("Tolos.png");
+		l.addLayer("caves.png");
 		
 		for (int i = 0; i < cave.length; i++){
 			
