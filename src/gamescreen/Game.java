@@ -30,15 +30,22 @@ public class Game implements GameScreen {
 		
 		paused = false;
 		escHeld = false;
-		pauseMenu = new Menu("composite_four.png", 512, 104, 256, 512);
 		loadResources();
 		
 	}
 	
 	@Override
 	public void update(double elapsedMilliseconds){
-
-		cam.update(elapsedMilliseconds);
+		
+		if (paused){
+			
+			pauseMenu.update(elapsedMilliseconds);
+			
+		} else {
+			
+			cam.update(elapsedMilliseconds);
+			
+		}
 
 	}
 
@@ -46,6 +53,13 @@ public class Game implements GameScreen {
 	public void draw(Graphics2D g){
 		
 		cam.draw(g);
+		
+		if (paused){
+			
+			pauseMenu.draw(g);
+			
+		}
+		
 	}
 
 	@Override
@@ -55,9 +69,12 @@ public class Game implements GameScreen {
 			
 			escHeld = true;
 			paused = !paused;
+			
+			if (paused){ pauseMenu.setVisible(true); }
+			
 			System.out.println("Paused opr whateer");
 			
-		} else if (escHeld){
+		} else if (!InputHandler.KEY_ESCAPE_PRESSED){
 			
 			escHeld = false;
 			
@@ -69,7 +86,7 @@ public class Game implements GameScreen {
 			
 		} else {
 			
-			pauseMenu.setVisible(true);
+			pauseMenu.processInput();
 			
 		}
 		
@@ -93,8 +110,14 @@ public class Game implements GameScreen {
 		ResourceManager.createSpriteSheet("mountain_high.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
 		ResourceManager.createSpriteSheet("composite_four.png", 8, 8);
+		ResourceManager.createSpriteSheet("composite_two.png", 16, 16);
+		ResourceManager.createSpriteSheet("button.png", 24, 24);
+		
 		c = new CaveGenerator();
 		cam = new Camera(0, 0, 128, 72, c.createLevel(64, 64, 4, 0.5f));
+
+		pauseMenu = new Menu("composite_four.png", 480, 104, 320, 512);
+		pauseMenu.addButton(new Button("EXIT", 32, 32));
 	}
 
 	@Override
