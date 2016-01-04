@@ -114,7 +114,7 @@ public class Game implements GameScreen {
 		ResourceManager.createSpriteSheet("button.png", 24, 24);
 		
 		c = new CaveGenerator();
-		cam = new Camera(0, 0, 128, 72, c.createLevel(64, 64, 4, 0.5f));
+		cam = new Camera(0, 0, 256, 144, c.createLevel(64, 64, 4, 0.5f));
 
 		pauseMenu = new Menu("composite_four.png", 480, 104, 320, 512);
 		pauseMenu.addButton(new Button("EXIT", 32, 32));

@@ -25,7 +25,7 @@ public class AABB {
 
 			return false;
 
-			}
+		}
 
 		return true;
 
@@ -49,10 +49,27 @@ public class AABB {
 
 	}
 
+	//Return top-left corner
 	public Point getLocation(){
 
 		return new Point(x, y);
 
+	}
+	
+	//return bottom-right corner.
+	public Point getFarLocation(){
+		
+		return new Point(x1, y1);
+		
+	}
+	
+	public void setLocation(int x, int y){
+		
+		this.x = x;
+		this.y = y;
+		this.x1 = x + width;
+		this.y1 = y + height;
+		
 	}
 
 	public Dimension getSize(){
