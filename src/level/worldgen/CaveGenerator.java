@@ -7,6 +7,7 @@ import java.awt.Dimension;
 
 import level.Level;
 import level.Tile;
+import level.CollisionType;
 
 public class CaveGenerator {
 	
@@ -45,7 +46,11 @@ public class CaveGenerator {
 			
 			for (int j = 0; j < cave[0].length; j++){
 				
-				l.addTile(TileMapper.processTile(j, i, cave, true), j, i, 0);
+				CollisionType collision = cave[i][j] ? CollisionType.WALL : CollisionType.NONE;
+				
+				l.addTile(TileMapper.processTile(j, i, cave, true), j, i, 0);	
+				l.addCollision(j, i, collision);
+				
 			}
 		}
 		

@@ -2,6 +2,10 @@ package level;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.ArrayList;
+
+import game.Entity;
+
 import java.awt.Dimension;
 
 public class Level {
@@ -11,7 +15,7 @@ public class Level {
 	protected String name;
 
 	private TileLayer[] layers;
-	//private ArrayList<Entity> entities;
+	private ArrayList<Entity> entities;
 	private CollisionLayer collisions;
 
 	public Level(int width, int height, String name){
@@ -19,6 +23,7 @@ public class Level {
 		this.width = width;
 		this.height = height;
 		this.name = name;
+		collisions = new CollisionLayer(width, height);
 		layers = new TileLayer[0];
 
 	}
@@ -50,7 +55,31 @@ public class Level {
 		collisions.set(x, y, type);
 
 	}
+	
+	public void addEntity(Entity e){
+		
+		entities.add(e);
+		
+	}
+	
+	public Entity[] getEntites(){
+		
+		Entity[] e = new Entity[entities.size()];
+		entities.toArray(e);
+		return e;
+		
+	}
 
+	public void update(double elapsedMilliseconds){
+		
+		/*for (Entity e : entities){
+			
+			//e.update(elapsedMilliseconds);
+			
+		}*/
+		
+	}
+	
 	public void draw(Point p0, Point p1, Graphics2D g){
 
 		for (TileLayer t : layers){
@@ -58,6 +87,12 @@ public class Level {
 			t.draw(p0, p1, g);
 
 		}
+		
+		/*for (Entity e : entities){
+			
+			e.draw(g);
+			
+		}*/
 	}
 
 	public Dimension getSize(){

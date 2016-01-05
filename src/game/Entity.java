@@ -18,8 +18,6 @@ public abstract class Entity {
 		
 	}
 	
-	public abstract void collide(Entity e);
-	
 	protected EntityType getType(){
 		
 		return entityType;
@@ -28,5 +26,6 @@ public abstract class Entity {
 	
 	public abstract void update(double elapsedMilliseconds);
 	public abstract void draw(Graphics2D g);
+	protected abstract void collide(Entity e);
 	
 }
