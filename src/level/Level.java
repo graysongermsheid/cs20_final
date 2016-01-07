@@ -28,6 +28,12 @@ public class Level {
 
 	}
 
+	public CollisionLayer getCollisionLayer(){
+		
+		return collisions;
+		
+	}
+	
 	public void addLayer(String tileSet){
 
 		TileLayer l2[] = new TileLayer[layers.length + 1];

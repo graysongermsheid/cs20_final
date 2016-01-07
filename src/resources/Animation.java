@@ -24,6 +24,18 @@ public class Animation extends SpriteSheet {
 
 	}
 
+	public Animation(double delay, BufferedImage... images){
+		
+		this.images = images;
+		this.delay = delay;
+		this.timer = 0d;
+		this.currentFrame = 0;
+
+		this.minFrame = 0;
+		this.maxFrame = images.length;
+		
+	}
+	
 	public BufferedImage getCurrentFrame(){
 
 		return images[currentFrame];

@@ -27,14 +27,22 @@ public class SpriteFont extends SpriteSheet{
 	public void drawText(String text, int x, int y, Graphics2D g){
 
 		int lastX = x;
-		int character;
+		int character = 0;
 		BufferedImage drawImage = null;
 
 		for (int i = 0; i < text.length(); i++){
 
 			do {
 
-				character = text.charAt(i);
+				try {
+
+					character = text.charAt(i);
+					
+				} catch (Exception e){
+					
+					System.out.println("Non-Unicode character!");
+					
+				}
 
 				if (character > 127 || character < 32){
 
@@ -77,14 +85,22 @@ public class SpriteFont extends SpriteSheet{
 	public void drawShadowedText(String text, int x, int y, Graphics2D g){
 
 		int lastX = x;
-		int character;
+		int character = 0;
 		BufferedImage drawImage = null;
 
 		for (int i = 0; i < text.length(); i++){
 
 			do {
 
-				character = text.charAt(i);
+				try {
+
+					character = text.charAt(i);
+					
+				} catch (Exception e){
+					
+					System.out.println("Non-Unicode character: " + text.substring(i, i + 1));
+					
+				}
 
 				if (character > 127 || character < 32){
 

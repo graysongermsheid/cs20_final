@@ -39,7 +39,7 @@ public class MainMenu extends MenuScreen {
 
 			}
 		};
-		components[2] = new TextBox("message.txt", 192, 176, 256, 48);
+		components[2] = new TextBox("message.txt", 192, 176, 640, 480);
 
 	}
 

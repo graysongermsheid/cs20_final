@@ -2,25 +2,25 @@ package game;
 
 public class Speed {
 
-	private int speedX = 0;
-	private int speedY = 0;
+	public int x = 0;
+	public int y = 0;
 	
 	public void setSpeed(int x, int y){
 		
-		speedX = x;
-		speedY = y;
+		this.x = x;
+		this.y = y;
 		
 	}
 	
 	public void setXSpeed(int x){
 		
-		speedX = x;
+		this.x = x;
 		
 	}
 	
 	public void setYSpeed(int y){
 		
-		speedY = y;
+		this.y = y;
 		
 	}
 	

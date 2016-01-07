@@ -1,15 +1,11 @@
 package gamescreen;
 
-import gamescreen.*;
-import resources.*;
 import java.awt.Graphics2D;
 import java.awt.Dimension;
-import java.awt.Color;
 
 public class ScreenManager {
 	
 	private static GameScreen currentScreen;
-	private static SpriteFont displayFont;
 	public static Dimension screenSize;
 
 	public ScreenManager(int width, int height){

@@ -25,6 +25,7 @@ public class Camera {
 	private BufferedImage drawImage;
 	private AffineTransformOp transformer;
 	private AffineTransform transform;
+	private Player player;
 	
 	public Level currentLevel;
 	
@@ -46,6 +47,9 @@ public class Camera {
 		size = new Dimension(width, height);
 		currentLevel = l;
 		
+		LivingEntity.setLevelCollisionLayer(l.getCollisionLayer());
+		player = new Player(64, 64, 100);
+		
 	}
 
 	public void setLevel(int x, int y, Level l){
@@ -54,6 +58,7 @@ public class Camera {
 		transform = new AffineTransform();
 		farLocation = new Point(x + size.width, y + size.height);
 		currentLevel = l;
+		LivingEntity.setLevelCollisionLayer(l.getCollisionLayer());
 
 	}
 	
@@ -90,6 +95,8 @@ public class Camera {
 			farLocation = new Point(location.x + size.width, location.y + size.height);
 
 		}
+		
+		player.update(elapsedMilliseconds);
 	}
 	
 	public void processInput(){
@@ -99,7 +106,8 @@ public class Camera {
 
 		location.y += (InputHandler.KEY_DOWN_PRESSED && farLocation.y + 1 < currentLevel.getRealSize().height) ? 1 : 0;
 		location.y -= (InputHandler.KEY_UP_PRESSED && location.y > 0) ? 1 : 0;
-			
+	
+		player.processInput();
 	}
 	
 	public void draw(Graphics2D g){
@@ -112,6 +120,7 @@ public class Camera {
 		float scaleH = gamescreen.ScreenManager.screenSize.width / (float)size.width;
 		BufferedImage scaledImage = new BufferedImage((int)(size.width * scaleH), (int)(size.height * scaleV), BufferedImage.TYPE_INT_ARGB);
 		currentLevel.draw(location, farLocation, g2);
+		player.draw(g2);
 
 		g2.dispose();
 
