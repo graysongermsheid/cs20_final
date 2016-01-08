@@ -12,7 +12,15 @@ public class CollisionLayer {
 	
 	public CollisionType getType(int x, int y){
 		
-		return collisionTypes[y][x];
+		if (x >= 0 && y >= 0 && x < collisionTypes[0].length && y < collisionTypes.length){
+			
+			return collisionTypes[y][x];
+			
+		} else {
+			
+			return CollisionType.WALL;
+			
+		}
 		
 	}
 	

@@ -3,6 +3,7 @@ package game;
 import level.CollisionType;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 
 import level.AABB;
 import level.CollisionLayer;
@@ -42,24 +43,26 @@ public abstract class LivingEntity extends Entity {
 	public abstract void collide(Entity e);
 	
 	//Collide with terrain (call in update function)
-	protected void collide(CollisionType c, AABB box, AABB newPosition){
+	protected void collide(CollisionType c, AABB box){
 		
-		if (!box.collides(newPosition)){
+		AABB newPosition = new AABB(boundingBox.getLocation().x + speed.x, boundingBox.getLocation().y + speed.y, boundingBox.getSize().width, boundingBox.getSize().height);
+		
+		if (!box.collides(newPosition) || c == CollisionType.NONE){
 			
 			return;
 			
 		}
 		
+		//System.out.println("COLLISION");
+		
 		if (newPosition.getOverlapX(box) > 0){
 			
-			newPosition.setLocation(box.getLocation().x - newPosition.getSize().width, newPosition.getLocation().y);
 			speed.setXSpeed(0);
 			
 		}
 		
 		if (newPosition.getOverlapY(box) > 0){
 			
-			newPosition.setLocation(newPosition.getLocation().x, box.getLocation().y - newPosition.getSize().height);
 			speed.setYSpeed(0);
 			
 		}
@@ -104,29 +107,28 @@ public abstract class LivingEntity extends Entity {
 			
 		}
 		
-		AABB newPos = new AABB(boundingBox.getLocation().x + speed.x, boundingBox.getLocation().y + speed.y, boundingBox.getSize().width, boundingBox.getSize().height);
+		//AABB newPos = new AABB(boundingBox.getLocation().x + speed.x, boundingBox.getLocation().y + speed.y, boundingBox.getSize().width, boundingBox.getSize().height);
 		int x = boundingBox.getLocation().x / 16;
 		int y = boundingBox.getLocation().y / 16;
 		
-		collide(collisions.getType(x - 1, y - 1), collisions.getCollisionBox(x - 1, y - 1), newPos);
-		collide(collisions.getType(x, y - 1), collisions.getCollisionBox(x, y - 1), newPos);
-		collide(collisions.getType(x + 1, y - 1), collisions.getCollisionBox(x + 1, y - 1), newPos);
+		collide(collisions.getType(x - 1, y - 1), collisions.getCollisionBox(x - 1, y - 1));
+		collide(collisions.getType(x, y - 1), collisions.getCollisionBox(x, y - 1));
+		collide(collisions.getType(x + 1, y - 1), collisions.getCollisionBox(x + 1, y - 1));
 		
-		collide(collisions.getType(x - 1, y), collisions.getCollisionBox(x - 1, y), newPos);
-		collide(collisions.getType(x, y), collisions.getCollisionBox(x, y), newPos);
-		collide(collisions.getType(x + 1, y), collisions.getCollisionBox(x + 1, y), newPos);
+		collide(collisions.getType(x - 1, y), collisions.getCollisionBox(x - 1, y));
+		collide(collisions.getType(x, y), collisions.getCollisionBox(x, y));
+		collide(collisions.getType(x + 1, y), collisions.getCollisionBox(x + 1, y));
 		
-		collide(collisions.getType(x - 1, y + 1), collisions.getCollisionBox(x - 1, y + 1), newPos);
-		collide(collisions.getType(x, y + 1), collisions.getCollisionBox(x, y + 1), newPos);
-		collide(collisions.getType(x + 1, y + 1), collisions.getCollisionBox(x + 1, y + 1), newPos);
+		collide(collisions.getType(x - 1, y + 1), collisions.getCollisionBox(x - 1, y + 1));
+		collide(collisions.getType(x, y + 1), collisions.getCollisionBox(x, y + 1));
+		collide(collisions.getType(x + 1, y + 1), collisions.getCollisionBox(x + 1, y + 1));
 		
-		boundingBox = newPos;
+		boundingBox.setLocation(boundingBox.getLocation().x + speed.x, boundingBox.getLocation().y + speed.y);;
 	}
 	
-	@Override
-	public void draw(Graphics2D g){
+	public void draw(Graphics2D g, Point p){
 		
-		g.drawImage(animations[direction.value()].getCurrentFrame(), boundingBox.getLocation().x, boundingBox.getLocation().y, null);
+		g.drawImage(animations[direction.value()].getCurrentFrame(), boundingBox.getLocation().x - p.x, boundingBox.getLocation().y - p.y, null);
 		
 	}
 

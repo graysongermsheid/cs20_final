@@ -36,7 +36,7 @@ public class AABB {
 	//    1 would mean that this rectangle's far edge would overlap a's near edge by one (collision)
 	public int getOverlapY(AABB a){
 
-		return a.y - y1;
+		return y1 - a.y;
 
 	}
 
@@ -45,7 +45,7 @@ public class AABB {
 	//    1 would mean that this rectangle's far edge would overlap a's near edge by one (collision)
 	public int getOverlapX(AABB a){
 
-		return a.x - x1;
+		return x1 - a.x;
 
 	}
 

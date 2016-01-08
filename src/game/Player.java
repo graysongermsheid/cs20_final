@@ -1,5 +1,7 @@
 package game;
 
+import java.awt.Graphics2D;
+
 import input.InputHandler;
 
 public class Player extends LivingEntity{
@@ -20,11 +22,11 @@ public class Player extends LivingEntity{
 		
 		if (InputHandler.KEY_UP_PRESSED && !InputHandler.KEY_DOWN_PRESSED){
 			
-			speed.setYSpeed(-1);
+			speed.setYSpeed(-2);
 			
 		} else if (InputHandler.KEY_DOWN_PRESSED && !InputHandler.KEY_UP_PRESSED){
 			
-			speed.setYSpeed(1);
+			speed.setYSpeed(2);
 			
 		} else {
 			
@@ -34,11 +36,11 @@ public class Player extends LivingEntity{
 		
 		if (InputHandler.KEY_LEFT_PRESSED && !InputHandler.KEY_RIGHT_PRESSED){
 			
-			speed.setXSpeed(-1);
+			speed.setXSpeed(-2);
 			
 		} else if (InputHandler.KEY_RIGHT_PRESSED && !InputHandler.KEY_LEFT_PRESSED){
 			
-			speed.setXSpeed(1);
+			speed.setXSpeed(2);
 			
 		} else {
 			
@@ -51,6 +53,12 @@ public class Player extends LivingEntity{
 	public void update(double elapsedMilliseconds){
 		
 		super.update(elapsedMilliseconds);
+		
+	}
+
+	@Override
+	public void draw(Graphics2D g) {
+		// TODO Auto-generated method stub
 		
 	}
 	

@@ -4,6 +4,7 @@ import level.AABB;
 import resources.SpriteSheet;
 import resources.ResourceManager;
 import java.awt.Graphics2D;
+import java.awt.Point;
 
 public abstract class Entity {
 
@@ -21,6 +22,12 @@ public abstract class Entity {
 	protected EntityType getType(){
 		
 		return entityType;
+		
+	}
+	
+	public Point getCenter(){
+		
+		return new Point(boundingBox.getFarLocation().x - boundingBox.getSize().width / 2, boundingBox.getFarLocation().y - boundingBox.getSize().height / 2);
 		
 	}
 	
