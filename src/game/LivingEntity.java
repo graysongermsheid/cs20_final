@@ -55,15 +55,17 @@ public abstract class LivingEntity extends Entity {
 		
 		//System.out.println("COLLISION");
 		
-		if (newPosition.getOverlapX(box) > 0){
+		while (newPosition.getOverlapX(box) > 0){
 			
-			speed.setXSpeed(0);
+			speed.setXSpeed(speed.x - 1 < 0 ? 0 : speed.x - 1);
+			newPosition = new AABB(boundingBox.getLocation().x + speed.x, boundingBox.getLocation().y + speed.y, boundingBox.getSize().width, boundingBox.getSize().height);
 			
 		}
 		
-		if (newPosition.getOverlapY(box) > 0){
+		while (newPosition.getOverlapY(box) > 0){
 			
-			speed.setYSpeed(0);
+			speed.setYSpeed(speed.y - 1 < 0 ? 0 : speed.y - 1);
+			newPosition = new AABB(boundingBox.getLocation().x + speed.x, boundingBox.getLocation().y + speed.y, boundingBox.getSize().width, boundingBox.getSize().height);
 			
 		}
 		
