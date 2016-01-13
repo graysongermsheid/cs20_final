@@ -9,12 +9,14 @@ import java.awt.Point;
 public abstract class Entity {
 
 	protected AABB boundingBox;
+	protected AABB hitBox;
 	protected EntityType entityType;
 	protected SpriteSheet sourceSprites;
 	
 	public Entity(int x, int y, int width, int height, String spriteSheet){
 		
 		this.boundingBox = new AABB(x, y, width, height);
+		this.hitBox = new AABB(x, y, width, height);
 		this.sourceSprites = ResourceManager.getSpriteSheet(spriteSheet);
 		
 	}

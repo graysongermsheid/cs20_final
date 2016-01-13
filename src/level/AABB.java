@@ -71,10 +71,43 @@ public class AABB {
 		this.y1 = y + height;
 		
 	}
+	
+	public void setSize(int width, int height){
+		
+		this.width = width;
+		this.height = height;
+		this.x1 = x + width;
+		this.y1 = y + height;
+		
+	}
 
 	public Dimension getSize(){
 
 		return new Dimension(width, height);
 
+	}
+	
+	public int getX(){
+		
+		return x;
+		
+	}
+	
+	public int getY(){
+		
+		return y;
+		
+	}
+	
+	public int getWidth(){
+		
+		return width;
+		
+	}
+	
+	public int getHeight(){
+		
+		return height;
+		
 	}
 }
