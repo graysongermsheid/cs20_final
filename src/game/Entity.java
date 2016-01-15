@@ -15,7 +15,7 @@ public abstract class Entity {
 	
 	public Entity(int x, int y, int width, int height, String spriteSheet){
 		
-		this.boundingBox = new AABB(x, y, width, height);
+		//this.boundingBox = new AABB(x, y, width, height);
 		this.hitBox = new AABB(x, y, width, height);
 		this.sourceSprites = ResourceManager.getSpriteSheet(spriteSheet);
 		

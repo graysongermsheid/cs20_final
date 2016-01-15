@@ -1,16 +1,21 @@
 package game;
 
 import level.Level;
+
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Random;
 import level.CollisionLayer;
 import level.CollisionType;
 
 public class EntityManager {
 
-	private static CollisionLayer referenceCollisions;
-	private static Random r = new Random();
+	private CollisionLayer referenceCollisions;
+	private Random r = new Random();
+	private ArrayList<BadGuy> entities = new ArrayList<BadGuy>();
 	
-	public static Entity spawnRandomLocation(EntityType t){
+	public Entity spawnRandomLocation(EntityType t){
 		
 		if (t == EntityType.PLAYER){
 			
@@ -38,9 +43,39 @@ public class EntityManager {
 		return null;
 	}
 	
-	public static void setReferenceCollisions(CollisionLayer c){
+	public void spawn(EntityType t, Point p){
+		
+		if (t == EntityType.MONSTER){
+			
+			entities.add(new BadGuy(p.x, p.y));
+			
+		}
+		
+	}
+	
+	public void setReferenceCollisions(CollisionLayer c){
 		
 		referenceCollisions = c;
+		
+	}
+	
+	public void update(double elapsedMilliseconds){
+		
+		for (BadGuy b : entities){
+			
+			b.update(elapsedMilliseconds);
+			
+		}
+		
+	}
+	
+	public void draw(Graphics2D g, Point p){
+		
+		for (BadGuy b : entities){
+			
+			b.draw(g, p);
+			
+		}
 		
 	}
 }

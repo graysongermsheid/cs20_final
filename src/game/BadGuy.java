@@ -4,10 +4,13 @@ import java.awt.Graphics2D;
 
 public class BadGuy extends LivingEntity {
 
+	private int desiredSpeed;
+	
 	public BadGuy(int x, int y) {
 		
-		super(x, y, 16, 16, "character.png", 100);
-
+		super(x + 4, y, 16, 11, "character.png", 100);
+		desiredSpeed = 1;
+		
 	}
 
 	@Override
@@ -16,10 +19,23 @@ public class BadGuy extends LivingEntity {
 
 	}
 
+	public void think(){
+		
+		if (speed.x != desiredSpeed){
+			
+			desiredSpeed = (-1 * desiredSpeed);
+			speed.x = desiredSpeed;
+			
+		}
+		
+	}
+	
 	@Override
 	public void update(double elapsedMilliseconds) {
-		// TODO Auto-generated method stub
 
+		super.update(elapsedMilliseconds);
+		think();
+		
 	}
 
 	@Override

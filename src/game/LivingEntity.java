@@ -19,7 +19,6 @@ public abstract class LivingEntity extends Entity {
 	protected Direction direction; //values correspond to animation states
 	protected Animation[] animations;
 	protected static CollisionLayer collisions;
-	private SpriteFont fuck;
 
 	public LivingEntity(int x, int y, int width, int height, String spriteSheet, int health) {
 		
@@ -27,17 +26,15 @@ public abstract class LivingEntity extends Entity {
 		alive = true;
 		speed = new Speed();
 		direction = Direction.SOUTH;
-		hitBox = new AABB(boundingBox.getX() + 2, boundingBox.getY(), 13, boundingBox.getHeight() - 1);
+		//hitBox = new AABB(boundingBox.getX() + 2, boundingBox.getY(), 13, boundingBox.getHeight() - 1);
 		
 		animations = new Animation[4];
 		animations[0] = new Animation(sourceSprites.getRange(0, 2), 0.25d);
 		animations[0].setRange(1, 2);
-		animations[1] = new Animation(sourceSprites.getRange(3, 4), 0.25d);
+		animations[1] = new Animation(sourceSprites.getRange(3, 4), 0.3d);
 		animations[2] = new Animation(sourceSprites.getRange(6, 8), 0.25d);
 		animations[2].setRange(1, 2);
-		animations[3] = new Animation(sourceSprites.getRange(9, 10), 0.25d);
-		
-		fuck = ResourceManager.getFont("font.png");
+		animations[3] = new Animation(sourceSprites.getRange(10, 11), 0.3d);
 		
 	}
 
@@ -97,27 +94,6 @@ public abstract class LivingEntity extends Entity {
 	@Override
 	public void update(double elapsedMilliseconds){
 		
-		
-		if (speed.x > 0){
-			
-			direction = Direction.EAST;
-			
-		} else if (speed.x < 0){
-			
-			direction = Direction.WEST;
-			
-		}
-		
-		if (speed.y > 0){
-			
-			direction = Direction.SOUTH;
-			
-		} else if (speed.y < 0){
-			
-			direction = Direction.NORTH;
-			
-		}
-		
 		int x = (int)Math.floor(getCenter().x / 16.0);
 		int y = (int)Math.floor(getCenter().y / 16.0);
 		
@@ -140,6 +116,26 @@ public abstract class LivingEntity extends Entity {
 		
 		hitBox.setLocation(hitBox.getX() + speed.x, hitBox.getY() + speed.y);
 		
+		if (speed.x > 0){
+			
+			direction = Direction.EAST;
+			
+		} else if (speed.x < 0){
+			
+			direction = Direction.WEST;
+			
+		}
+		
+		if (speed.y > 0){
+			
+			direction = Direction.SOUTH;
+			
+		} else if (speed.y < 0){
+			
+			direction = Direction.NORTH;
+			
+		}
+		
 		if ((speed.x != 0) || (speed.y != 0)){
 			
 			animations[direction.value()].update(elapsedMilliseconds);
@@ -159,10 +155,7 @@ public abstract class LivingEntity extends Entity {
 	
 	public void draw(Graphics2D g, Point p){
 		
-		g.setColor(java.awt.Color.YELLOW);
-		g.drawRect(hitBox.getX() - p.x, hitBox.getY() - p.y, hitBox.getWidth(), hitBox.getHeight());
-		g.drawImage(animations[direction.value()].getCurrentFrame(), hitBox.getLocation().x - p.x - 1, hitBox.getLocation().y - p.y, null);
-		fuck.drawText(hitBox.getX() + ", " + hitBox.getY(), 48, 48, g);
+		g.drawImage(animations[direction.value()].getCurrentFrame(), hitBox.getLocation().x - p.x - 1, hitBox.getLocation().y - p.y - 4, null);
 		
 	}
 

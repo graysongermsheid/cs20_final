@@ -55,7 +55,7 @@ public class Game implements GameScreen {
 		cam.draw(g);
 		
 		if (paused){
-			
+
 			pauseMenu.draw(g);
 			
 		}
@@ -109,16 +109,28 @@ public class Game implements GameScreen {
 		ResourceManager.createSpriteSheet("mountain.png", 16, 16);
 		ResourceManager.createSpriteSheet("mountain_high.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
+		ResourceManager.createSpriteSheet("font.png", 16, 16);
 		ResourceManager.createSpriteSheet("composite_four.png", 8, 8);
 		ResourceManager.createSpriteSheet("composite_two.png", 16, 16);
 		ResourceManager.createSpriteSheet("button.png", 24, 24);
 		ResourceManager.createSpriteSheet("player.png", 16, 16);
+		ResourceManager.createSpriteSheet("character.png", 16, 16);
 		
 		c = new CaveGenerator();
 		cam = new Camera(0, 0, 256, 144, c.createLevel(64, 64, 4, 0.5f));
 
 		pauseMenu = new Menu("composite_four.png", 480, 104, 320, 512);
-		pauseMenu.addButton(new Button("EXIT", 32, 32));
+		pauseMenu.addButton(new Button("X", 304, -16, 32, 32){
+			
+			@Override
+			public void performAction(){
+				
+				paused = false;
+				pauseMenu.setVisible(false);
+				
+			}
+			
+		});
 	}
 
 	@Override

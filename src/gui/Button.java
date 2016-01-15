@@ -24,7 +24,7 @@ public class Button extends GUIComponent {
 
 		super("button.png", x, y, width, height);
 		states = new Animation(source, 1.0);
-		font = new SpriteFont(ResourceManager.getSpriteSheet("font_bold.png"));
+		font = new SpriteFont(ResourceManager.getSpriteSheet("font.png"));
 		visible = true;
 		this.text = text;
 		currentState = ButtonState.DEFAULT;
@@ -42,7 +42,7 @@ public class Button extends GUIComponent {
 
 		super ("button.png", x, y, 0, 0);
 		states = new Animation(source, 1.0);
-		font = new SpriteFont(ResourceManager.getSpriteSheet("font_bold.png"));
+		font = new SpriteFont(ResourceManager.getSpriteSheet("font.png"));
 		visible = true;
 		this.text = text;
 		currentState = ButtonState.DEFAULT;

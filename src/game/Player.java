@@ -8,7 +8,7 @@ public class Player extends LivingEntity{
 	
 	public Player(int x, int y, int health) {
 		
-		super(x, y, 16, 16, "player.png", health);
+		super(x + 4, y, 13, 11, "player.png", health);
 
 	}
 
