@@ -72,6 +72,17 @@ public class AABB {
 		
 	}
 	
+	public AABB shiftLocation(int x, int y){
+		
+		this.x += x;
+		this.y += y;
+		this.x1 = this.x + width;
+		this.y1 = this.y + height;
+		
+		return this;
+		
+	}
+	
 	public void setSize(int width, int height){
 		
 		this.width = width;

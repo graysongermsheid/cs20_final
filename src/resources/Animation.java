@@ -20,7 +20,7 @@ public class Animation extends SpriteSheet {
 		this.currentFrame = 0;
 
 		this.minFrame = 0;
-		this.maxFrame = images.length;
+		this.maxFrame = images.length - 1;
 
 	}
 
@@ -32,7 +32,7 @@ public class Animation extends SpriteSheet {
 		this.currentFrame = 0;
 
 		this.minFrame = 0;
-		this.maxFrame = images.length;
+		this.maxFrame = images.length - 1;
 		
 	}
 	
@@ -51,7 +51,7 @@ public class Animation extends SpriteSheet {
 
 	public void advanceCurrentFrame(){
 
-		currentFrame = (currentFrame == maxFrame - 1) ? 0 : currentFrame + 1;
+		currentFrame = (currentFrame == maxFrame) ? minFrame : currentFrame + 1;
 
 	}
 
@@ -87,9 +87,11 @@ public class Animation extends SpriteSheet {
 	}
 
 	public void update(double elapsedMilliseconds){
-
+		
 		if (!paused){
 
+			timer += elapsedMilliseconds;
+			
 			if (timer >= delay * 1000){
 
 				advanceCurrentFrame();

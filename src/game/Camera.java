@@ -48,7 +48,8 @@ public class Camera {
 		currentLevel = l;
 		
 		LivingEntity.setLevelCollisionLayer(l.getCollisionLayer());
-		player = new Player(640, 640, 100);
+		EntityManager.setReferenceCollisions(l.getCollisionLayer());
+		player = (Player) EntityManager.spawnRandomLocation(EntityType.PLAYER);
 		
 	}
 
@@ -96,6 +97,20 @@ public class Camera {
 			location.y = currentLevel.getRealSize().height - size.height;
 			farLocation = new Point(location.x + size.width, location.y + size.height);
 
+		}
+		
+		if (location.x < 0){
+			
+			location.x = 0;
+			farLocation.x = location.x + size.width;
+			
+		}
+		
+		if (location.y < 0){
+			
+			location.y = 0;
+			farLocation.y = location.y + size.height;
+			
 		}
 	}
 	

@@ -1,5 +1,7 @@
 package level;
 
+import java.awt.Dimension;
+
 public class CollisionLayer {
 	
 	private CollisionType[][] collisionTypes;
@@ -28,6 +30,12 @@ public class CollisionLayer {
 		
 		AABB collisionBox = new AABB(x * 16, y * 16, 16, 16);
 		return collisionBox;
+		
+	}
+	
+	public Dimension getSize(){
+		
+		return new Dimension(collisionTypes[0].length, collisionTypes.length);
 		
 	}
 	

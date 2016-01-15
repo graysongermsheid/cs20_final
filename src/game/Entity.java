@@ -29,7 +29,7 @@ public abstract class Entity {
 	
 	public Point getCenter(){
 		
-		return new Point(boundingBox.getFarLocation().x - boundingBox.getSize().width / 2, boundingBox.getFarLocation().y - boundingBox.getSize().height / 2);
+		return new Point(hitBox.getFarLocation().x - hitBox.getSize().width / 2, hitBox.getFarLocation().y - hitBox.getSize().height / 2);
 		
 	}
 	

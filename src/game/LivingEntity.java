@@ -8,6 +8,8 @@ import java.awt.Point;
 import level.AABB;
 import level.CollisionLayer;
 import resources.Animation;
+import resources.ResourceManager;
+import resources.SpriteFont;
 
 public abstract class LivingEntity extends Entity {
 
@@ -17,6 +19,7 @@ public abstract class LivingEntity extends Entity {
 	protected Direction direction; //values correspond to animation states
 	protected Animation[] animations;
 	protected static CollisionLayer collisions;
+	private SpriteFont fuck;
 
 	public LivingEntity(int x, int y, int width, int height, String spriteSheet, int health) {
 		
@@ -24,13 +27,17 @@ public abstract class LivingEntity extends Entity {
 		alive = true;
 		speed = new Speed();
 		direction = Direction.SOUTH;
-		hitBox = new AABB(boundingBox.getX() + 2, boundingBox.getY(), 11, boundingBox.getHeight());
+		hitBox = new AABB(boundingBox.getX() + 2, boundingBox.getY(), 13, boundingBox.getHeight() - 1);
 		
 		animations = new Animation[4];
-		animations[0] = new Animation(sourceSprites.getRange(0, 2), 0.5d);
-		animations[1] = new Animation(sourceSprites.getRange(3, 5), 0.5d);
-		animations[2] = new Animation(sourceSprites.getRange(6, 8), 0.5d);
-		animations[3] = new Animation(sourceSprites.getRange(9, 11), 0.5d);
+		animations[0] = new Animation(sourceSprites.getRange(0, 2), 0.25d);
+		animations[0].setRange(1, 2);
+		animations[1] = new Animation(sourceSprites.getRange(3, 4), 0.25d);
+		animations[2] = new Animation(sourceSprites.getRange(6, 8), 0.25d);
+		animations[2].setRange(1, 2);
+		animations[3] = new Animation(sourceSprites.getRange(9, 10), 0.25d);
+		
+		fuck = ResourceManager.getFont("font.png");
 		
 	}
 
@@ -46,80 +53,37 @@ public abstract class LivingEntity extends Entity {
 	//Collide with terrain (call in update function)
 	protected void collide(CollisionType c, AABB box){
 		
-		AABB newPosition = new AABB(hitBox.getX() + speed.x, hitBox.getY() + speed.y, hitBox.getWidth(), hitBox.getHeight());
+		AABB newBox = new AABB(hitBox.getX() + speed.x, hitBox.getY() + speed.y, hitBox.getWidth(), hitBox.getHeight());
+		AABB newBoxX = new AABB(hitBox.getX() + speed.x, hitBox.getY(), hitBox.getWidth(), hitBox.getHeight());
 		
-		if (!box.collides(newPosition) || c == CollisionType.NONE){
-			
-			hitBox = newPosition;
-			
-			switch(direction){
-			
-			case SOUTH:
-				
-				boundingBox.setLocation(hitBox.getX() - 2, hitBox.getY());
-				
-				break;
-			case NORTH:
-				
-				boundingBox.setLocation(hitBox.getX() - 2, hitBox.getY());
-				
-				break;
-			case EAST:
-				
-				boundingBox.setLocation(hitBox.getX() - 1, hitBox.getY());
-				
-				break;
-			case WEST:
-				
-				boundingBox.setLocation(hitBox.getX() - 3, hitBox.getY());
-				
-				break;
-		}
-			
+		if (!newBox.collides(box) || c == CollisionType.NONE || (speed.x == 0 && speed.y == 0)){
+	
 			return;
 			
 		}
 		
-		System.out.println("COLLISION");
-		
-		while (newPosition.getOverlapX(box) > 0){
+		while (newBox.collides(box)){
 			
-			speed.setXSpeed(speed.x - 1 < 0 ? 0 : speed.x - 1);
-			newPosition = new AABB(hitBox.getX() + speed.x, hitBox.getY() + speed.y, hitBox.getWidth(), hitBox.getHeight());
+			if (newBoxX.collides(box) && speed.x != 0){
 			
-		}
+				int b = (speed.x < 0) ? 1 : -1;
+				speed.x += b;
+				newBoxX = new AABB(hitBox.getX() + speed.x, hitBox.getY(), hitBox.getWidth(), hitBox.getHeight());
+				
+			}
 		
-		while (newPosition.getOverlapY(box) > 0){
+			AABB newBoxY = new AABB(newBoxX.getX(), hitBox.getY() + speed.y, hitBox.getWidth(), hitBox.getHeight());
+		
+			if (newBoxY.collides(box) && speed.y != 0){
 			
-			speed.setYSpeed(speed.y - 1 < 0 ? 0 : speed.y - 1);
-			newPosition = new AABB(hitBox.getX() + speed.x, hitBox.getY() + speed.y, hitBox.getWidth(), hitBox.getHeight());
+				int b = (speed.y < 0) ? 1 : -1;
+				speed.y += b;
+				newBoxY = new AABB(hitBox.getX(), hitBox.getY() + speed.y, hitBox.getWidth(), hitBox.getHeight());
 			
-		}
-		
-		hitBox = newPosition;
-		
-		switch(direction){
-		
-			case SOUTH:
-				
-				boundingBox.setLocation(hitBox.getX() - 2, hitBox.getY());
-				
-				break;
-			case NORTH:
-				
-				boundingBox.setLocation(hitBox.getX() - 2, hitBox.getY());
-				
-				break;
-			case EAST:
-				
-				boundingBox.setLocation(hitBox.getX() - 1, hitBox.getY());
-				
-				break;
-			case WEST:
-				
-				boundingBox.setLocation(hitBox.getX() - 3, hitBox.getY());
-				
-				break;
+			}
+			
+			newBox.setLocation(hitBox.getX() + speed.x, hitBox.getY() + speed.y); 
+			
 		}
 	}
 	
@@ -133,7 +97,16 @@ public abstract class LivingEntity extends Entity {
 	@Override
 	public void update(double elapsedMilliseconds){
 		
-		Direction oldDirection = direction;
+		
+		if (speed.x > 0){
+			
+			direction = Direction.EAST;
+			
+		} else if (speed.x < 0){
+			
+			direction = Direction.WEST;
+			
+		}
 		
 		if (speed.y > 0){
 			
@@ -143,68 +116,53 @@ public abstract class LivingEntity extends Entity {
 			
 			direction = Direction.NORTH;
 			
-		} else if (speed.x > 0){
-			
-			direction = Direction.EAST;
-			
-		} else if (speed.x < 0){
-			
-			direction = Direction.WEST;
-			
 		}
-				
+		
+		int x = (int)Math.floor(getCenter().x / 16.0);
+		int y = (int)Math.floor(getCenter().y / 16.0);
+		
+		
+		collide(collisions.getType(x - 1, y - 1), collisions.getCollisionBox(x - 1, y - 1).shiftLocation(-1, -1));
+		collide(collisions.getType(x, y - 1), collisions.getCollisionBox(x, y - 1).shiftLocation(0, -1));
+		collide(collisions.getType(x + 1, y - 1), collisions.getCollisionBox(x + 1, y - 1).shiftLocation(0, -1));
+		
+		collide(collisions.getType(x - 1, y), collisions.getCollisionBox(x - 1, y).shiftLocation(-1, 0));
+		collide(collisions.getType(x, y), collisions.getCollisionBox(x, y));
+		collide(collisions.getType(x + 1, y), collisions.getCollisionBox(x + 1, y));
+		
+		collide(collisions.getType(x - 1, y + 1), collisions.getCollisionBox(x - 1, y + 1).shiftLocation(-1, 0));
+		collide(collisions.getType(x, y + 1), collisions.getCollisionBox(x, y + 1));
+		collide(collisions.getType(x + 1, y + 1), collisions.getCollisionBox(x + 1, y + 1));
+	
+		collide(collisions.getType(x - 1, y + 2), collisions.getCollisionBox(x - 1, y + 2).shiftLocation(-1, 0));
+		collide(collisions.getType(x, y + 2), collisions.getCollisionBox(x, y + 2));
+		collide(collisions.getType(x + 1, y + 2), collisions.getCollisionBox(x + 1, y + 2));
+		
+		hitBox.setLocation(hitBox.getX() + speed.x, hitBox.getY() + speed.y);
+		
 		if ((speed.x != 0) || (speed.y != 0)){
 			
 			animations[direction.value()].update(elapsedMilliseconds);
 			
 		} else {
-			
+
+			if (!((direction == Direction.SOUTH) || (direction == Direction.NORTH))){
+				
+				direction = Direction.SOUTH;
+				
+			}
 			animations[direction.value()].setCurrentFrame(0);
 			
 		}
 		
-		//AABB newPos = new AABB(boundingBox.getLocation().x + speed.x, boundingBox.getLocation().y + speed.y, boundingBox.getSize().width, boundingBox.getSize().height);
-		int x = boundingBox.getLocation().x / 16;
-		int y = boundingBox.getLocation().y / 16;
-		
-		collide(collisions.getType(x - 1, y - 1), collisions.getCollisionBox(x - 1, y - 1));
-		collide(collisions.getType(x, y - 1), collisions.getCollisionBox(x, y - 1));
-		collide(collisions.getType(x + 1, y - 1), collisions.getCollisionBox(x + 1, y - 1));
-		
-		collide(collisions.getType(x - 1, y), collisions.getCollisionBox(x - 1, y));
-		collide(collisions.getType(x, y), collisions.getCollisionBox(x, y));
-		collide(collisions.getType(x + 1, y), collisions.getCollisionBox(x + 1, y));
-		
-		collide(collisions.getType(x - 1, y + 1), collisions.getCollisionBox(x - 1, y + 1));
-		collide(collisions.getType(x, y + 1), collisions.getCollisionBox(x, y + 1));
-		collide(collisions.getType(x + 1, y + 1), collisions.getCollisionBox(x + 1, y + 1));
-	
 	}
 	
 	public void draw(Graphics2D g, Point p){
 		
-		g.setColor(java.awt.Color.BLACK);
-		g.fillRect(boundingBox.getLocation().x - p.x, boundingBox.getLocation().y - p.y, boundingBox.getWidth(), boundingBox.getHeight());
-		
-		switch(direction){
-		
-			case SOUTH:
-				g.setColor(java.awt.Color.YELLOW);
-				break;
-			case NORTH:
-				g.setColor(java.awt.Color.GREEN);
-				break;
-			case EAST:
-				g.setColor(java.awt.Color.BLUE);
-				break;
-			case WEST:
-				g.setColor(java.awt.Color.RED);
-				break;
-		
-		}
-		
+		g.setColor(java.awt.Color.YELLOW);
 		g.drawRect(hitBox.getX() - p.x, hitBox.getY() - p.y, hitBox.getWidth(), hitBox.getHeight());
-		g.drawImage(animations[direction.value()].getCurrentFrame(), boundingBox.getLocation().x - p.x, boundingBox.getLocation().y - p.y, null);
+		g.drawImage(animations[direction.value()].getCurrentFrame(), hitBox.getLocation().x - p.x - 1, hitBox.getLocation().y - p.y, null);
+		fuck.drawText(hitBox.getX() + ", " + hitBox.getY(), 48, 48, g);
 		
 	}
 

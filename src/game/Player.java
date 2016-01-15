@@ -22,11 +22,11 @@ public class Player extends LivingEntity{
 		
 		if (InputHandler.KEY_UP_PRESSED && !InputHandler.KEY_DOWN_PRESSED){
 			
-			speed.setYSpeed(-2);
+			speed.setYSpeed(-1);
 			
 		} else if (InputHandler.KEY_DOWN_PRESSED && !InputHandler.KEY_UP_PRESSED){
 			
-			speed.setYSpeed(2);
+			speed.setYSpeed(1);
 			
 		} else {
 			
@@ -36,11 +36,11 @@ public class Player extends LivingEntity{
 		
 		if (InputHandler.KEY_LEFT_PRESSED && !InputHandler.KEY_RIGHT_PRESSED){
 			
-			speed.setXSpeed(-2);
+			speed.setXSpeed(-1);
 			
 		} else if (InputHandler.KEY_RIGHT_PRESSED && !InputHandler.KEY_LEFT_PRESSED){
 			
-			speed.setXSpeed(2);
+			speed.setXSpeed(1);
 			
 		} else {
 			
