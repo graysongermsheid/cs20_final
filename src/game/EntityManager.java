@@ -13,7 +13,7 @@ public class EntityManager {
 
 	private CollisionLayer referenceCollisions;
 	private Random r = new Random();
-	private ArrayList<BadGuy> entities = new ArrayList<BadGuy>();
+	private ArrayList<Entity> entities = new ArrayList<Entity>();
 	
 	public Entity spawnRandomLocation(EntityType t){
 		
@@ -37,7 +37,32 @@ public class EntityManager {
 			}
 			
 			System.out.println("Spawning player at " + x * 16 + ", " + y * 16);
-			return new Player(x * 16, y * 16, 100);
+			Player p = new Player(x * 16, y * 16, 100);
+			entities.add(p);
+			return p;
+		} else {
+			
+			boolean foundLocation = false;
+			int x = 0;
+			int y = 0;
+			
+			while(!foundLocation){
+				
+				x = r.nextInt(referenceCollisions.getSize().width);
+				y = r.nextInt(referenceCollisions.getSize().height);
+				
+				if (referenceCollisions.getType(x, y) == CollisionType.NONE){
+					
+					foundLocation = true;
+					
+				}
+				
+			}
+			
+			System.out.println("Spawning player at " + x * 16 + ", " + y * 16);
+			Snake p = new Snake(x * 16, y * 16);
+			entities.add(p);
+			
 		}
 		
 		return null;
@@ -47,7 +72,7 @@ public class EntityManager {
 		
 		if (t == EntityType.MONSTER){
 			
-			entities.add(new BadGuy(p.x, p.y));
+			entities.add(new Snake(p.x, p.y));
 			
 		}
 		
@@ -61,7 +86,7 @@ public class EntityManager {
 	
 	public void update(double elapsedMilliseconds){
 		
-		for (BadGuy b : entities){
+		for (Entity b : entities){
 			
 			b.update(elapsedMilliseconds);
 			
@@ -71,9 +96,32 @@ public class EntityManager {
 	
 	public void draw(Graphics2D g, Point p){
 		
-		for (BadGuy b : entities){
+		boolean sorted = false;
+		
+		while (!sorted){
+
+			sorted = true;
 			
-			b.draw(g, p);
+			for (int i = 0; i < entities.size() - 1; i++){
+				
+				if (entities.get(i).getFarLocation().y > entities.get(i + 1).getFarLocation().y){
+					
+					System.out.println("i: " + entities.get(i).getFarLocation().y + 
+									   "i + 1: " + entities.get(i + 1).getFarLocation().y);
+					
+					sorted = false;
+					Entity e = entities.get(i + 1);
+					entities.set(i + 1, entities.get(i));
+					entities.set(i, e);
+					
+				}
+				
+			}
+		}
+		
+		for (Entity e : entities){
+			
+			e.draw(g, p);
 			
 		}
 		

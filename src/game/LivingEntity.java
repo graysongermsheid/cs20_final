@@ -4,6 +4,7 @@ import level.CollisionType;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.ArrayList;
 
 import level.AABB;
 import level.CollisionLayer;
@@ -18,6 +19,7 @@ public abstract class LivingEntity extends Entity {
 	protected Speed speed;
 	protected Direction direction; //values correspond to animation states
 	protected Animation[] animations;
+	protected ArrayList<Entity> collidedEntities; //list of entities this entity is already collided with
 	protected static CollisionLayer collisions;
 
 	public LivingEntity(int x, int y, int width, int height, String spriteSheet, int health) {

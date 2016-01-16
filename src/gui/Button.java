@@ -19,6 +19,8 @@ public class Button extends GUIComponent {
 	private String text;
 	private SpriteFont font;
 	private Point textOffset;
+	private int width;
+	private int height;
 
 	public Button(String text, int x, int y, int width, int height){
 
@@ -27,6 +29,8 @@ public class Button extends GUIComponent {
 		font = new SpriteFont(ResourceManager.getSpriteSheet("font.png"));
 		visible = true;
 		this.text = text;
+		this.width = width;
+		this.height = height;
 		currentState = ButtonState.DEFAULT;
 
 		textOffset = new Point((width  / 2) - (font.getStringSize(text).width / 2), (height / 2) - (font.getStringSize(text).height / 2));
@@ -91,6 +95,17 @@ public class Button extends GUIComponent {
 		int additionalOffset = 0;
 
 		font.setColor(Color.WHITE);
+		if (currentState == ButtonState.DOWN || currentState == ButtonState.MOUSED_OVER){
+			
+			font.setScaling(1.1f);
+			textOffset = new Point((width  / 2) - (font.getStringSize(text).width / 2), (height / 2) - (font.getStringSize(text).height / 2));
+			
+		} else {
+			
+			font.setScaling(1f);
+			textOffset = new Point((width  / 2) - (font.getStringSize(text).width / 2), (height / 2) - (font.getStringSize(text).height / 2));
+			
+		}
 
 		font.drawText(text, location.x + textOffset.x, location.y + textOffset.y + additionalOffset, g);
 

@@ -52,7 +52,7 @@ public class Camera {
 		LivingEntity.setLevelCollisionLayer(l.getCollisionLayer());
 		e.setReferenceCollisions(l.getCollisionLayer());
 		player = (Player) e.spawnRandomLocation(EntityType.PLAYER);
-		e.spawn(EntityType.MONSTER, new Point(512, 512));
+		e.spawnRandomLocation(EntityType.MONSTER);
 		
 	}
 
@@ -84,7 +84,6 @@ public class Camera {
 	
 	public void update(double elapsedMilliseconds){
 		
-		player.update(elapsedMilliseconds);
 		e.update(elapsedMilliseconds);
 		location = new Point(player.getCenter().x - size.width / 2, player.getCenter().y - size.height / 2);
 		farLocation = new Point(location.x + size.width, location.y + size.height);
@@ -134,7 +133,6 @@ public class Camera {
 		float scaleH = gamescreen.ScreenManager.screenSize.width / (float)size.width;
 		BufferedImage scaledImage = new BufferedImage((int)(size.width * scaleH), (int)(size.height * scaleV), BufferedImage.TYPE_INT_ARGB);
 		currentLevel.draw(location, farLocation, g2);
-		player.draw(g2, location);
 		e.draw(g2, location);
 
 		g2.dispose();

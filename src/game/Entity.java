@@ -33,8 +33,14 @@ public abstract class Entity {
 		
 	}
 	
+	public Point getFarLocation(){
+		
+		return hitBox.getFarLocation();
+		
+	}
+	
 	public abstract void update(double elapsedMilliseconds);
-	public abstract void draw(Graphics2D g);
+	public abstract void draw(Graphics2D g, Point p);
 	protected abstract void collide(Entity e);
 	
 }
