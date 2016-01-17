@@ -2,6 +2,7 @@ package game;
 
 import level.CollisionType;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public abstract class LivingEntity extends Entity {
 	protected int health;
 	protected Speed speed;
 	protected Direction direction; //values correspond to animation states
-	protected Animation[] animations;
+	protected Animation[] animations; //0-3 are normal, 4-7 are hurt
 	protected static CollisionLayer collisions;
 	protected double invulnerableTimer;
 
@@ -32,13 +33,20 @@ public abstract class LivingEntity extends Entity {
 		entitiesCollided = new ArrayList<Entity>();
 		//hitBox = new AABB(boundingBox.getX() + 2, boundingBox.getY(), 13, boundingBox.getHeight() - 1);
 		
-		animations = new Animation[4];
+		animations = new Animation[8];
 		animations[0] = new Animation(sourceSprites.getRange(0, 2), 0.25d);
 		animations[0].setRange(1, 2);
 		animations[1] = new Animation(sourceSprites.getRange(3, 4), 0.3d);
 		animations[2] = new Animation(sourceSprites.getRange(6, 8), 0.25d);
 		animations[2].setRange(1, 2);
 		animations[3] = new Animation(sourceSprites.getRange(10, 11), 0.3d);
+		
+		animations[4] = new Animation(sourceSprites.getRange(12, 14), 0.25d);
+		animations[4].setRange(1, 2);
+		animations[5] = new Animation(sourceSprites.getRange(15, 16), 0.3d);
+		animations[6] = new Animation(sourceSprites.getRange(18, 20), 0.25d);
+		animations[6].setRange(1, 2);
+		animations[7] = new Animation(sourceSprites.getRange(22, 23), 0.3d);
 		
 	}
 
@@ -161,9 +169,25 @@ public abstract class LivingEntity extends Entity {
 	
 	public void draw(Graphics2D g, Point p){
 		
-		if (!(invulnerableTimer > 0 && !(((((int)invulnerableTimer / 10) / 10) / 10) % 2 == 0))){
+		if (getType() == EntityType.MONSTER){
+			
+			g.setColor(Color.RED);
+			
+		} else {
+			
+			g.setColor(Color.GREEN);
+			
+		}
+		
+		g.drawRect(hitBox.getX() - p.x, hitBox.getY() - p.y, hitBox.getWidth(), hitBox.getHeight());
+		
+		if (!(invulnerableTimer > 0 && !(((((int)invulnerableTimer / 10) / 10) / 10) % 2 == 0))){ //flashes every 500 ms
 
 			g.drawImage(animations[direction.value()].getCurrentFrame(), hitBox.getLocation().x - p.x - 1, hitBox.getLocation().y - p.y - 4, null);
+			
+		} else {
+			
+			g.drawImage(animations[direction.value() + 4].getCurrentFrame(), hitBox.getLocation().x - p.x - 1, hitBox.getLocation().y - p.y - 4, null);
 			
 		}
 	}

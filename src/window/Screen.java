@@ -30,8 +30,8 @@ public class Screen extends Canvas {
 
 		SIZE = getSize();
 
-		resources.ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
-		font = ResourceManager.getFont("font_bold.png");
+		resources.ResourceManager.createSpriteSheet("font.png", 16, 16);
+		font = ResourceManager.getFont("font.png");
 		System.out.println("Canvas size: " + SIZE);
 
 		InputHandler in = new InputHandler();

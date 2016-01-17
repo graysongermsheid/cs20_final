@@ -9,7 +9,7 @@ import javax.sound.sampled.*;
 
 public class ResourceManager {
 
-	public static String PATH = "/content/";
+	public static String PATH = "src/content/";
 	
 	private static HashMap<String, BufferedImage> imageMap = new HashMap<String, BufferedImage>();
 	private static HashMap<String, SpriteSheet> spriteSheetMap = new HashMap<String, SpriteSheet>();
