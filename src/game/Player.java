@@ -50,9 +50,30 @@ public class Player extends LivingEntity{
 	}
 	
 	@Override
+	public void damage(int amount){
+		
+		int whatever = health;
+		super.damage(amount);
+		
+		if (health != whatever){
+
+			System.out.println("Player Health: " + health);
+			
+		}
+		
+	}
+	
+	@Override
 	public void update(double elapsedMilliseconds){
 		
 		super.update(elapsedMilliseconds);
+		
+	}
+	
+	@Override
+	public EntityType getType(){
+		
+		return EntityType.PLAYER;
 		
 	}
 }

@@ -90,6 +90,20 @@ public class EntityManager {
 			
 			b.update(elapsedMilliseconds);
 			
+			for (Entity c : entities){
+				
+				if (c.getHitBox().collides(b.getHitBox())){
+					
+					b.collide(c);
+					
+				} else {
+					
+					b.removeCollision(c);
+					
+				}
+				
+			}
+			
 		}
 		
 	}

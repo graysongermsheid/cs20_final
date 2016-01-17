@@ -1,11 +1,13 @@
 package game;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.awt.Graphics2D;
 
-public class Snake extends LivingEntity {
+public class Snake extends LivingEntity implements Monster {
 
 	private Speed desiredSpeed;
+	private int attackDamage;
 	
 	public Snake(int x, int y) {
 		
@@ -18,6 +20,7 @@ public class Snake extends LivingEntity {
 			desiredSpeed.y = r.nextInt(3) - 1;
 			System.out.println("Set snake spedd: " + desiredSpeed.x + ", " + desiredSpeed.y + " (@" + hitBox.getX() + ", " + hitBox.getY() + ")");
 		}
+		attackDamage = 10;
 		
 	}
 
@@ -25,6 +28,18 @@ public class Snake extends LivingEntity {
 	public void collide(Entity e) {
 		// TODO Auto-generated method stub
 
+		//if (!entitiesCollided.contains(e)){
+			
+			entitiesCollided.add(e);
+			
+			if (e.getType() == EntityType.PLAYER){
+				
+				((Player)e).damage(attackDamage);
+				
+			}
+			
+		//}
+		
 	}
 
 	public void think(){
@@ -50,6 +65,12 @@ public class Snake extends LivingEntity {
 		super.update(elapsedMilliseconds);
 		think();
 		
+	}
+
+	@Override
+	public MonsterType getMonsterType() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

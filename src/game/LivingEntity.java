@@ -19,15 +19,17 @@ public abstract class LivingEntity extends Entity {
 	protected Speed speed;
 	protected Direction direction; //values correspond to animation states
 	protected Animation[] animations;
-	protected ArrayList<Entity> collidedEntities; //list of entities this entity is already collided with
 	protected static CollisionLayer collisions;
+	protected double invulnerableTimer;
 
 	public LivingEntity(int x, int y, int width, int height, String spriteSheet, int health) {
 		
 		super(x, y, width, height, spriteSheet);
+		this.health = health;
 		alive = true;
 		speed = new Speed();
 		direction = Direction.SOUTH;
+		entitiesCollided = new ArrayList<Entity>();
 		//hitBox = new AABB(boundingBox.getX() + 2, boundingBox.getY(), 13, boundingBox.getHeight() - 1);
 		
 		animations = new Animation[4];
@@ -45,9 +47,6 @@ public abstract class LivingEntity extends Entity {
 		collisions = c;
 		
 	}
-	
-	@Override
-	public abstract void collide(Entity e);
 	
 	//Collide with terrain (call in update function)
 	protected void collide(CollisionType c, AABB box){
@@ -88,7 +87,10 @@ public abstract class LivingEntity extends Entity {
 	
 	public void damage(int amount){
 		
-		health -= amount <= health ? amount : health;
+		if (invulnerableTimer > 0) { return; }
+		
+		health -= (amount <= health) ? amount : health;
+		invulnerableTimer = 5000;
 		alive = health > 0;
 		
 	}
@@ -153,12 +155,16 @@ public abstract class LivingEntity extends Entity {
 			
 		}
 		
+		invulnerableTimer -= (invulnerableTimer - elapsedMilliseconds < 0) ? invulnerableTimer : elapsedMilliseconds;
+		
 	}
 	
 	public void draw(Graphics2D g, Point p){
 		
-		g.drawImage(animations[direction.value()].getCurrentFrame(), hitBox.getLocation().x - p.x - 1, hitBox.getLocation().y - p.y - 4, null);
-		
-	}
+		if (!(invulnerableTimer > 0 && !(((((int)invulnerableTimer / 10) / 10) / 10) % 2 == 0))){
 
+			g.drawImage(animations[direction.value()].getCurrentFrame(), hitBox.getLocation().x - p.x - 1, hitBox.getLocation().y - p.y - 4, null);
+			
+		}
+	}
 }
