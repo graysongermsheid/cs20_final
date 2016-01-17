@@ -97,6 +97,7 @@ public abstract class LivingEntity extends Entity {
 		
 		if (invulnerableTimer > 0) { return; }
 		
+		ResourceManager.playSound("hit.wav");
 		health -= (amount <= health) ? amount : health;
 		invulnerableTimer = 5000;
 		alive = health > 0;

@@ -3,13 +3,20 @@ package game;
 import java.awt.Graphics2D;
 
 import input.InputHandler;
+import resources.ResourceManager;
 
 public class Player extends LivingEntity{
+	
+	private double footstepTimer;
+	private double footstepGap;
 	
 	public Player(int x, int y, int health) {
 		
 		super(x + 4, y, 13, 11, "player.png", health);
 
+		footstepGap = 250d;
+		footstepTimer = 0d;
+		
 	}
 
 	@Override
@@ -47,19 +54,22 @@ public class Player extends LivingEntity{
 			speed.setXSpeed(0);
 			
 		}
+		
+		if (speed.x == 0 && speed.y != 0){
+			
+			footstepGap = 300;
+			
+		} else {
+			
+			footstepGap = 250;
+			
+		}
 	}
 	
 	@Override
 	public void damage(int amount){
 		
-		int whatever = health;
 		super.damage(amount);
-		
-		if (health != whatever){
-
-			System.out.println("Player Health: " + health);
-			
-		}
 		
 	}
 	
@@ -67,6 +77,22 @@ public class Player extends LivingEntity{
 	public void update(double elapsedMilliseconds){
 		
 		super.update(elapsedMilliseconds);
+		
+		footstepTimer += elapsedMilliseconds;
+		
+		if (!alive){
+			
+			ResourceManager.playSound("die.wav");
+			gamescreen.ScreenManager.switchCurrentScreen(new gamescreen.GameOver(100, 1, "SNAKE"));
+			
+		}
+		
+		if (footstepTimer > footstepGap && (speed.x != 0 || speed.y != 0)){
+			
+			footstepTimer = 0d;
+			ResourceManager.playSound("footstep.wav");
+			
+		}
 		
 	}
 	

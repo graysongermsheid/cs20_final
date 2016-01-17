@@ -37,7 +37,7 @@ public class EntityManager {
 			}
 			
 			System.out.println("Spawning player at " + x * 16 + ", " + y * 16);
-			Player p = new Player(x * 16, y * 16, 100);
+			Player p = new Player(x * 16, y * 16, 15);
 			entities.add(p);
 			return p;
 		} else {

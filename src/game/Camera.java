@@ -44,7 +44,7 @@ public class Camera {
 		transformer = new AffineTransformOp(transform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR); //that's a weird way to spell neighbour
 
 		drawImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		f = ResourceManager.getFont("font_bold.png");
+		f = ResourceManager.getFont("font.png");
 		farLocation = new Point(x + width, y + height);
 		size = new Dimension(width, height);
 		currentLevel = l;
