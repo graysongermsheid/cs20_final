@@ -24,7 +24,16 @@ public class GameOver extends MenuScreen {
 		components = new GUIComponent[2];
 		
 		components[0] = new Button("Exit Game", 0, 0, 256, 32);
-		components[1] = new Button("Restart?", 300, 0, 256, 32);
+		components[1] = new Button("Restart?", 300, 0, 256, 32){
+			
+			@Override
+			public void performAction(){
+				
+				ScreenManager.switchCurrentScreen(new Game());
+				
+			}
+			
+		};
 		
 	}
 	

@@ -9,16 +9,16 @@ import java.util.ArrayList;
 
 public abstract class Entity {
 
-	protected AABB boundingBox;
-	protected AABB hitBox;
+	protected AABB hitBox; //FIX SO THIS CAN CHANGE SHAPE FOR ENTITIES
 	protected EntityType entityType;
 	protected SpriteSheet sourceSprites;
 	protected ArrayList<Entity> entitiesCollided;
+	protected Point position;
 	
 	public Entity(int x, int y, int width, int height, String spriteSheet){
 		
-		//this.boundingBox = new AABB(x, y, width, height);
-		this.hitBox = new AABB(x, y, width, height);
+		this.hitBox = new AABB(x, y, width, height); //(individual entities sould redefine hitbox in constructor
+		this.position = new Point(x, y);
 		this.sourceSprites = ResourceManager.getSpriteSheet(spriteSheet);
 		
 	}

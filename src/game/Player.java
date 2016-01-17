@@ -3,6 +3,7 @@ package game;
 import java.awt.Graphics2D;
 
 import input.InputHandler;
+import level.AABB;
 import resources.ResourceManager;
 
 public class Player extends LivingEntity{
@@ -12,8 +13,9 @@ public class Player extends LivingEntity{
 	
 	public Player(int x, int y, int health) {
 		
-		super(x + 4, y, 13, 11, "player.png", health);
-
+		super(x, y, 16, 16, "player.png", health);
+		hitBox = new AABB(x + 1, y + 6, 13, 10);
+		
 		footstepGap = 250d;
 		footstepTimer = 0d;
 		
@@ -57,11 +59,11 @@ public class Player extends LivingEntity{
 		
 		if (speed.x == 0 && speed.y != 0){
 			
-			footstepGap = 300;
+			footstepGap = 750;
 			
 		} else {
 			
-			footstepGap = 250;
+			footstepGap = 750;
 			
 		}
 	}
@@ -90,7 +92,7 @@ public class Player extends LivingEntity{
 		if (footstepTimer > footstepGap && (speed.x != 0 || speed.y != 0)){
 			
 			footstepTimer = 0d;
-			ResourceManager.playSound("footstep.wav");
+			//ResourceManager.playSound("footstep.wav");
 			
 		}
 		
@@ -100,6 +102,27 @@ public class Player extends LivingEntity{
 	public EntityType getType(){
 		
 		return EntityType.PLAYER;
+		
+	}
+
+	@Override
+	protected AABB getDirectionalHitbox(Direction d) {
+
+		//this doesnt work they always need to be the same size or it breaks
+		
+		if (d == Direction.SOUTH || d == Direction.NORTH){
+			
+			return new AABB(position.x + 1, position.y + 6, 13, 9);
+			
+		} else if (d == Direction.EAST){
+			
+			return new AABB(position.x + 1, position.y + 6, 12, 9);
+			
+		} else {
+			
+			return new AABB(position.x + 2, position.y + 6, 12, 9);
+			
+		}
 		
 	}
 }

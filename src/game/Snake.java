@@ -2,6 +2,9 @@ package game;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import level.AABB;
+
 import java.awt.Graphics2D;
 
 public class Snake extends LivingEntity implements Monster {
@@ -12,6 +15,7 @@ public class Snake extends LivingEntity implements Monster {
 	public Snake(int x, int y) {
 		
 		super(x + 4, y, 16, 11, "character.png", 100);
+		hitBox = new AABB(x, y + 6, 16, 10);
 		Random r = new Random();
 		desiredSpeed = new Speed();
 		while ((desiredSpeed.x == 0) && (desiredSpeed.y == 0)){
@@ -78,6 +82,21 @@ public class Snake extends LivingEntity implements Monster {
 	public MonsterType getMonsterType() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	protected AABB getDirectionalHitbox(Direction d) {
+
+		if (d == Direction.SOUTH || d == Direction.NORTH){
+			
+			return new AABB(position.x + 1, position.y + 6, 14, 10);
+			
+		} else {
+			
+			return new AABB(position.x, position.y + 6, 16, 10);
+			
+		}
+		
 	}
 
 }

@@ -52,7 +52,7 @@ public class Camera {
 		LivingEntity.setLevelCollisionLayer(l.getCollisionLayer());
 		e.setReferenceCollisions(l.getCollisionLayer());
 		player = (Player) e.spawnRandomLocation(EntityType.PLAYER);
-		e.spawnRandomLocation(EntityType.MONSTER);
+		//e.spawnRandomLocation(EntityType.MONSTER);
 		
 	}
 

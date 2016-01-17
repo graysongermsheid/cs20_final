@@ -22,11 +22,13 @@ public class EntityManager {
 			boolean foundLocation = false;
 			int x = 0;
 			int y = 0;
+			Player p = null;
 			
 			while(!foundLocation){
 				
 				x = r.nextInt(referenceCollisions.getSize().width);
 				y = r.nextInt(referenceCollisions.getSize().height);
+				p = new Player(x * 16, y * 16, 15);
 				
 				if (referenceCollisions.getType(x, y) == CollisionType.NONE){
 					
@@ -34,10 +36,29 @@ public class EntityManager {
 					
 				}
 				
+				//MAKE THIS ENTITY AGNOSTIC
+				if ((p.getHitBox().collides(referenceCollisions.getCollisionBox(x - 1, y - 1)) && referenceCollisions.getType(x - 1, y - 1) == CollisionType.WALL) ||
+					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x, y - 1)) && referenceCollisions.getType(x, y - 1) == CollisionType.WALL) ||
+					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x + 1, y - 1)) && referenceCollisions.getType(x + 1, y - 1) == CollisionType.WALL) ||
+					
+					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x - 1, y)) && referenceCollisions.getType(x - 1, y) == CollisionType.WALL) ||
+					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x + 1, y)) && referenceCollisions.getType(x + 1, y) == CollisionType.WALL) ||
+					
+					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x - 1, y + 1)) && referenceCollisions.getType(x - 1, y + 1) == CollisionType.WALL) ||
+					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x, y + 1)) && referenceCollisions.getType(x, y + 1) == CollisionType.WALL) ||
+					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x + 1, y + 1)) && referenceCollisions.getType(x + 1, y + 1) == CollisionType.WALL) ||
+					
+					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x - 1, y + 2)) && referenceCollisions.getType(x - 1, y + 2) == CollisionType.WALL) ||
+					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x, y + 2)) && referenceCollisions.getType(x, y + 2) == CollisionType.WALL) ||
+					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x + 1, y + 2)) && referenceCollisions.getType(x + 1, y + 2) == CollisionType.WALL)){
+					
+					foundLocation = false;
+					
+				}
+				
 			}
 			
 			System.out.println("Spawning player at " + x * 16 + ", " + y * 16);
-			Player p = new Player(x * 16, y * 16, 15);
 			entities.add(p);
 			return p;
 		} else {
