@@ -14,7 +14,7 @@ public class Player extends LivingEntity{
 	public Player(int x, int y, int health) {
 		
 		super(x, y, 16, 16, "player.png", health);
-		hitBox = new AABB(x + 1, y + 6, 13, 10);
+		hitBox = new AABB(x + 1, y + 6, 13, 9);
 		
 		footstepGap = 250d;
 		footstepTimer = 0d;
@@ -102,27 +102,6 @@ public class Player extends LivingEntity{
 	public EntityType getType(){
 		
 		return EntityType.PLAYER;
-		
-	}
-
-	@Override
-	protected AABB getDirectionalHitbox(Direction d) {
-
-		//this doesnt work they always need to be the same size or it breaks
-		
-		if (d == Direction.SOUTH || d == Direction.NORTH){
-			
-			return new AABB(position.x + 1, position.y + 6, 13, 9);
-			
-		} else if (d == Direction.EAST){
-			
-			return new AABB(position.x + 1, position.y + 6, 12, 9);
-			
-		} else {
-			
-			return new AABB(position.x + 2, position.y + 6, 12, 9);
-			
-		}
 		
 	}
 }
