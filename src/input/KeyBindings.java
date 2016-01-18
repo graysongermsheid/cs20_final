@@ -10,7 +10,8 @@ public enum KeyBindings{
 	RIGHT (KeyEvent.VK_D, KeyEvent.VK_RIGHT),
 	ACTION (KeyEvent.VK_ENTER, KeyEvent.VK_X),
 	ACTION2 (KeyEvent.VK_SPACE, KeyEvent.VK_Z),
-	ESCAPE (KeyEvent.VK_ESCAPE);
+	ESCAPE (KeyEvent.VK_ESCAPE),
+	DEBUG (KeyEvent.VK_F1);
 
 	int[] bindings;
 

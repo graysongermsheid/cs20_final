@@ -1,4 +1,0 @@
-Okay, this is a textbox.`
-This should work pretty well, but I want it to still
-split at the end of lines.`
-Last line!

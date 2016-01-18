@@ -25,7 +25,7 @@ public class Menu extends GUIComponent {
 		this.background = ImageTools.combineImages(width, height, s.getAllImages());
 		this.dragged = false;
 
-		this.font = ResourceManager.getFont("font_large.png");
+		this.font = ResourceManager.getFont("font.png");
 		this.title = null;
 		menuButtons = new ArrayList<Button>();
 	}
@@ -39,7 +39,7 @@ public class Menu extends GUIComponent {
 		this.background = ImageTools.combineImages(width, height, s.getAllImages());
 		this.dragged = false;
 
-		this.font = ResourceManager.getFont("font_large.png");
+		this.font = ResourceManager.getFont("font.png");
 		this.title = title;
 		menuButtons = new ArrayList<Button>();
 	}

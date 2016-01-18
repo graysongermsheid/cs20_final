@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
+
+import level.AABB;
 import level.CollisionLayer;
 import level.CollisionType;
 
@@ -17,85 +19,62 @@ public class EntityManager {
 	
 	public Entity spawnRandomLocation(EntityType t){
 		
-		if (t == EntityType.PLAYER){
+		Entity e = null;
+		boolean foundLocation = false;
+		int x = 0;
+		int y = 0;
+		
+		while (!foundLocation){
 			
-			boolean foundLocation = false;
-			int x = 0;
-			int y = 0;
-			Player p = null;
+			x = r.nextInt(referenceCollisions.getSize().width);
+			y = r.nextInt(referenceCollisions.getSize().height);
 			
-			while(!foundLocation){
+			if (t == EntityType.PLAYER){
 				
-				x = r.nextInt(referenceCollisions.getSize().width);
-				y = r.nextInt(referenceCollisions.getSize().height);
-				p = new Player(x * 16, y * 16, 15);
+				e = new Player(x * 16, y * 16, 100);
 				
-				if (referenceCollisions.getType(x, y) == CollisionType.NONE){
-					
-					foundLocation = true;
-					
-				}
+			} else if (t == EntityType.MONSTER){
 				
-				//MAKE THIS ENTITY AGNOSTIC
-				if ((p.getHitBox().collides(referenceCollisions.getCollisionBox(x - 1, y - 1)) && referenceCollisions.getType(x - 1, y - 1) == CollisionType.WALL) ||
-					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x, y - 1)) && referenceCollisions.getType(x, y - 1) == CollisionType.WALL) ||
-					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x + 1, y - 1)) && referenceCollisions.getType(x + 1, y - 1) == CollisionType.WALL) ||
-					
-					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x - 1, y)) && referenceCollisions.getType(x - 1, y) == CollisionType.WALL) ||
-					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x + 1, y)) && referenceCollisions.getType(x + 1, y) == CollisionType.WALL) ||
-					
-					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x - 1, y + 1)) && referenceCollisions.getType(x - 1, y + 1) == CollisionType.WALL) ||
-					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x, y + 1)) && referenceCollisions.getType(x, y + 1) == CollisionType.WALL) ||
-					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x + 1, y + 1)) && referenceCollisions.getType(x + 1, y + 1) == CollisionType.WALL) ||
-					
-					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x - 1, y + 2)) && referenceCollisions.getType(x - 1, y + 2) == CollisionType.WALL) ||
-					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x, y + 2)) && referenceCollisions.getType(x, y + 2) == CollisionType.WALL) ||
-					(p.getHitBox().collides(referenceCollisions.getCollisionBox(x + 1, y + 2)) && referenceCollisions.getType(x + 1, y + 2) == CollisionType.WALL)){
-					
-					foundLocation = false;
-					
-				}
+				e = new Snake(x * 16, y * 16);
 				
 			}
 			
-			System.out.println("Spawning player at " + x * 16 + ", " + y * 16);
-			entities.add(p);
-			return p;
-		} else {
-			
-			boolean foundLocation = false;
-			int x = 0;
-			int y = 0;
-			
-			while(!foundLocation){
+			if (referenceCollisions.getType(x, y) == CollisionType.NONE &&
+				!checkCollisions(e.getHitBox(), x, y)){
 				
-				x = r.nextInt(referenceCollisions.getSize().width);
-				y = r.nextInt(referenceCollisions.getSize().height);
-				
-				if (referenceCollisions.getType(x, y) == CollisionType.NONE){
-					
-					foundLocation = true;
-					
-				}
+				foundLocation = true;
 				
 			}
-			
-			System.out.println("Spawning player at " + x * 16 + ", " + y * 16);
-			Snake p = new Snake(x * 16, y * 16);
-			entities.add(p);
 			
 		}
 		
-		return null;
+		System.out.println("Spawning entity at: [" + x * 16 + ", " + y * 16 + "]");
+		entities.add(e);
+		return e;
 	}
 	
-	public void spawn(EntityType t, Point p){
+	private boolean checkCollisions(AABB a, int x, int y){
 		
-		if (t == EntityType.MONSTER){
-			
-			entities.add(new Snake(p.x, p.y));
-			
+		if ((a.collides(referenceCollisions.getCollisionBox(x - 1, y - 1)) && referenceCollisions.getType(x - 1, y - 1) == CollisionType.WALL) ||
+			(a.collides(referenceCollisions.getCollisionBox(x, y - 1)) && referenceCollisions.getType(x, y - 1) == CollisionType.WALL) ||
+			(a.collides(referenceCollisions.getCollisionBox(x + 1, y - 1)) && referenceCollisions.getType(x + 1, y - 1) == CollisionType.WALL) ||
+				
+			(a.collides(referenceCollisions.getCollisionBox(x - 1, y)) && referenceCollisions.getType(x - 1, y) == CollisionType.WALL) ||
+			(a.collides(referenceCollisions.getCollisionBox(x + 1, y)) && referenceCollisions.getType(x + 1, y) == CollisionType.WALL) ||
+				
+			(a.collides(referenceCollisions.getCollisionBox(x - 1, y + 1)) && referenceCollisions.getType(x - 1, y + 1) == CollisionType.WALL) ||
+			(a.collides(referenceCollisions.getCollisionBox(x, y + 1)) && referenceCollisions.getType(x, y + 1) == CollisionType.WALL) ||
+			(a.collides(referenceCollisions.getCollisionBox(x + 1, y + 1)) && referenceCollisions.getType(x + 1, y + 1) == CollisionType.WALL) ||
+				
+			(a.collides(referenceCollisions.getCollisionBox(x - 1, y + 2)) && referenceCollisions.getType(x - 1, y + 2) == CollisionType.WALL) ||
+			(a.collides(referenceCollisions.getCollisionBox(x, y + 2)) && referenceCollisions.getType(x, y + 2) == CollisionType.WALL) ||
+			(a.collides(referenceCollisions.getCollisionBox(x + 1, y + 2)) && referenceCollisions.getType(x + 1, y + 2) == CollisionType.WALL)){
+				
+			return true;
+				
 		}
+		
+		return false;
 		
 	}
 	
@@ -159,6 +138,15 @@ public class EntityManager {
 			e.draw(g, p);
 			
 		}
+		
+	}
+	
+	public Entity[] getEntities(){
+		
+		Entity[] list = new Entity[entities.size()];
+		list = entities.toArray(list);
+		
+		return list;
 		
 	}
 }

@@ -114,7 +114,7 @@ public class Game implements GameScreen {
 		ResourceManager.createSpriteSheet("composite_two.png", 16, 16);
 		ResourceManager.createSpriteSheet("button.png", 24, 24);
 		ResourceManager.createSpriteSheet("player.png", 16, 16);
-		ResourceManager.createSpriteSheet("character.png", 16, 16);
+		ResourceManager.createSpriteSheet("snake.png", 16, 16);
 		
 		c = new CaveGenerator();
 		cam = new Camera(0, 0, 256, 144, c.createLevel(64, 64, 4, 0.5f));

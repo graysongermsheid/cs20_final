@@ -14,6 +14,7 @@ import java.awt.image.AffineTransformOp;
 
 import resources.ResourceManager;
 import resources.SpriteFont;
+import window.Screen;
 
 public class Camera {
 
@@ -26,7 +27,8 @@ public class Camera {
 	private AffineTransform transform;
 	private Player player;
 	private EntityManager e;
-	private boolean debug; //whether or not to show game info
+	public static boolean debug; //whether or not to show game info
+	private boolean debugHeld;
 	
 	public Level currentLevel;
 	
@@ -52,7 +54,7 @@ public class Camera {
 		LivingEntity.setLevelCollisionLayer(l.getCollisionLayer());
 		e.setReferenceCollisions(l.getCollisionLayer());
 		player = (Player) e.spawnRandomLocation(EntityType.PLAYER);
-		//e.spawnRandomLocation(EntityType.MONSTER);
+		e.spawnRandomLocation(EntityType.MONSTER);
 		
 	}
 
@@ -120,9 +122,14 @@ public class Camera {
 	public void processInput(){
 		
 		player.processInput();
-		if (InputHandler.KEY_ACTION_PRESSED && InputHandler.KEY_ESCAPE_PRESSED){
+		if (InputHandler.KEY_DEBUG_PRESSED && !debugHeld){
 			
 			debug = !debug;
+			debugHeld = true;
+			
+		} else if (!InputHandler.KEY_DEBUG_PRESSED){
+			
+			debugHeld = false;
 			
 		}
 		
@@ -149,13 +156,38 @@ public class Camera {
 		//Draw camera information to the screen
 		if (debug){
 
-			g.setColor(new java.awt.Color(128, 128, 128, 128));
-			g.fillRect(0, 0, 256, 32);
-			
-			font.setColor(java.awt.Color.GREEN);
-			font.drawText("[" + location.x + "," + location.y + "]" + " [" + farLocation.x + "," + farLocation.y + "]", 0, 0, g);
-			font.drawText(currentLevel.getRealSize().width + " x " + currentLevel.getRealSize().height, 0, 18, g);
+			drawDetails(g, scaleH, scaleV);
 			
 		}
+	}
+	
+	private void drawDetails(Graphics2D g, float scaleH, float scaleV){
+		
+		g.setColor(new java.awt.Color(128, 128, 128, 128));
+		g.fillRect(0, 0, 512, 36);
+		
+		int sH = (int) scaleH;
+		int sV = (int) scaleV; //cause java doesnt let you use floats in rectangles
+		
+		font.setColor(java.awt.Color.GREEN);
+		
+		//Display camera bounds in the far and near corners
+		String cameraNear = "[" + location.x + "," + location.y + "]";
+		String cameraFar = "[" + farLocation.x + "," + farLocation.y + "]";
+		font.drawText(cameraNear, 0, 0, g);
+		font.drawText(cameraFar, Screen.SIZE.width - font.getStringSize(cameraFar).width, Screen.SIZE.height - font.getStringSize(cameraFar).height, g);
+		font.drawText("fps: " + Screen.getFPS() + " (updates: " + Screen.getTicks() + ")", 0, 18, g);
+		
+		for (Entity p : e.getEntities()){
+			
+			g.setColor(java.awt.Color.GREEN);
+			
+			String info = p.getType().getInfo() + " | Location: " + "[" + p.getCenter().x + ", " + p.getCenter().getY() + "]";
+			String info2 = (p.getType() != EntityType.ITEM) ? "HP: " + ((LivingEntity) p).getHealth() + " | " + (((LivingEntity)p).getAlive() ? "alive" : "dead") : " ";
+			g.drawString(info, p.getHitBox().getX() * scaleH - location.x * scaleH, p.getHitBox().getFarLocation().y * scaleV - location.y * scaleV + 20);
+			g.drawString(info2, p.getHitBox().getX() * scaleH - location.x * scaleH, p.getHitBox().getFarLocation().y * scaleV - location.y * scaleV + 35);
+			g.drawRect(p.getHitBox().getX() * sH - location.x * sH, p.getHitBox().getY() * sV - location.y * sV, p.getHitBox().getWidth() * sH + sH, p.getHitBox().getHeight() * sV + sV);
+		}
+		
 	}
 }

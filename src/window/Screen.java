@@ -14,9 +14,8 @@ public class Screen extends Canvas {
 	
 	private BufferStrategy buffer;
 	private ScreenManager screenManager;
-	private SpriteFont font;
-	private double fps;
-	private double ups;
+	private static double fps;
+	private static double ups;
 	public static Dimension SIZE;
 
 	public void createBuffer(){
@@ -29,9 +28,6 @@ public class Screen extends Canvas {
 	public void run(){
 
 		SIZE = getSize();
-
-		resources.ResourceManager.createSpriteSheet("font.png", 16, 16);
-		font = ResourceManager.getFont("font.png");
 		System.out.println("Canvas size: " + SIZE);
 
 		InputHandler in = new InputHandler();
@@ -124,6 +120,18 @@ public class Screen extends Canvas {
 		}
 	}
 
+	public static double getFPS(){
+		
+		return fps;
+		
+	}
+	
+	public static double getTicks(){
+		
+		return ups;
+		
+	}
+	
 	private void processInput(){
 
 		if (InputHandler.MOUSE_LOCATION == null){
@@ -152,9 +160,6 @@ public class Screen extends Canvas {
 		g.fillRect(0, 0, SIZE.width, SIZE.height);
 
 		screenManager.draw(g);
-		font.setColor(Color.GREEN);
-		font.setBackgroundColor(Color.BLACK);
-		font.drawShadowedText("FPS: " + fps + " UPDATES: " + ups, 0, 38, g);
 		buffer.show();
 
 		g.dispose();

@@ -1,5 +1,10 @@
 package level.worldgen;
 
+//NOT USED IN PROJECT -- WAS JUST AN IDEA ON DUNGEON GENERATION
+
+//Takes a rectangle (x * y) and recursively splits into 'leaves'
+//never got it past that point
+
 import java.util.Random;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;

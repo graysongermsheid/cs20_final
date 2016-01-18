@@ -27,6 +27,7 @@ public class InputHandler extends MouseInputAdapter implements MouseWheelListene
 	public static boolean KEY_ACTION_PRESSED;
 	public static boolean KEY_ACTION2_PRESSED;
 	public static boolean KEY_ESCAPE_PRESSED;
+	public static boolean KEY_DEBUG_PRESSED;
 
 	public static boolean KEY_UP_RELEASED;
 	public static boolean KEY_DOWN_RELEASED;
@@ -77,6 +78,10 @@ public class InputHandler extends MouseInputAdapter implements MouseWheelListene
 			KEY_ESCAPE_PRESSED = true;
 			KEY_ESCAPE_RELEASED = false;
 			
+		} else if (KeyBindings.DEBUG.matches(e.getKeyCode())){
+			
+			KEY_DEBUG_PRESSED = true;
+			
 		}
 	}
 
@@ -119,6 +124,10 @@ public class InputHandler extends MouseInputAdapter implements MouseWheelListene
 			
 			KEY_ESCAPE_PRESSED = false;
 			KEY_ESCAPE_RELEASED = true;
+			
+		} else if (KeyBindings.DEBUG.matches(e.getKeyCode())){
+			
+			KEY_DEBUG_PRESSED = false;
 			
 		}
 

@@ -112,8 +112,6 @@ public abstract class LivingEntity extends Entity {
 		return newBox;
 	}
 	
-	protected abstract AABB getDirectionalHitbox(Direction d);
-	
 	public void damage(int amount){
 		
 		if (invulnerableTimer > 0) { return; }
@@ -122,6 +120,18 @@ public abstract class LivingEntity extends Entity {
 		health -= (amount <= health) ? amount : health;
 		invulnerableTimer = 2500;
 		alive = health > 0;
+		
+	}
+	
+	public int getHealth(){
+		
+		return health;
+		
+	}
+	
+	public boolean getAlive(){
+		
+		return alive;
 		
 	}
 	
@@ -189,31 +199,13 @@ public abstract class LivingEntity extends Entity {
 			
 		}
 		
-		if (direction != oldDirection){
-			
-			hitBox = getDirectionalHitbox(direction);
-			
-		}
-		
 		invulnerableTimer -= (invulnerableTimer - elapsedMilliseconds < 0) ? invulnerableTimer : elapsedMilliseconds;
 		
 	}
 	
 	public void draw(Graphics2D g, Point p){
 		
-		if (getType() == EntityType.MONSTER){
-			
-			g.setColor(Color.RED);
-			
-		} else {
-			
-			g.setColor(Color.GREEN);
-			
-		}
-		
-		g.drawRect(hitBox.getX() - p.x, hitBox.getY() - p.y, hitBox.getWidth(), hitBox.getHeight());
-		
-		if (!(invulnerableTimer > 0 && !(((((int)invulnerableTimer / 10) / 10) / 10) % 2 == 0))){ //flashes every 500 ms
+		if (!(invulnerableTimer > 0 && (((((int)invulnerableTimer / 10) / 10) / 10) % 2 == 0))){ //flashes every 500 ms
 
 			g.drawImage(animations[direction.value()].getCurrentFrame(), position.x - p.x, position.y - p.y, null);
 			
