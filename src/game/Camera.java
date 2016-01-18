@@ -20,13 +20,13 @@ public class Camera {
 	private Point location; //Pixels
 	private Point farLocation; //far corner
 	private Dimension size; //Pixels
-	private Focus focus;
-	private SpriteFont f;
+	private SpriteFont font;
 	private BufferedImage drawImage;
 	private AffineTransformOp transformer;
 	private AffineTransform transform;
 	private Player player;
 	private EntityManager e;
+	private boolean debug; //whether or not to show game info
 	
 	public Level currentLevel;
 	
@@ -44,7 +44,7 @@ public class Camera {
 		transformer = new AffineTransformOp(transform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR); //that's a weird way to spell neighbour
 
 		drawImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		f = ResourceManager.getFont("font.png");
+		font = ResourceManager.getFont("font.png");
 		farLocation = new Point(x + width, y + height);
 		size = new Dimension(width, height);
 		currentLevel = l;
@@ -120,6 +120,11 @@ public class Camera {
 	public void processInput(){
 		
 		player.processInput();
+		if (InputHandler.KEY_ACTION_PRESSED && InputHandler.KEY_ESCAPE_PRESSED){
+			
+			debug = !debug;
+			
+		}
 		
 	}
 	
@@ -142,19 +147,15 @@ public class Camera {
 		g.drawImage(scaledImage, 0, 0, null);
 
 		//Draw camera information to the screen
-		f.setColor(java.awt.Color.GREEN);
-		f.setBackgroundColor(java.awt.Color.BLACK);
-		f.drawShadowedText("[" + location.x + "," + location.y + "]" + " [" + farLocation.x + "," + farLocation.y + "]", 0, 0, g);
-		f.drawShadowedText(currentLevel.getRealSize().width + " x " + currentLevel.getRealSize().height, 0, 18, g);
-	}
-	
-	protected enum Focus {
-		
-		//Whether the camera follows the player, locks to the center or locks to a corner
-	
-		PLAYER,
-		CENTER,
-		CORNERS;
-		
+		if (debug){
+
+			g.setColor(new java.awt.Color(128, 128, 128, 128));
+			g.fillRect(0, 0, 256, 32);
+			
+			font.setColor(java.awt.Color.GREEN);
+			font.drawText("[" + location.x + "," + location.y + "]" + " [" + farLocation.x + "," + farLocation.y + "]", 0, 0, g);
+			font.drawText(currentLevel.getRealSize().width + " x " + currentLevel.getRealSize().height, 0, 18, g);
+			
+		}
 	}
 }
