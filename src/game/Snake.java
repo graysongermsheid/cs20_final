@@ -80,7 +80,8 @@ public class Snake extends LivingEntity implements Monster {
 	
 	@Override
 	public MonsterType getMonsterType() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return MonsterType.SNAKE;
+		
 	}
 }

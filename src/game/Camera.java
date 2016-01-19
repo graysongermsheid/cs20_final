@@ -182,7 +182,19 @@ public class Camera {
 			
 			g.setColor(java.awt.Color.GREEN);
 			
-			String info = p.getType().getInfo() + " | Location: " + "[" + p.getCenter().x + ", " + p.getCenter().getY() + "]";
+			String info = "";
+			
+			if (p.getType() == EntityType.MONSTER){
+				
+				info = ((Monster)p).getMonsterType().toString();
+				
+			} else if (p.getType() == EntityType.ITEM){
+				
+				info = ((Item)p).getItemType().toString();
+				
+			}
+			
+			info += " | Location: " + "[" + p.getCenter().x + ", " + p.getCenter().getY() + "]";
 			String info2 = (p.getType() != EntityType.ITEM) ? "HP: " + ((LivingEntity) p).getHealth() + " | " + (((LivingEntity)p).getAlive() ? "alive" : "dead") : " ";
 			g.drawString(info, p.getHitBox().getX() * scaleH - location.x * scaleH, p.getHitBox().getFarLocation().y * scaleV - location.y * scaleV + 20);
 			g.drawString(info2, p.getHitBox().getX() * scaleH - location.x * scaleH, p.getHitBox().getFarLocation().y * scaleV - location.y * scaleV + 35);
