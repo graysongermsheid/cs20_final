@@ -14,7 +14,7 @@ public class Snake extends LivingEntity implements Monster {
 	
 	public Snake(int x, int y) {
 		
-		super(x + 4, y, 16, 11, "snake.png", 30);
+		super(x, y, 16, 16, "snake.png", 30);
 		hitBox = new AABB(x + 4, y + 6, 15, 10);
 		Random r = new Random();
 		desiredSpeed = new Speed();

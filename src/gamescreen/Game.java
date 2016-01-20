@@ -7,6 +7,7 @@ import java.util.Random;
 import resources.ResourceManager;
 import input.InputHandler;
 import level.worldgen.CaveGenerator;
+import level.worldgen.DungeonGenerator;
 import gui.*;
 
 import game.Camera;
@@ -25,6 +26,7 @@ public class Game implements GameScreen {
 	private CaveGenerator c;
 	private Camera cam;
 	private Menu pauseMenu;
+	private DungeonGenerator d;
 
 	public Game(){
 		
@@ -102,23 +104,25 @@ public class Game implements GameScreen {
 	@Override
 	public void loadResources(){
 		
+		d = new DungeonGenerator();
+		//d.createLevel(5, 5);
+		
 		ResourceManager.createSpriteSheet("caves.png", 16, 16);
-		ResourceManager.createSpriteSheet("sand.png", 16, 16);
-		ResourceManager.createSpriteSheet("water.png", 16, 16);
-		ResourceManager.createSpriteSheet("grass.png", 16, 16);
-		ResourceManager.createSpriteSheet("mountain.png", 16, 16);
-		ResourceManager.createSpriteSheet("mountain_high.png", 16, 16);
+		ResourceManager.createSpriteSheet("dungeon.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
 		ResourceManager.createSpriteSheet("font.png", 16, 16);
+		ResourceManager.createSpriteSheet("font_small.png", 4, 6);
 		ResourceManager.createSpriteSheet("composite_four.png", 8, 8);
 		ResourceManager.createSpriteSheet("composite_two.png", 16, 16);
 		ResourceManager.createSpriteSheet("button.png", 24, 24);
 		ResourceManager.createSpriteSheet("player.png", 16, 16);
 		ResourceManager.createSpriteSheet("snake.png", 16, 16);
+		ResourceManager.createSpriteSheet("guard.png", 16, 16);
 		
 		c = new CaveGenerator();
-		cam = new Camera(0, 0, 256, 144, c.createLevel(64, 64, 4, 0.5f));
-
+		//cam = new Camera(0, 0, 256, 144, c.createLevel(64, 64, 4, 0.5f));
+		cam = new Camera(0, 0, 256, 144, d.createLevel(5, 5));
+		
 		pauseMenu = new Menu("composite_four.png", 480, 104, 320, 512);
 		pauseMenu.addButton(new Button("X", 304, -16, 32, 32){
 			

@@ -1,7 +1,9 @@
 package game;
 
-public enum Direction {
+import java.util.Random;
 
+public enum Direction {
+	
 	SOUTH (0),
 	EAST (1),
 	NORTH (2),
@@ -21,4 +23,21 @@ public enum Direction {
 		
 	}
 	
+	public static Direction random(){
+		
+		Random r = new Random();
+		switch(r.nextInt(4)){
+		
+			case 0:
+				return SOUTH;
+			case 1:
+				return NORTH;
+			case 2:
+				return EAST;
+			default:
+				return WEST;
+		
+		}
+		
+	}
 }

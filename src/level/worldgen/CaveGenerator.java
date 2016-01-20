@@ -48,7 +48,7 @@ public class CaveGenerator {
 				
 				CollisionType collision = cave[i][j] ? CollisionType.WALL : CollisionType.NONE;
 				
-				l.addTile(TileMapper.processTile(j, i, cave, true), j, i, 0);	
+				l.addTile(TileMapper.processTile(j, i, cave), j, i, 0);	
 				l.addCollision(j, i, collision);
 				
 			}

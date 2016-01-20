@@ -35,7 +35,18 @@ public class EntityManager {
 				
 			} else if (t == EntityType.MONSTER){
 				
-				e = new Snake(x * 16, y * 16);
+				MonsterType m = MonsterType.random();
+				
+				switch (m){
+				
+				case GUARD:
+					e = new Guard(x * 16, y * 16);
+					break;
+				case SNAKE:
+				default:
+					e = new Snake(x * 16, y * 16);
+					break;
+				}
 				
 			}
 			
@@ -51,6 +62,16 @@ public class EntityManager {
 		System.out.println("Spawning entity at: [" + x * 16 + ", " + y * 16 + "]");
 		entities.add(e);
 		return e;
+	}
+	
+	public void spawnMonsters(int amount){
+		
+		for (int i = 0; i < amount; i++){
+			
+			spawnRandomLocation(EntityType.MONSTER);
+			
+		}
+		
 	}
 	
 	private boolean checkCollisions(AABB a, int x, int y){
@@ -119,9 +140,6 @@ public class EntityManager {
 			for (int i = 0; i < entities.size() - 1; i++){
 				
 				if (entities.get(i).getFarLocation().y > entities.get(i + 1).getFarLocation().y){
-					
-					System.out.println("i: " + entities.get(i).getFarLocation().y + 
-									   "i + 1: " + entities.get(i + 1).getFarLocation().y);
 					
 					sorted = false;
 					Entity e = entities.get(i + 1);

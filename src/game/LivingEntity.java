@@ -205,7 +205,7 @@ public abstract class LivingEntity extends Entity {
 	
 	public void draw(Graphics2D g, Point p){
 		
-		if (!(invulnerableTimer > 0 && (((((int)invulnerableTimer / 10) / 10) / 10) % 2 == 0))){ //flashes every 500 ms
+		if (invulnerableTimer == 0 || (((int)invulnerableTimer) / 10 / 10 % 4 == 0)){ //entites flash when they're invulnerable
 
 			g.drawImage(animations[direction.value()].getCurrentFrame(), position.x - p.x, position.y - p.y, null);
 			

@@ -2,9 +2,8 @@ package level;
 
 public enum CollisionType {
 	
-	NONE (0x0),
-	WALL (0xF),
-	DOOR (0xD);
+	NONE (0),
+	WALL (1);
 
 	int val;
 
@@ -18,5 +17,20 @@ public enum CollisionType {
 		
 		return val;
 		
+	}
+	
+	public static CollisionType fromValue(int value){
+		
+		for (CollisionType c : values()){
+			
+			if (c.value() == value){
+				
+				return c;
+				
+			}
+			
+		}
+		
+		return CollisionType.NONE;
 	}
 }

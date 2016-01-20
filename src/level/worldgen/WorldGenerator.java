@@ -83,12 +83,12 @@ public class WorldGenerator {
 			
 			for (int j = 0; j < width / 2; j++){
 				
-				l.addTile(TileMapper.processTile(j, i, water, false), j, i, 0);
-				l.addTile(TileMapper.processTile(j, i, grass0, false), j, i, 1);
-				l.addTile(TileMapper.processTile(j, i, grass1, false), j, i, 2);
-				l.addTile(TileMapper.processTile(j, i, mountain0, false), j, i, 3);
-				l.addTile(TileMapper.processTile(j, i, mountain1, false), j, i, 4);
-				l.addTile(TileMapper.processTile(j, i, mountain2, false), j, i, 5);
+				//l.addTile(TileMapper.processTile(j, i, water, false), j, i, 0);
+				//l.addTile(TileMapper.processTile(j, i, grass0, false), j, i, 1);
+				//l.addTile(TileMapper.processTile(j, i, grass1, false), j, i, 2);
+				//l.addTile(TileMapper.processTile(j, i, mountain0, false), j, i, 3);
+				//l.addTile(TileMapper.processTile(j, i, mountain1, false), j, i, 4);
+				//l.addTile(TileMapper.processTile(j, i, mountain2, false), j, i, 5);
 				
 			}
 		}

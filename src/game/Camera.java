@@ -54,7 +54,7 @@ public class Camera {
 		LivingEntity.setLevelCollisionLayer(l.getCollisionLayer());
 		e.setReferenceCollisions(l.getCollisionLayer());
 		player = (Player) e.spawnRandomLocation(EntityType.PLAYER);
-		e.spawnRandomLocation(EntityType.MONSTER);
+		e.spawnMonsters(20);
 		
 	}
 
@@ -152,7 +152,8 @@ public class Camera {
 		//Scale the original image to fit the screen
 		scaledImage = transformer.filter(drawImage, scaledImage);
 		g.drawImage(scaledImage, 0, 0, null);
-
+		g.drawImage(ResourceManager.getImage("hp_bar.png"), 4, 4, null);
+		
 		//Draw camera information to the screen
 		if (debug){
 
@@ -161,6 +162,7 @@ public class Camera {
 		}
 	}
 	
+	//Draw helpful details about the game
 	private void drawDetails(Graphics2D g, float scaleH, float scaleV){
 		
 		g.setColor(new java.awt.Color(128, 128, 128, 128));
@@ -199,7 +201,7 @@ public class Camera {
 			g.drawString(info, p.getHitBox().getX() * scaleH - location.x * scaleH, p.getHitBox().getFarLocation().y * scaleV - location.y * scaleV + 20);
 			g.drawString(info2, p.getHitBox().getX() * scaleH - location.x * scaleH, p.getHitBox().getFarLocation().y * scaleV - location.y * scaleV + 35);
 			g.drawRect(p.getHitBox().getX() * sH - location.x * sH, p.getHitBox().getY() * sV - location.y * sV, p.getHitBox().getWidth() * sH + sH, p.getHitBox().getHeight() * sV + sV);
-		}
-		
+			g.drawLine(player.getCenter().x * sH - location.x * sH, player.getCenter().y * sV - location.y * sV, p.getCenter().x * sH - location.x * sH, p.getCenter().y * sV - location.y * sV);
+		}	
 	}
 }
