@@ -15,14 +15,14 @@ public class Snake extends LivingEntity implements Monster {
 	public Snake(int x, int y) {
 		
 		super(x, y, 16, 16, "snake.png", 30);
-		hitBox = new AABB(x + 4, y + 6, 15, 10);
+		hitBox = new AABB(x, y + 6, 15, 9);
 		Random r = new Random();
 		desiredSpeed = new Speed();
 		while ((desiredSpeed.x == 0) && (desiredSpeed.y == 0)){
 			
 			desiredSpeed.x = r.nextInt(3) - 1;
 			desiredSpeed.y = r.nextInt(3) - 1;
-			System.out.println("Set snake spedd: " + desiredSpeed.x + ", " + desiredSpeed.y + " (@" + hitBox.getX() + ", " + hitBox.getY() + ")");
+			
 		}
 		attackDamage = 10;
 		
@@ -30,19 +30,14 @@ public class Snake extends LivingEntity implements Monster {
 
 	@Override
 	public void collide(Entity e) {
-		// TODO Auto-generated method stub
-
-		//if (!entitiesCollided.contains(e)){
 			
-			entitiesCollided.add(e);
+		entitiesCollided.add(e);
 			
-			if (e.getType() == EntityType.PLAYER){
+		if (e.getType() == EntityType.PLAYER){
 				
-				((Player)e).damage(attackDamage);
+			((Player)e).damage(attackDamage, this);
 				
-			}
-			
-		//}
+		}
 		
 	}
 

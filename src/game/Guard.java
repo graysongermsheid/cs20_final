@@ -1,19 +1,22 @@
 package game;
 
 import level.AABB;
+import java.util.Random;
 
 public class Guard extends LivingEntity implements Monster {
 
 	private double walkTimer;
 	private double walkCooldown;
 	private Direction desiredDirection;
+	private Random r;
 	
 	public Guard(int x, int y){
 		
 		super(x, y, 16, 16, "guard.png", 50);
+		r = new Random();
 		hitBox = new AABB(x + 1, y + 6, 13, 9);
 		walkTimer = 1000d;
-		walkCooldown = 3000d;
+		walkCooldown = (double)r.nextInt(3000);
 		
 	}
 	public void collide(Entity e) {
@@ -22,7 +25,7 @@ public class Guard extends LivingEntity implements Monster {
 			
 		if (e.getType() == EntityType.PLAYER){
 				
-			((Player)e).damage(25);
+			((Player)e).damage(25, this);
 				
 		}
 		
@@ -43,24 +46,24 @@ public class Guard extends LivingEntity implements Monster {
 			switch (desiredDirection){
 			
 				case SOUTH:
-					speed.setSpeed(0, 2);
+					speed.setSpeed(0, 3);
 					break;
 				case NORTH:
-					speed.setSpeed(0, -2);
+					speed.setSpeed(0, -3);
 					break;
 				case EAST:
-					speed.setSpeed(2, 0);
+					speed.setSpeed(3, 0);
 					break;
 				case WEST:
 				default:
-					speed.setSpeed(-2, 0);
+					speed.setSpeed(-3, 0);
 					break;
 			}
 		} else if (walkTimer <= 0 && walkCooldown <= 0){
 			
 			desiredDirection = null;
 			walkTimer = 1000d;
-			walkCooldown = 3000d;
+			walkCooldown = (double)r.nextInt(3001) + 1000;
 			
 		}
 		

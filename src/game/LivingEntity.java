@@ -30,7 +30,6 @@ public abstract class LivingEntity extends Entity {
 		alive = true;
 		speed = new Speed();
 		direction = Direction.SOUTH;
-		entitiesCollided = new ArrayList<Entity>();
 		//hitBox = new AABB(boundingBox.getX() + 2, boundingBox.getY(), 13, boundingBox.getHeight() - 1);
 		
 		animations = new Animation[4];

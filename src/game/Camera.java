@@ -29,14 +29,18 @@ public class Camera {
 	private EntityManager e;
 	public static boolean debug; //whether or not to show game info
 	private boolean debugHeld;
+	private SpriteFont scoreFont;
 	
 	public Level currentLevel;
 	
 	public Camera(int x, int y, int width, int height, Level l){
-		
+
+		scoreFont = ResourceManager.getFont("font_small.png");
 		location = new Point(x, y);
 		transform = new AffineTransform();
 		e = new EntityManager();
+		
+		Door.camRef = this;
 		
 		Dimension screenSize = gamescreen.ScreenManager.screenSize;
 		float scaleVert = screenSize.height / (float)height;
@@ -53,19 +57,34 @@ public class Camera {
 		
 		LivingEntity.setLevelCollisionLayer(l.getCollisionLayer());
 		e.setReferenceCollisions(l.getCollisionLayer());
-		player = (Player) e.spawnRandomLocation(EntityType.PLAYER);
-		e.spawnMonsters(20);
+		spawnEntities();
 		
 	}
 
 	public void setLevel(int x, int y, Level l){
 
+		e.clearEntities();
 		location = new Point(x, y);
 		transform = new AffineTransform();
 		farLocation = new Point(x + size.width, y + size.height);
 		currentLevel = l;
 		LivingEntity.setLevelCollisionLayer(l.getCollisionLayer());
-
+		e.setReferenceCollisions(l.getCollisionLayer());
+		spawnEntities();
+		
+		player.health = ScoreTracker.playerHealth;
+		ScoreTracker.areasExplored++;
+		ScoreTracker.score += 250;
+	}
+	
+	private void spawnEntities(){
+		
+		player = (Player) e.spawnRandomLocation(EntityType.PLAYER);
+		e.spawnEntities(EntityType.MONSTER, 20);
+		e.spawnEntities(EntityType.DOOR, 1);
+		e.spawnEntities(EntityType.COIN, 20);
+		e.spawnEntities(EntityType.HEAL, 4);
+		
 	}
 	
 	public void setSize(int width, int height){
@@ -117,6 +136,8 @@ public class Camera {
 			farLocation.y = location.y + size.height;
 			
 		}
+		
+		ScoreTracker.playerHealth = player.health;
 	}
 	
 	public void processInput(){
@@ -146,13 +167,13 @@ public class Camera {
 		BufferedImage scaledImage = new BufferedImage((int)(size.width * scaleH), (int)(size.height * scaleV), BufferedImage.TYPE_INT_ARGB);
 		currentLevel.draw(location, farLocation, g2);
 		e.draw(g2, location);
-
+		drawStats(g2);
+		
 		g2.dispose();
 
 		//Scale the original image to fit the screen
 		scaledImage = transformer.filter(drawImage, scaledImage);
 		g.drawImage(scaledImage, 0, 0, null);
-		g.drawImage(ResourceManager.getImage("hp_bar.png"), 4, 4, null);
 		
 		//Draw camera information to the screen
 		if (debug){
@@ -160,6 +181,22 @@ public class Camera {
 			drawDetails(g, scaleH, scaleV);
 			
 		}
+	}
+	
+	private void drawStats(Graphics2D g){
+		
+		g.setColor(java.awt.Color.BLACK);
+		g.fillRect(2, 134, 64, 8);
+		g.setColor(java.awt.Color.RED);
+		g.fillRect(2, 134, (int)((player.getHealth() / (double)Player.MAX_HEALTH) * 64), 8);
+		g.drawImage(ResourceManager.getImage("hp_small.png"), 2, 134, null);
+		
+		//DRAW SCORE & MONEY
+		String score = "SCORE:" + ScoreTracker.score + " $" + ScoreTracker.goldCollected;
+		scoreFont.setBackgroundColor(java.awt.Color.ORANGE);
+		scoreFont.setColor(java.awt.Color.YELLOW);
+		scoreFont.drawShadowedText(score, 256 - scoreFont.getStringSize(score).width - 2, 144 - scoreFont.getStringSize(score).height - 1, g);
+		
 	}
 	
 	//Draw helpful details about the game
@@ -185,22 +222,56 @@ public class Camera {
 			g.setColor(java.awt.Color.GREEN);
 			
 			String info = "";
+			String info2 = "";
 			
 			if (p.getType() == EntityType.MONSTER){
 				
 				info = ((Monster)p).getMonsterType().toString();
+				info2 = "HP: " + ((LivingEntity)p).getHealth() + " | " + (((LivingEntity)p).getAlive() ? "ALIVE" : "DEAD");
 				
-			} else if (p.getType() == EntityType.ITEM){
+			} else if (p.getType() == EntityType.COIN){
 				
-				info = ((Item)p).getItemType().toString();
+				info = p.getType().getInfo() + " ($" + ((Coin)p).getVal() + ")";
+				
+			} else if (p.getType() == EntityType.PLAYER){
+				
+				info = "You";
+				info2 = "HP: " + ((LivingEntity)p).getHealth() + " | " + (((LivingEntity)p).getAlive() ? "ALIVE" : "DEAD");
+				
+			} else if (p.getType() == EntityType.HEAL){
+				
+				info = "Health Boost";
+				info2 = "Heals: " + ((HealingPotion)p).getHealAmount();
 				
 			}
 			
 			info += " | Location: " + "[" + p.getCenter().x + ", " + p.getCenter().getY() + "]";
-			String info2 = (p.getType() != EntityType.ITEM) ? "HP: " + ((LivingEntity) p).getHealth() + " | " + (((LivingEntity)p).getAlive() ? "alive" : "dead") : " ";
 			g.drawString(info, p.getHitBox().getX() * scaleH - location.x * scaleH, p.getHitBox().getFarLocation().y * scaleV - location.y * scaleV + 20);
 			g.drawString(info2, p.getHitBox().getX() * scaleH - location.x * scaleH, p.getHitBox().getFarLocation().y * scaleV - location.y * scaleV + 35);
 			g.drawRect(p.getHitBox().getX() * sH - location.x * sH, p.getHitBox().getY() * sV - location.y * sV, p.getHitBox().getWidth() * sH + sH, p.getHitBox().getHeight() * sV + sV);
+			
+			if (p.getType() == EntityType.DOOR){
+				
+				g.setColor(new Color(125, 255, 255, 128));
+				
+			} else if (p.getType() == EntityType.COIN){
+				
+				g.setColor(new Color(255, 190, 0, 128));
+				
+			} else if (p.getType() == EntityType.HEAL){
+				
+				g.setColor(new Color(0, 255, 0, 128));
+				
+			} else if (p.getType() == EntityType.MONSTER){
+				
+				g.setColor(new Color(255, 0, 0, 128));
+				
+			} else {
+			
+				g.setColor(new java.awt.Color(255, 255, 255, 128));
+			
+			}
+			
 			g.drawLine(player.getCenter().x * sH - location.x * sH, player.getCenter().y * sV - location.y * sV, p.getCenter().x * sH - location.x * sH, p.getCenter().y * sV - location.y * sV);
 		}	
 	}

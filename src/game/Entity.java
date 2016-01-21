@@ -14,12 +14,14 @@ public abstract class Entity {
 	protected SpriteSheet sourceSprites;
 	protected ArrayList<Entity> entitiesCollided;
 	protected Point position;
+	public boolean disposalFlag; // If this entity needs to be removed;
 	
 	public Entity(int x, int y, int width, int height, String spriteSheet){
 		
 		this.hitBox = new AABB(x, y, width, height); //(individual entities sould redefine hitbox in constructor
 		this.position = new Point(x, y);
 		this.sourceSprites = ResourceManager.getSpriteSheet(spriteSheet);
+		this.entitiesCollided = new ArrayList<Entity>();
 		
 	}
 	

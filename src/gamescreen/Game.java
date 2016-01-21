@@ -1,8 +1,6 @@
 package gamescreen;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.Random;
 
 import resources.ResourceManager;
 import input.InputHandler;
@@ -13,13 +11,6 @@ import gui.*;
 import game.Camera;
 
 public class Game implements GameScreen {
-	
-	///////////////////////////////////////////
-	//Game has a seed -- save the seed and for each
-	//z level seed the rng with (seed / (caveID * z-level))
-
-	//that way the world has an ID, the each individual cave
-	//system has an id, so all the game needs to save is 2 numbers
 	
 	private boolean paused;
 	private boolean escHeld;
@@ -32,7 +23,7 @@ public class Game implements GameScreen {
 		
 		paused = false;
 		escHeld = false;
-		loadResources();
+		//loadResources();
 		
 	}
 	
@@ -74,8 +65,6 @@ public class Game implements GameScreen {
 			
 			if (paused){ pauseMenu.setVisible(true); }
 			
-			System.out.println("Paused opr whateer");
-			
 		} else if (!InputHandler.KEY_ESCAPE_PRESSED){
 			
 			escHeld = false;
@@ -105,25 +94,24 @@ public class Game implements GameScreen {
 	public void loadResources(){
 		
 		d = new DungeonGenerator();
-		//d.createLevel(5, 5);
 		
 		ResourceManager.createSpriteSheet("caves.png", 16, 16);
 		ResourceManager.createSpriteSheet("dungeon.png", 16, 16);
-		ResourceManager.createSpriteSheet("font_bold.png", 16, 16);
 		ResourceManager.createSpriteSheet("font.png", 16, 16);
 		ResourceManager.createSpriteSheet("font_small.png", 4, 6);
-		ResourceManager.createSpriteSheet("composite_four.png", 8, 8);
 		ResourceManager.createSpriteSheet("composite_two.png", 16, 16);
 		ResourceManager.createSpriteSheet("button.png", 24, 24);
 		ResourceManager.createSpriteSheet("player.png", 16, 16);
 		ResourceManager.createSpriteSheet("snake.png", 16, 16);
 		ResourceManager.createSpriteSheet("guard.png", 16, 16);
+		ResourceManager.createSpriteSheet("ladder.png", 16, 16);
+		ResourceManager.createSpriteSheet("coins.png", 16, 16);
+		ResourceManager.createSpriteSheet("health.png", 16, 16);
 		
-		c = new CaveGenerator();
-		//cam = new Camera(0, 0, 256, 144, c.createLevel(64, 64, 4, 0.5f));
 		cam = new Camera(0, 0, 256, 144, d.createLevel(5, 5));
 		
-		pauseMenu = new Menu("composite_four.png", 480, 104, 320, 512);
+		pauseMenu = new Menu("composite_two.png", 480, 104, 320, 200);
+		pauseMenu.lock();
 		pauseMenu.addButton(new Button("X", 304, -16, 32, 32){
 			
 			@Override
@@ -131,6 +119,46 @@ public class Game implements GameScreen {
 				
 				paused = false;
 				pauseMenu.setVisible(false);
+				
+			}
+			
+		});
+		pauseMenu.addButton(new Button("Mute", 12, 12, 296, 32){
+			
+			@Override
+			public void performAction(){
+				
+				ResourceManager.MUTE = !ResourceManager.MUTE;
+				
+			}
+			
+		});
+		pauseMenu.addButton(new Button("Menu", 12, 56, 296, 32){
+	
+			@Override
+			public void performAction(){
+		
+				ScreenManager.switchCurrentScreen(new MainMenu());
+		
+			}
+	
+		});
+		pauseMenu.addButton(new Button("Give Up", 12, 100, 296, 32){
+			
+			@Override
+			public void performAction(){
+				
+				ScreenManager.switchCurrentScreen(new GameOver("Boredom"));
+				
+			}
+			
+		});
+		pauseMenu.addButton(new Button("Quit Game", 12, 144, 296, 32){
+			
+			@Override
+			public void performAction(){
+				
+				System.exit(0);
 				
 			}
 			

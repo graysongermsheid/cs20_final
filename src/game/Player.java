@@ -12,7 +12,8 @@ public class Player extends LivingEntity{
 	
 	private double footstepTimer;
 	private double footstepGap;
-	private SpriteFont scoreFont;
+	private String attackedBy;
+	public static final int MAX_HEALTH = 50;
 	
 	public Player(int x, int y, int health) {
 		
@@ -22,7 +23,6 @@ public class Player extends LivingEntity{
 		footstepGap = 250d;
 		footstepTimer = 0d;
 	
-		scoreFont = ResourceManager.getFont("font_small.png");
 	}
 
 	@Override
@@ -72,10 +72,12 @@ public class Player extends LivingEntity{
 		}
 	}
 	
-	@Override
-	public void damage(int amount){
+	public void damage(int amount, Entity e){
 		
+		int oldHealth = health;
 		super.damage(amount);
+		attackedBy = ((Monster)e).getMonsterType().toString();
+		ScoreTracker.healthLost += oldHealth - health;
 		
 	}
 	
@@ -89,7 +91,7 @@ public class Player extends LivingEntity{
 		if (!alive){
 			
 			ResourceManager.playSound("die.wav");
-			gamescreen.ScreenManager.switchCurrentScreen(new gamescreen.GameOver(100, 1, "SNAKE"));
+			gamescreen.ScreenManager.switchCurrentScreen(new gamescreen.GameOver(attackedBy));
 			
 		}
 		
@@ -107,18 +109,6 @@ public class Player extends LivingEntity{
 		
 		super.draw(g, p);
 		
-		//DRAW HP BAR
-		g.setColor(java.awt.Color.BLACK);
-		g.fillRect(2, 134, 64, 8);
-		g.setColor(java.awt.Color.RED);
-		g.fillRect(2, 134, (int)((health / 100.0) * 64), 8);
-		g.drawImage(ResourceManager.getImage("hp_small.png"), 2, 134, null);
-		
-		//DRAW SCORE & MONEY
-		String score = "SCORE:" + ScoreTracker.score + " $" + ScoreTracker.goldCollected;
-		scoreFont.setBackgroundColor(java.awt.Color.ORANGE);
-		scoreFont.setColor(java.awt.Color.YELLOW);
-		scoreFont.drawShadowedText(score, 256 - scoreFont.getStringSize(score).width - 2, 144 - scoreFont.getStringSize(score).height - 1, g);
 	}
 	
 	@Override

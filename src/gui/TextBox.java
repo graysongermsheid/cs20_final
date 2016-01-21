@@ -29,7 +29,7 @@ public class TextBox extends Menu {
 
 	public TextBox(String messageFile, int x, int y, int width, int height){
 
-		super("composite_one.png", x, y, width, height);
+		super("composite_two.png", x, y, width, height);
 		this.font = ResourceManager.getFont("font.png");
 		padding = new Dimension(16, 8);
 		bestFontColor = Color.WHITE;

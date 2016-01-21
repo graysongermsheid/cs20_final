@@ -31,7 +31,7 @@ public class EntityManager {
 			
 			if (t == EntityType.PLAYER){
 				
-				e = new Player(x * 16, y * 16, 100);
+				e = new Player(x * 16, y * 16, 50);
 				
 			} else if (t == EntityType.MONSTER){
 				
@@ -47,6 +47,17 @@ public class EntityManager {
 					e = new Snake(x * 16, y * 16);
 					break;
 				}
+			} else if (t == EntityType.COIN){
+				
+				e = new Coin(x * 16, y * 16, r.nextInt(25) + 1);
+				
+			} else if (t == EntityType.HEAL){
+				
+				e = new HealingPotion(x * 16, y * 16, r.nextInt(25) + 1);
+				
+			} else if (t == EntityType.DOOR){
+				
+				e = new Door(x * 16, y * 16);
 				
 			}
 			
@@ -59,16 +70,15 @@ public class EntityManager {
 			
 		}
 		
-		System.out.println("Spawning entity at: [" + x * 16 + ", " + y * 16 + "]");
 		entities.add(e);
 		return e;
 	}
 	
-	public void spawnMonsters(int amount){
+	public void spawnEntities(EntityType e, int amount){
 		
 		for (int i = 0; i < amount; i++){
 			
-			spawnRandomLocation(EntityType.MONSTER);
+			spawnRandomLocation(e);
 			
 		}
 		
@@ -107,26 +117,33 @@ public class EntityManager {
 	
 	public void update(double elapsedMilliseconds){
 		
-		for (Entity b : entities){
+		for (int i = 0; i < entities.size(); i++){
 			
-			b.update(elapsedMilliseconds);
-			
-			for (Entity c : entities){
+			if (entities.get(i).disposalFlag){
 				
-				if (c.getHitBox().collides(b.getHitBox())){
+				entities.remove(i);
+				if (i >= entities.size()){
 					
-					b.collide(c);
-					
-				} else {
-					
-					b.removeCollision(c);
+					break;
 					
 				}
 				
 			}
-			
-		}
+			entities.get(i).update(elapsedMilliseconds);
 		
+			for (Entity c : entities){
+				
+				if (c.getHitBox().collides(entities.get(i).getHitBox())){
+					
+					entities.get(i).collide(c);
+					
+				} else {
+					
+					entities.get(i).removeCollision(c);
+					
+				}	
+			}
+		}
 	}
 	
 	public void draw(Graphics2D g, Point p){
@@ -165,6 +182,12 @@ public class EntityManager {
 		list = entities.toArray(list);
 		
 		return list;
+		
+	}
+	
+	public void clearEntities(){
+		
+		entities = new ArrayList<Entity>();
 		
 	}
 }

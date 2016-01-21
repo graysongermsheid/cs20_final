@@ -109,7 +109,7 @@ public class Screen extends Canvas {
 				updateCount = 0;
 				
 			}
-
+			
 			while (/*currentTime - lastUpdate < LOOP_SPEED && */currentTime - lastRender < FRAME_SPEED){
 
 				Thread.yield();

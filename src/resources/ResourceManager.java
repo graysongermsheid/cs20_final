@@ -10,11 +10,12 @@ import javax.sound.sampled.*;
 public class ResourceManager {
 
 	public static String PATH = "src/content/";
+	public static boolean MUTE = false;
 	
 	private static HashMap<String, BufferedImage> imageMap = new HashMap<String, BufferedImage>();
 	private static HashMap<String, SpriteSheet> spriteSheetMap = new HashMap<String, SpriteSheet>();
 	private static HashMap<String, SpriteFont> fontMap = new HashMap<String, SpriteFont>();
-
+	
 	public static void clearResources(){
 
 		imageMap.clear();
@@ -23,12 +24,10 @@ public class ResourceManager {
 
 	}
 
-	public static void addSound(String soundName){
-
-	}
-
 	public static void playSound(String soundName){
 
+		if (MUTE) {return;}
+		
 		try {
 
    			File file;

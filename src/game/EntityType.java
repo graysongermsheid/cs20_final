@@ -5,8 +5,10 @@ public enum EntityType {
 	//Entity types so the game knows what to cast to on collision
 	
 	PLAYER ("Player"),
-	MONSTER ("A Monster!"),
-	ITEM ("A Thing!");
+	MONSTER ("THIS SHOULDNT BE HERE"),
+	COIN ("Coins"),
+	DOOR ("Door"),
+	HEAL ("Health Boost");
 	
 	String info;
 	

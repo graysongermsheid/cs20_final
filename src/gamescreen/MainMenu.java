@@ -19,9 +19,9 @@ public class MainMenu extends MenuScreen {
 
 		super.loadResources();
 
-		components = new GUIComponent[3];
+		components = new GUIComponent[5];
 
-		components[0] = new Button("~Click~", 256, 96, 128, 32){
+		components[0] = new Button("Play Game", 512, 512, 256, 32){
 
 			@Override
 			public void performAction(){
@@ -30,24 +30,45 @@ public class MainMenu extends MenuScreen {
 
 			}
 		};
-		components[1] = new Button("TextBox", 256, 136, 128, 32){
+		components[1] = new Button("Mute", 512, 556, 256, 32){
 
 			@Override
 			public void performAction(){
 
-				((TextBox) components[2]).show();
+				ResourceManager.MUTE = !ResourceManager.MUTE;
 
 			}
 		};
-		components[2] = new TextBox("message.txt", 192, 176, 640, 480);
+		components[2] = new Button("Quit", 512, 644, 256, 32){
+			
+			@Override
+			public void performAction(){
+				
+				System.exit(0);
+				
+			}
+			
+		};
+		components[3] = new Button("Help", 512, 600, 256, 32){
+			
+			@Override
+			public void performAction(){
+				
+				((TextBox)components[4]).show();
+				
+			}
+			
+		};
+		components[4] = new TextBox("help.txt", 448, 316, 384, 176);
 
 	}
 
 	@Override
 	public void draw(Graphics2D g){
 
+		g.drawImage(ResourceManager.getImage("title_banner.png"), 256, 64, null);
 		super.draw(g);
-
+		
 	}
 
 	@Override

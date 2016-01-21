@@ -7,9 +7,8 @@ public class ScoreTracker {
 	public static int goldCollected;
 	public static int healthLost;
 	public static int healthHealed;
-	public static int areasExplored;
-	public static int monstersKilled;
-	public static double distanceTraveled;
+	public static int areasExplored = 1;
+	public static String killedBy;
 	
 	public static void resetStats(){
 		
@@ -18,9 +17,7 @@ public class ScoreTracker {
 		goldCollected = 0;
 		healthLost = 0;
 		healthHealed = 0;
-		areasExplored = 0;
-		distanceTraveled = 0;
-		monstersKilled = 0;
+		areasExplored = 1;
 		
 	}
 }

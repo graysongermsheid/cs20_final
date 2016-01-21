@@ -12,6 +12,7 @@ public class Menu extends GUIComponent {
 	protected Point locationRelativeToMouse;
 	protected BufferedImage background;
 	protected boolean dragged;
+	protected boolean locked;
 	protected ArrayList<Button> menuButtons;
 	protected SpriteFont font;
 	private String title;
@@ -42,6 +43,12 @@ public class Menu extends GUIComponent {
 		this.font = ResourceManager.getFont("font.png");
 		this.title = title;
 		menuButtons = new ArrayList<Button>();
+	}
+	
+	public void lock(){
+		
+		locked = !locked;
+		
 	}
 
 	public void addButton(Button button){
@@ -94,7 +101,7 @@ public class Menu extends GUIComponent {
 	@Override
 	public void processInput(){
 
-		if (InputHandler.MOUSE_CLICKED && !InputHandler.MOUSE_DRAGGED) {
+		if (InputHandler.MOUSE_CLICKED && !InputHandler.MOUSE_DRAGGED && !locked) {
 
 			if (isInsideBoundaries(InputHandler.MOUSE_LOCATION)){
 
@@ -103,7 +110,7 @@ public class Menu extends GUIComponent {
 
 			}
 
-		} else if (InputHandler.MOUSE_DRAGGED && dragged){
+		} else if (InputHandler.MOUSE_DRAGGED && dragged&& !locked){
 
 			Point oldLocation = location;
 			Point newLocation =  new Point(InputHandler.MOUSE_LOCATION.x + locationRelativeToMouse.x,
