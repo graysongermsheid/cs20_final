@@ -13,10 +13,10 @@ public class DungeonGenerator {
 	public Level createLevel(int width, int height){
 		
 		RoomStyle[][] rooms = createMaze(width, height);
-		Level l = new Level(width * 9, height * 8, "DUNGEON");
+		Level l = new Level(width * 9, height * 9, "DUNGEON");
 		l.addLayer("dungeon.png");
 		
-		boolean[][] levelMap = new boolean[height * 8][width * 9];
+		boolean[][] levelMap = new boolean[height * 9][width * 9];
 		
 		for (int i = 0; i < height; i++){
 			
@@ -24,11 +24,11 @@ public class DungeonGenerator {
 				
 				boolean[][] q = readTiles(rooms[i][j].toString());
 				
-				for (int a = 0; a < 8; a++){
+				for (int a = 0; a < 9; a++){
 					
 					for (int b = 0; b < 9; b++){
 						
-						levelMap[i * 8 + a][j * 9 + b] = q[a][b];
+						levelMap[i * 9 + a][j * 9 + b] = q[a][b];
 						
 					}
 				}
@@ -53,14 +53,13 @@ public class DungeonGenerator {
 	private boolean[][] readTiles(String filename){
 		
 		BufferedImage plan = ResourceManager.getImage("/levels/" + filename + ".png");
-		boolean[][] map = new boolean[8][9];
+		boolean[][] map = new boolean[9][9];
 		
-		for (int i = 0; i < 8; i++){
+		for (int i = 0; i < 9; i++){
 			
 			for (int j = 0; j < 9; j++){
 				
 				map[i][j] = plan.getRGB(j, i) == java.awt.Color.BLACK.getRGB(); //if the plan is black, then it's a wall
-				System.out.print(" RGB: " + plan.getRGB(j, i));
 				
 			}
 		}
@@ -102,16 +101,6 @@ public class DungeonGenerator {
 		
 		Random r = new Random();
 		rooms = addRoom(r.nextInt(width - 1) + 1, r.nextInt(height - 1) + 1, rooms);
-		
-		for (int i = 0; i < height; i++){
-
-			System.out.println();
-			for (int j = 0; j < width; j++){
-				
-				System.out.print(rooms[i][j].toString());
-				
-			}
-		}
 		
 		return rooms;
 		

@@ -27,7 +27,7 @@ public class Camera {
 	private AffineTransform transform;
 	private Player player;
 	private EntityManager e;
-	public static boolean debug; //whether or not to show game info
+	public static DebugMode debug; //whether or not to show game info
 	private boolean debugHeld;
 	private SpriteFont scoreFont;
 	
@@ -39,6 +39,7 @@ public class Camera {
 		location = new Point(x, y);
 		transform = new AffineTransform();
 		e = new EntityManager();
+		debug = DebugMode.OFF;
 		
 		Door.camRef = this;
 		
@@ -145,7 +146,7 @@ public class Camera {
 		player.processInput();
 		if (InputHandler.KEY_DEBUG_PRESSED && !debugHeld){
 			
-			debug = !debug;
+			debug = debug.next();
 			debugHeld = true;
 			
 		} else if (!InputHandler.KEY_DEBUG_PRESSED){
@@ -176,7 +177,7 @@ public class Camera {
 		g.drawImage(scaledImage, 0, 0, null);
 		
 		//Draw camera information to the screen
-		if (debug){
+		if (debug != DebugMode.OFF){
 
 			drawDetails(g, scaleH, scaleV);
 			
@@ -250,29 +251,58 @@ public class Camera {
 			g.drawString(info2, p.getHitBox().getX() * scaleH - location.x * scaleH, p.getHitBox().getFarLocation().y * scaleV - location.y * scaleV + 35);
 			g.drawRect(p.getHitBox().getX() * sH - location.x * sH, p.getHitBox().getY() * sV - location.y * sV, p.getHitBox().getWidth() * sH + sH, p.getHitBox().getHeight() * sV + sV);
 			
-			if (p.getType() == EntityType.DOOR){
+			if (debug == DebugMode.FULL){
+			
+				if (p.getType() == EntityType.DOOR){
 				
-				g.setColor(new Color(125, 255, 255, 128));
+					g.setColor(new Color(125, 255, 255, 128));
 				
-			} else if (p.getType() == EntityType.COIN){
+				} else if (p.getType() == EntityType.COIN){
 				
-				g.setColor(new Color(255, 190, 0, 128));
+					g.setColor(new Color(255, 190, 0, 128));
 				
-			} else if (p.getType() == EntityType.HEAL){
+				} else if (p.getType() == EntityType.HEAL){
 				
-				g.setColor(new Color(0, 255, 0, 128));
+					g.setColor(new Color(0, 255, 0, 128));
 				
-			} else if (p.getType() == EntityType.MONSTER){
+				} else if (p.getType() == EntityType.MONSTER){
 				
-				g.setColor(new Color(255, 0, 0, 128));
+					g.setColor(new Color(255, 0, 0, 128));
+				
+				} else {
+			
+					g.setColor(new java.awt.Color(255, 255, 255, 128));
+			
+				}
+			
+				g.drawLine(player.getCenter().x * sH - location.x * sH, player.getCenter().y * sV - location.y * sV, p.getCenter().x * sH - location.x * sH, p.getCenter().y * sV - location.y * sV);
+			}
+		}
+	}
+	
+	private enum DebugMode{
+		
+		OFF,
+		FULL,
+		MINIMAL;
+		
+		protected DebugMode next(){
+			
+			if (this == OFF){
+				
+				return FULL;
+				
+			} else if (this == FULL){
+				
+				return MINIMAL;
 				
 			} else {
-			
-				g.setColor(new java.awt.Color(255, 255, 255, 128));
-			
+				
+				return OFF;
+				
 			}
 			
-			g.drawLine(player.getCenter().x * sH - location.x * sH, player.getCenter().y * sV - location.y * sV, p.getCenter().x * sH - location.x * sH, p.getCenter().y * sV - location.y * sV);
-		}	
+		}
+		
 	}
 }

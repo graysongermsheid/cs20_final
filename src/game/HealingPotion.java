@@ -44,10 +44,7 @@ public class HealingPotion extends Entity {
 	}
 	
 	@Override
-	public void update(double elapsedMilliseconds) {
-		// TODO Auto-generated method stub
-
-	}
+	public void update(double elapsedMilliseconds) {}
 
 	@Override
 	public void draw(Graphics2D g, Point p) {
@@ -69,13 +66,11 @@ public class HealingPotion extends Entity {
 					ScoreTracker.healthHealed += amount;
 					p.health = Math.min(p.health + amount, Player.MAX_HEALTH);
 					
+					ResourceManager.playSound("heal.wav");
+					
 					if (p.health == Player.MAX_HEALTH){
 						
 						ResourceManager.playSound("heal_full.wav");
-						
-					} else {
-						
-						ResourceManager.playSound("heal.wav");
 						
 					}
 					
