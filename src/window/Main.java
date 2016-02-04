@@ -6,15 +6,15 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import input.InputHandler;
 
-public class Window extends JFrame{
+public class Main extends JFrame{
 	
 	public static void main(String[] args){
 
-		Window window = new Window();
+		Main window = new Main();
 
 	}
 
-	public Window(){
+	public Main(){
 	
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Cool Title - The Game");

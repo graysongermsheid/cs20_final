@@ -11,27 +11,38 @@ import resources.ResourceManager;
 
 public class Door extends Entity {
 
-	private DoorDestination destination;
+	private AreaType destination;
 	private Random r;
+	private AreaType currentArea;
 	private static DungeonGenerator d = new DungeonGenerator();
 	private static CaveGenerator c = new CaveGenerator();
-	public static Camera camRef; //pointer to camera so this can switch levels
+	protected static Camera camRef; //pointer to camera so this can switch levels
 	
 	public Door(int x, int y){
 		
 		super(x, y, 16, 16, "ladder.png");
-		hitBox = new AABB(x + 1, y + 1, 13, 13);
+		currentArea = camRef.getAreaType();
 		
 		r = new Random();
 		int a = r.nextInt(5);
 		
 		if (a == 0){
 			
-			destination = DoorDestination.DUNGEONS;
+			destination = AreaType.DUNGEONS;
 			
 		} else {
 			
-			destination = DoorDestination.CAVES;
+			destination = AreaType.CAVES;
+			
+		}
+		
+		if (currentArea == AreaType.DUNGEONS){
+			
+			hitBox = new AABB(x + 5, y + 5, 13, 13);
+			
+		} else {
+
+			hitBox = new AABB(x + 3, y + 4, 16, 16);
 			
 		}
 		
@@ -46,7 +57,7 @@ public class Door extends Entity {
 	@Override
 	public void draw(Graphics2D g, Point p) {
 
-		g.drawImage(sourceSprites.getImage(0), position.x - p.x, position.y - p.y, null);
+		g.drawImage(sourceSprites.getImage(currentArea.getValue()), position.x - p.x, position.y - p.y, null);
 		
 	}
 
@@ -59,9 +70,9 @@ public class Door extends Entity {
 			
 			Level newLevel;
 			
-			if (destination == DoorDestination.CAVES){
+			if (destination == AreaType.CAVES){
 
-				camRef.setLevel(0, 0, c.createLevel(r.nextInt(33) + 32, r.nextInt(33) + 32, r.nextInt(3) + 2, 0.5f));
+				camRef.setLevel(0, 0, c.createLevel(r.nextInt(33) + 32, r.nextInt(33) + 32, r.nextInt(3) + 2, 0.5f, 40.0));
 				
 			} else {
 				
@@ -71,27 +82,6 @@ public class Door extends Entity {
 			
 		}
 		
-	}
-
-	private enum DoorDestination{
-		
-		DUNGEONS ("Dungeons"),
-		CAVES ("Caves");
-		
-		String name;
-		
-		DoorDestination(String val){
-			
-			name = val;
-			
-		}
-		
-		@Override
-		public String toString(){
-			
-			return name;
-			
-		}
 	}
 	
 	@Override

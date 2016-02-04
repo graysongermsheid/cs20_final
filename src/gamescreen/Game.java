@@ -104,7 +104,7 @@ public class Game implements GameScreen {
 		ResourceManager.createSpriteSheet("player.png", 16, 16);
 		ResourceManager.createSpriteSheet("snake.png", 16, 16);
 		ResourceManager.createSpriteSheet("guard.png", 16, 16);
-		ResourceManager.createSpriteSheet("ladder.png", 16, 16);
+		ResourceManager.createSpriteSheet("ladder.png", 24, 24);
 		ResourceManager.createSpriteSheet("coins.png", 16, 16);
 		ResourceManager.createSpriteSheet("health.png", 16, 16);
 		

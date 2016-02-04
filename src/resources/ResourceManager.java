@@ -3,13 +3,15 @@ package resources;
 import java.awt.image.BufferedImage;
 import javax.imageio.*;
 import java.io.*;
+import java.net.URI;
+import java.net.URL;
 import java.util.*;
 import java.awt.Color;
 import javax.sound.sampled.*;
 
 public class ResourceManager {
 
-	public static String PATH = "src/content/";
+	public static String PATH = "content/";
 	public static boolean MUTE = false;
 	
 	private static HashMap<String, BufferedImage> imageMap = new HashMap<String, BufferedImage>();
@@ -24,6 +26,22 @@ public class ResourceManager {
 
 	}
 
+	public static InputStream getURI(String fileName){
+		
+		try {
+		
+			InputStream c = ResourceManager.class.getResourceAsStream("/resources/content/" + fileName);
+			return c;
+			
+		} catch (Exception e){
+			
+			e.printStackTrace();
+			return null;
+			
+		}
+		
+	}
+	
 	public static void playSound(String soundName){
 
 		if (MUTE) {return;}
@@ -36,8 +54,8 @@ public class ResourceManager {
    			DataLine.Info info;
     		Clip clip;
 
-    		file = new File(PATH + "sound/" + soundName);
-    		stream = AudioSystem.getAudioInputStream(file);
+    		InputStream a = new BufferedInputStream(getURI("sound/" + soundName));
+    		stream = AudioSystem.getAudioInputStream(a);
     		format = stream.getFormat();
     		info = new DataLine.Info(Clip.class, format);
     		clip = (Clip) AudioSystem.getLine(info);
@@ -113,12 +131,13 @@ public class ResourceManager {
 
 		try {
 
-			BufferedImage newImage = ImageIO.read(new File(PATH + imageName));
+			BufferedImage newImage = ImageIO.read(getURI(imageName));
 			imageMap.put(imageName, newImage);
 
 		} catch (Exception e){
 
-			System.out.println("ResourceManager could not load image <" + imageName + "> please make sure this file is a .png");
+			e.printStackTrace();
+			System.out.println("ResourceManager could not load image <" + imageName + "> please make sure this f||||ile is a .png");
 
 		}
 	}

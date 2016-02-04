@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import game.AreaType;
 import game.Entity;
 
 import java.awt.Dimension;
@@ -14,15 +15,16 @@ public class Level {
 	protected int width;
 	protected String name;
 
+	private AreaType type;
 	private TileLayer[] layers;
-	private ArrayList<Entity> entities;
 	private CollisionLayer collisions;
 
-	public Level(int width, int height, String name){
+	public Level(int width, int height, String name, AreaType type){
 
 		this.width = width;
 		this.height = height;
 		this.name = name;
+		this.type = type;
 		collisions = new CollisionLayer(width, height);
 		layers = new TileLayer[0];
 
@@ -62,27 +64,15 @@ public class Level {
 
 	}
 	
-	public void addEntity(Entity e){
+	public AreaType getAreaType(){
 		
-		entities.add(e);
+		return type;
 		
 	}
 	
-	public Entity[] getEntites(){
+	public String getName(){
 		
-		Entity[] e = new Entity[entities.size()];
-		entities.toArray(e);
-		return e;
-		
-	}
-
-	public void update(double elapsedMilliseconds){
-		
-		/*for (Entity e : entities){
-			
-			//e.update(elapsedMilliseconds);
-			
-		}*/
+		return name;
 		
 	}
 	
@@ -93,12 +83,6 @@ public class Level {
 			t.draw(p0, p1, g);
 
 		}
-		
-		/*for (Entity e : entities){
-			
-			e.draw(g);
-			
-		}*/
 	}
 
 	public Dimension getSize(){

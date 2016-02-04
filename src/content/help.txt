@@ -1,7 +1,0 @@
-- W,A,S,D - Movement       
-- ESC - Pause            
-- F1 - Debug            
-- Max Health: 50         
-- Snakes deal 10 damage   
-- Guards deal 25 damage   
-- You can collect different food items to heal lost health 

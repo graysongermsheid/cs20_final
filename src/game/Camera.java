@@ -30,11 +30,12 @@ public class Camera {
 	public static DebugMode debug; //whether or not to show game info
 	private boolean debugHeld;
 	private SpriteFont scoreFont;
+	private AreaType currentArea;
 	
 	public Level currentLevel;
 	
 	public Camera(int x, int y, int width, int height, Level l){
-
+		
 		scoreFont = ResourceManager.getFont("font_small.png");
 		location = new Point(x, y);
 		transform = new AffineTransform();
@@ -55,6 +56,7 @@ public class Camera {
 		farLocation = new Point(x + width, y + height);
 		size = new Dimension(width, height);
 		currentLevel = l;
+		currentArea = l.getAreaType();
 		
 		LivingEntity.setLevelCollisionLayer(l.getCollisionLayer());
 		e.setReferenceCollisions(l.getCollisionLayer());
@@ -69,6 +71,7 @@ public class Camera {
 		transform = new AffineTransform();
 		farLocation = new Point(x + size.width, y + size.height);
 		currentLevel = l;
+		currentArea = l.getAreaType();
 		LivingEntity.setLevelCollisionLayer(l.getCollisionLayer());
 		e.setReferenceCollisions(l.getCollisionLayer());
 		spawnEntities();
@@ -85,6 +88,12 @@ public class Camera {
 		e.spawnEntities(EntityType.DOOR, 1);
 		e.spawnEntities(EntityType.COIN, 20);
 		e.spawnEntities(EntityType.HEAL, 4);
+		
+	}
+	
+	public AreaType getAreaType(){
+		
+		return currentArea;
 		
 	}
 	

@@ -12,17 +12,20 @@ import level.CollisionType;
 public class CaveGenerator {
 	
 	private static Random r;
-
+	private static FractalNoise perlin;
+	
 	public CaveGenerator(int seed){
 
 		r = new Random(seed);
-
+		//perlin = new FractalNoise(seed);
+			
 	}
 
 	public CaveGenerator(){
 
 		r = new Random();
-
+		perlin = new FractalNoise();
+		
 	}
 
 	public Level createLevel(int width, int height, int steps, float percentLand){
@@ -39,7 +42,7 @@ public class CaveGenerator {
 			}
 		}
 		
-		Level l = new Level(width, height, "Cave");
+		Level l = new Level(width, height, "Cave", game.AreaType.CAVES);
 		l.addLayer("caves.png");
 		
 		for (int i = 0; i < cave.length; i++){
@@ -55,6 +58,55 @@ public class CaveGenerator {
 		}
 		
 		return l;
+	}
+	
+	public Level createLevel(int width, int height, int steps, float percentLand, double largestBiome){
+		
+		CaveNode[][] cave1 = generateMap(width, height, steps, percentLand);
+		boolean[][] cave = new boolean[height][width];
+		double[][] fractalNoise = perlin.getFractal(width, height, largestBiome);
+		
+		for (int i = 0; i < cave1.length; i++){
+			
+			for (int j = 0; j < cave1[0].length; j++){
+				
+				cave[i][j] = !cave1[i][j].empty;
+				
+			}
+		}
+		
+		Level l = new Level(width, height, "Cave", game.AreaType.CAVES);
+		l.addLayer("caves.png");
+		l.addLayer("caves_desert.png");
+		l.addLayer("caves_snow.png");
+		
+		for (int i = 0; i < cave.length; i++){
+			
+			for (int j = 0; j < cave[0].length; j++){
+				
+				CollisionType collision = cave[i][j] ? CollisionType.WALL : CollisionType.NONE;
+				
+				if (fractalNoise[i][j] <= 0.33){
+					
+					l.addTile(TileMapper.processTile(j, i, cave), j, i, 2);
+					
+				} else if (fractalNoise[i][j] <= 0.66){
+
+					l.addTile(TileMapper.processTile(j, i, cave), j, i, 0);	
+					
+				} else {
+
+					l.addTile(TileMapper.processTile(j, i, cave), j, i, 1);	
+					
+				}
+				
+				l.addCollision(j, i, collision);
+				
+			}
+		}
+		
+		return l;
+		
 	}
 	
 	public CaveNode[][] generateMap(int width, int height, int steps, float percentLand){

@@ -13,7 +13,7 @@ public class DungeonGenerator {
 	public Level createLevel(int width, int height){
 		
 		RoomStyle[][] rooms = createMaze(width, height);
-		Level l = new Level(width * 9, height * 9, "DUNGEON");
+		Level l = new Level(width * 9, height * 9, "DUNGEON", game.AreaType.DUNGEONS);
 		l.addLayer("dungeon.png");
 		
 		boolean[][] levelMap = new boolean[height * 9][width * 9];
@@ -52,7 +52,7 @@ public class DungeonGenerator {
 	
 	private boolean[][] readTiles(String filename){
 		
-		BufferedImage plan = ResourceManager.getImage("/levels/" + filename + ".png");
+		BufferedImage plan = ResourceManager.getImage("levels/" + filename + ".png");
 		boolean[][] map = new boolean[9][9];
 		
 		for (int i = 0; i < 9; i++){
